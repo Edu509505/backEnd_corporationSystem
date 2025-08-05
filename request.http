@@ -1,0 +1,55 @@
+POST http://localhost:3000/clientes
+Content-Type: application/json
+
+{
+    "cliente":"VPL TAVARES LOGISTICA",
+    "cnpj": "00.000.000/0001-00",
+    "local": "CUBATÃO",
+    "status": "ATIVO"
+}
+
+###
+
+GET http://localhost:3000/clientes
+
+###
+
+POST http://localhost:3000/contratos
+Content-Type: application/json
+
+{
+    "idCliente": 1,
+    "contrato": "00010001-2025",
+    "nome": "Manutenção Corretiva - Sem Material",
+    "descricao": "***",
+    "status": "ATIVO",
+    "local": "CUBATÃO"
+}
+
+###
+
+GET http://localhost:3000/contratos
+
+###
+
+POST http://localhost:3000/medicoes
+Content-Type: application/json
+
+{
+    "idCliente": 1,
+    "idContrato": 1,
+    "obra": "Terminal T-30",
+    "local": "CUBATÃO",
+    "periodo": "25/03/2025 - 25/07/2025",
+    "descricao": "***",
+    "tipo": "M²",
+    "observacoes": "***",
+    "quantidade": 20,
+    "valorUnitario":0.25,
+    "valor": 5.35,
+    "valorTotalDaMedicao": 107.87
+}
+
+###
+
+GET http://localhost:3000/medicoes
