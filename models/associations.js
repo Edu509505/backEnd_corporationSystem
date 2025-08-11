@@ -1,15 +1,16 @@
 import Clientes from './clientes'
 import Contratos from './contratos'
 import Medicoes from './medicoes'
+import Proposta from './propostas'
 
 Clientes.hasMany(Contratos)
+Clientes.hasMany(Proposta)
+
+Proposta.belongsTo(Clientes)
 Contratos.belongsTo(Clientes)
+Medicoes.belongsTo(Contratos)
 
-Medicoes.belongsToMany(Contratos, {through: 'MedicoesContratos'})
-Contratos.belongsToMany(Medicoes, {through: 'MedicoesContratos'})
 
-Medicoes.belongsToMany(Clientes, {through: 'MedicoesClientes'})
-Clientes.belongsToMany(Medicoes, {through: 'MedicoesClientes'})
 
 
 /*

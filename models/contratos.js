@@ -11,6 +11,14 @@ const Contratos = database.define('contratos', {
         },
         allowNull: false
     },
+    idProposta: {
+        type: Sequelize.NUMBER,
+        references: {
+            model: 'Proposta',
+            key: 'id'
+        },
+        allowNull: false
+    },
     contrato:{
         type: Sequelize.STRING,
         allowNull: false
