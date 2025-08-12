@@ -2,19 +2,23 @@ import { Sequelize } from "sequelize";
 
 import database from "../db.js";
 
-const Proposta = database.define('propostas', {
-    idCliente:{
-        type: Sequelize.NUMBER,
-        references: {
-            model: 'Clientes',
-            key: 'id'
-        },
-        allowNull: false
+const Proposta = database.define("propostas", {
+  idCliente: {
+    type: Sequelize.NUMBER,
+    references: {
+      model: "Clientes",
+      key: "id",
     },
-    tipoDeProposta: {
-        type: Sequelize.STRING,
-        allowNull: false
-    }
-})
+    allowNull: false,
+  },
+  tipoDeProposta: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  anexo: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
 
-export default Proposta
+export default Proposta;
