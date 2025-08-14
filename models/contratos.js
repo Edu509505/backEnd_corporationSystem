@@ -1,44 +1,44 @@
 import { Sequelize } from "sequelize";
 
-import database from '../db.js'
+import database from "../db.js";
 
-const Contratos = database.define('contratos', {
-    idCliente:{
-        type: Sequelize.INTEGER,
-        references:{
-            model: 'Clientes',
-            key: 'id'
-        },
-        allowNull: false
+const Contratos = database.define("contratos", {
+  idCliente: {
+    type: Sequelize.NUMBER,
+    references: {
+      model: "Clientes",
+      key: "id",
     },
-    idProposta: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: 'Propostas',
-            key: 'id'
-        },
-        allowNull: false
+    allowNull: false,
+  },
+  idProposta: {
+    type: Sequelize.NUMBER,
+    references: {
+      model: "Propostas",
+      key: "id",
     },
-    contrato:{
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    nome: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    descricao:{
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    status: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    local:{
-        type: Sequelize.STRING,
-        allowNull: false
-    }
-})
+    allowNull: false,
+  },
+  contrato: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  nome: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  descricao: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  local: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
 
-export default Contratos
+export default Contratos;

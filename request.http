@@ -2,7 +2,7 @@ POST http://localhost:3000/clientes
 Content-Type: application/json
 
 {
-    "cliente":"E&E",
+    "cliente":"E&E 222",
     "cnpj": "00.000.000/0001-00",
     "local": "CUBATÃO",
     "status": "ATIVO"
@@ -18,8 +18,8 @@ POST http://localhost:3000/contratos
 Content-Type: application/json
 
 {
-    "idCliente": 1,
-    "idProposta": 1,
+    "idCliente": 2,
+    "idProposta": 2,
     "contrato": "00010001-2025",
     "nome": "Manutenção Corretiva - Sem Material",
     "descricao": "***",
@@ -37,10 +37,13 @@ POST http://localhost:3000/propostas
 Content-Type: application/json
 
 {
-    "idCliente": 2,
+    "idCliente": 1,
     "tipoDeProposta": "00010001-2025"
 }
 
+###
+
+GET http://localhost:3000/propostas
 
 ###
 
