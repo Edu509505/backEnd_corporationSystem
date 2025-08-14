@@ -12,9 +12,9 @@ const Contratos = database.define('contratos', {
         allowNull: false
     },
     idProposta: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         references: {
-            model: 'Proposta',
+            model: 'Propostas',
             key: 'id'
         },
         allowNull: false
