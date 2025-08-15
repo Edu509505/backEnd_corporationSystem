@@ -17,7 +17,7 @@ async function getContrato(req,res){
     if(contratos){
         res.json(contratos.map(contratos => contratos.toJSON()))
     } else {
-        res.status(500).json({message: 'Não foi possível buscar usuários'})
+        res.status(500).json({message: 'Não foi possível buscar'})
     }
 }
 
