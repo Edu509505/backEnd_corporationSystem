@@ -12,7 +12,7 @@ async function createContrato(req, res){
 }
 
 async function getContrato(req,res){
-    const contratos = await Contratos.findAll()
+    const contratos = await Contratos.findByPk()
 
     if(contratos){
         res.json(contratos.map(contratos => contratos.toJSON()))
