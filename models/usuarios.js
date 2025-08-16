@@ -41,4 +41,5 @@ const Usuarios = database.define("usuarios", {
     }
 })
 
+// Coloquei uma virgula a mais
 export default Usuarios
