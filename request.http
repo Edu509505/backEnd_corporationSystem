@@ -2,7 +2,7 @@ POST http://localhost:3000/clientes
 Content-Type: application/json
 
 {
-    "cliente":"E&E 222",
+    "cliente":"acahu.ltda",
     "cnpj": "00.000.000/0001-00",
     "local": "CUBATÃO",
     "status": "ATIVO"
