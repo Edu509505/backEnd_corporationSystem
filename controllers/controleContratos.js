@@ -30,7 +30,7 @@ async function getContratoId(req, res) {
         if (contratoId) {
             res.json(contratoId.toJSON())
         } else {
-            res.status(404).json({ message: 'Não foi possível encontrar' })
+            res.status(404).json({ message: 'Contrato inexistente' })
         }
 
     } catch (error) {

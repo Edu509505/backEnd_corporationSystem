@@ -52,7 +52,7 @@ async function getClienteContrato(req, res) {
 
         }else{
 
-            res.status(404).json({ message: 'Não foi possóvel encontrar' })
+            res.status(404).json({ message: 'O contrato não existe' })
 
         }
     } catch (error) {

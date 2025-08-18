@@ -15,7 +15,7 @@ GET http://localhost:3000/clientes/1
 ###
 
 //Procurar contratos relacionado a um cliente
-GET http://localhost:3000/clientes/2/contratos
+GET http://localhost:3000/clientes/3/contratos
 
 ###
 
