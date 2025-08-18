@@ -1,4 +1,5 @@
 import Clientes from "../models/clientes.js";
+import Contratos from "../models/contratos.js";
 
 async function createCliente(req, res){
     const { cliente, cnpj, local, status } = req.body
@@ -25,7 +26,7 @@ async function getClientId(req, res) {
     const { id } = req.params;
 
     try{
-        const getClient = await Clientes.findOne({where: { id }});
+        const getClient = await Clientes.findByPk(id);
         
         if (getClient) {
             res.json(getClient.toJSON());
@@ -37,4 +38,30 @@ async function getClientId(req, res) {
     }
 }
 
-export default { createCliente, getCliente, getClientId }
+
+async function getClienteContrato(req, res) {
+    const { id } = req.params;
+
+    try {
+
+        const requestCliente = await Contratos.findOne({ where: { id }})
+
+        if(requestCliente){
+
+            res.json(requestCliente.toJSON())
+
+        }else{
+
+            res.status(404).json({ message: 'Não foi possóvel encontrar' })
+
+        }
+    } catch (error) {
+
+        res.status(500).json({ message: 'erro ao encontrar', error })
+
+    }
+}
+
+
+
+export default { createCliente, getCliente, getClientId, getClienteContrato }

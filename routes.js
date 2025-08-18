@@ -11,7 +11,10 @@ router.get('/clientes', controleClientes.getCliente)
 router.get('/clientes/:id', controleClientes.getClientId)
 router.post('/clientes', controleClientes.createCliente)
 
+router.get('/clientes/:id/contratos', controleClientes.getClienteContrato)
+
 router.get('/contratos', controleContrato.getContrato)
+router.get('/contratos/:id', controleContrato.getContratoId)
 router.post('/contratos', controleContrato.createContrato)
 
 router.get('/medicoes', controleMedicoes.getMedicao)
