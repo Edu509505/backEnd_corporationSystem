@@ -8,6 +8,7 @@ import controlePropostas from "./controllers/controlePropostas.js";
 const router = Router()
 
 router.get('/clientes', controleClientes.getCliente)
+router.get('/clientes/:id', controleClientes.getClientId)
 router.post('/clientes', controleClientes.createCliente)
 
 router.get('/contratos', controleContrato.getContrato)

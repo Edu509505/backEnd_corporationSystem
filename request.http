@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/clientes
+GET http://localhost:3000/clientes/1
 
 ###
 
@@ -29,7 +29,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/contratos
+GET http://localhost:3000/contratos/
 
 ###
 

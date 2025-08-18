@@ -21,4 +21,20 @@ async function getCliente(req,res){
     }
 }
 
-export default { createCliente, getCliente }
+async function getClientId(req, res) {
+    const { id } = req.params;
+
+    try{
+        const getClient = await Clientes.findOne({where: { id }});
+        
+        if (getClient) {
+            res.json(getClient.toJSON());
+        } else {
+            res.status(404).json({ message: "Não foi possível encontrar" })
+        }
+    }catch (error){
+        res.status(500).json({ message: "Erro ao encotrar", error })
+    }
+}
+
+export default { createCliente, getCliente, getClientId }
