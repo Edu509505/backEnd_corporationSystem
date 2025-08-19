@@ -18,21 +18,21 @@ const Usuarios = database.define("usuarios", {
     idProposta:{
         type: Sequelize.INTEGER,
         references: {
-            model: "Propostas",
+            model: "propostas",
             type: "id"
         }
     },
     idContrato:{
         type: Sequelize.INTEGER,
         references: {
-            model: "Contratos",
+            model: "contratos",
             key:"id"
         }
     },
     idMedicao:{
         type: Sequelize.INTEGER,
         references:{
-            model: "Medicao",
+            model: "medicao",
             key: "id"
         }
     },

@@ -4,6 +4,7 @@ import cors from 'cors'
 import database from './db.js'
 import router from './routes.js'
 import './models/clientes.js'
+import './models/associations.js'
 
 database.sync()
 

@@ -15,7 +15,7 @@ GET http://localhost:3000/clientes/1
 ###
 
 //Procurar contratos relacionado a um cliente
-GET http://localhost:3000/clientes/3/contratos
+GET http://localhost:3000/clientes/1/contratos
 
 ###
 
@@ -23,8 +23,8 @@ POST http://localhost:3000/contratos
 Content-Type: application/json
 
 {
-    "idCliente": 2,
-    "idProposta": 2,
+    "idCliente": 1,
+    "idProposta": 5,
     "contrato": "05302-584",
     "nome": "Manutenção Corretiva - Com Material",
     "descricao": "***",
@@ -42,7 +42,7 @@ POST http://localhost:3000/propostas
 Content-Type: application/json
 
 {
-    "idCliente": 1,
+    "idCliente": 2,
     "tipoDeProposta": "00010001-2025"
 }
 

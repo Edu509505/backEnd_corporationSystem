@@ -4,17 +4,17 @@ import database from "../db.js";
 
 const Contratos = database.define("contratos", {
   idCliente: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     references: {
-      model: "Clientes",
+      model: "clientes",
       key: "id",
     },
     allowNull: false,
   },
   idProposta: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     references: {
-      model: "Propostas",
+      model: "propostas",
       key: "id",
     },
     allowNull: false,
