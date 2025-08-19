@@ -1,13 +1,15 @@
-import Clientes from './clientes'
-import Contratos from './contratos'
-import Medicoes from './medicoes'
-import Proposta from './propostas'
+import Clientes from './clientes.js'
+import Contratos from './contratos.js'
+import Medicoes from './medicoes.js'
+import Proposta from './propostas.js'
 
-Clientes.hasMany(Contratos)
+Clientes.hasMany(Contratos, {foreignKey: "idCliente", as: "contratos"})
+Contratos.belongsTo(Clientes, {foreignKey: "idCliente", as: "cliente"})
+
 Clientes.hasMany(Proposta)
 
 Proposta.belongsTo(Clientes)
-Contratos.belongsTo(Clientes)
+
 Medicoes.belongsTo(Contratos)
 
 

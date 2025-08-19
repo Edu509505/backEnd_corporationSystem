@@ -4,9 +4,9 @@ import database from "../db.js";
 
 const Proposta = database.define("propostas", {
   idCliente: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     references: {
-      model: "Clientes",
+      model: "clientes",
       key: "id",
     },
     allowNull: false,

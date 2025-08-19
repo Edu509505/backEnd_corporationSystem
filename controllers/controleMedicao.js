@@ -12,6 +12,7 @@ async function createUsuario (req, res){
 }
 
 async function getUsuario(req, res) {
+    
     const usuarios = await Usuarios.findAll()
 
     if(usuarios){

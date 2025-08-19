@@ -18,7 +18,7 @@ const Clientes = database.define("clientes", {
   status: {
     type: Sequelize.STRING,
     allowNull: false,
-  },
+  }
 });
 
 export default Clientes;
