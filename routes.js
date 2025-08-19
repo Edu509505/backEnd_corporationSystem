@@ -9,7 +9,7 @@ const router = Router()
 
 router.get('/clientes', controleClientes.getCliente)
 router.get('/clientes/:id', controleClientes.getClientId)
-router.post('/clientes', controleClientes.createCliente)
+router.post('/cadastro', controleClientes.createCliente)
 
 router.get('/clientes/:id/contratos', controleClientes.getClienteContrato)
 
