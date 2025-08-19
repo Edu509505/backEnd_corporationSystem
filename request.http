@@ -25,10 +25,10 @@ Content-Type: application/json
 {
     "idCliente": 2,
     "idProposta": 2,
-    "contrato": "00010001-2025",
-    "nome": "Manutenção Corretiva - Sem Material",
+    "contrato": "05302-584",
+    "nome": "Manutenção Corretiva - Com Material",
     "descricao": "***",
-    "status": "ATIVO",
+    "status": "INATIVO",
     "local": "CUBATÃO"
 }
 

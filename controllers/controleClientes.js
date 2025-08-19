@@ -48,7 +48,7 @@ async function getClienteContrato(req, res) {
 
         if(requestCliente){
 
-            res.json(requestCliente.toJSON())
+            res.json([requestCliente.toJSON()])
 
         }else{
 
