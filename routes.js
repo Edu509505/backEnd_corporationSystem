@@ -4,12 +4,13 @@ import controleClientes from "./controllers/controleClientes.js";
 import controleContrato from "./controllers/controleContratos.js";
 import controleMedicoes from "./controllers/controleMedicoes.js";
 import controlePropostas from "./controllers/controlePropostas.js";
+import imageController from "./controllers/controllerImage.js"
 
 const router = Router()
 
 router.get('/clientes', controleClientes.getCliente)
 router.get('/clientes/:id', controleClientes.getClientId)
-router.post('/cadastro', controleClientes.createCliente)
+router.post('/clientes', controleClientes.createCliente)
 
 router.get('/clientes/:id/contratos', controleClientes.getClienteContrato)
 
@@ -22,5 +23,7 @@ router.post('/medicoes', controleMedicoes.createMedicao)
 
 router.get('/propostas', controlePropostas.getProposta)
 router.post('/propostas', controlePropostas.createProposta)
+
+router.post('/image/upload', imageController.uploadImage)
 
 export default router

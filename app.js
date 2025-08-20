@@ -1,5 +1,7 @@
+
 import express from 'express'
 import cors from 'cors'
+
 
 import database from './db.js'
 import router from './routes.js'
@@ -19,5 +21,5 @@ app.use(cors(
 app.use(router)
 
 app.listen(3000, () => {
-    console.log('O servirdor está escutando a porta 3000')
+    console.log('O servidor está escutando a porta 3000')
 })

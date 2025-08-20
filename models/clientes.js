@@ -18,7 +18,10 @@ const Clientes = database.define("clientes", {
   status: {
     type: Sequelize.STRING,
     allowNull: false,
-  }
+  },
+  path: {
+    type: Sequelize.STRING,
+  },
 });
 
 export default Clientes;

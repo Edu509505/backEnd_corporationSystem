@@ -38,7 +38,7 @@ const Contratos = database.define("contratos", {
   local: {
     type: Sequelize.STRING,
     allowNull: false,
-  },
+  }
 });
 
 export default Contratos;
