@@ -12,6 +12,7 @@ async function createProposta(req, res) {
 }
 
 async function getProposta(req, res) {
+    console.log('por favor funciona véi')
     const propostas = await Proposta.findAll()
 
     if (propostas) {

@@ -3,6 +3,7 @@ import Contratos from "../models/contratos.js";
 
 async function createCliente(req, res) {
     const { cliente, cnpj, local, status } = req.body
+    console.log('to aqui');
     const clientes = await Clientes.create({ cliente, cnpj, local, status })
 
     if (clientes) {
