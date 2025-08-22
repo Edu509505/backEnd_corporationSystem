@@ -24,6 +24,6 @@ router.post('/medicoes', controleMedicoes.createMedicao)
 router.get('/propostas', controlePropostas.getProposta)
 router.post('/propostas', controlePropostas.createProposta)
 
-router.post('/image/upload', imageController.uploadImage)
+router.post('/image/upload/json', imageController.uploadImageJson)
 
 export default router

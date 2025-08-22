@@ -6,15 +6,27 @@ import { PutObjectCommand } from '@aws-sdk/client-s3'
 
 const filePath = path.join(import.meta.dirname, '..', '132.png')
 
-async function uploadImage(rea, res) {
-    const file = readFileSync(filePath)
+async function uploadImageJson(req, res) {
+    const body = req.body;
+    const { fileBase64 } = body;
     const comand = new PutObjectCommand({
-        Bucket: 'tioduh',
-        Key: '/132.png',
-        Body: file
-    })
-    await s3.send(comand)
-    res.json(200).json({mesage: 'Oi'})
+            Bucket: 'tioduh',
+            Key: '/132.png',
+            Body: fileBase64
+        });
+        await s3.send(comand)
+        res.json(200).json({message: 'Oi'})
 }
 
-export default { uploadImage }
+// async function uploadImage(rea, res) {
+//     const file = readFileSync(filePath)
+//     const comand = new PutObjectCommand({
+//         Bucket: 'tioduh',
+//         Key: '/132.png',
+//         Body: file
+//     })
+//     await s3.send(comand)
+//     res.json(200).json({message: 'Oi'})
+// }
+
+export default { uploadImageJson }
