@@ -11,6 +11,7 @@ const router = Router()
 router.get('/clientes', controleClientes.getCliente)
 router.get('/clientes/:id', controleClientes.getClientId)
 router.post('/clientes', controleClientes.createCliente)
+router.put('/clientes/:id', controleClientes.updateCliente)
 
 router.get('/clientes/:id/contratos', controleClientes.getClienteContrato)
 
