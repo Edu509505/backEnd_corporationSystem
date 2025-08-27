@@ -7,12 +7,14 @@ import database from './db.js'
 import router from './routes.js'
 import './models/clientes.js'
 import './models/associations.js'
+import cookieParser from 'cookie-parser'
 
 database.sync()
 
 const app = express()
 
-app.use(express.json())
+app.use(cookieParser());
+app.use(express.json());
 app.use(cors(
     {
         origin: 'http://localhost:5173'
