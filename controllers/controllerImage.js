@@ -6,18 +6,24 @@ import { PutObjectCommand } from '@aws-sdk/client-s3'
 
 const filePath = path.join(import.meta.dirname, '..', '132.png')
 
-async function uploadImageFormData(req, res) {
+async function uploadImageFormData(req,res) {
     const filePath = path.join(import.meta.dirname, '..', 'temp', req.file.filename);
-    console.log('filePath', filePath);
+    console.log('filePath', filePath)
     const file = readFileSync(filePath);
-    const nomeDaimagem = Math.random()
-    .toString(36)
-    .substring(2, 15) + '-' + req.file.originalname;
+    const nomeDaImagem = Math.random()
+      .toString(36)
+      .slice(2, 15) + '-' + req.file.originalname;
+    console.log('salvando imagem', nomeDaImagem);
     const command = new PutObjectCommand({
-        Bucket: 'nicholas',
-        Key: `${req.user}`
+      Bucket: 'tioduh',
+      Key: `/${req.user}/${nomeDaImagem}`,
+      Body: file,
+    });
+    await s3.send(command);
+    res.status(200).json({
+      message: "Imagem salva no Minio com sucesso!"
     })
-}
+  }
 
 // // async function uploadImage(rea, res) {
 // //     const file = readFileSync(filePath)

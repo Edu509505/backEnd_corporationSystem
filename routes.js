@@ -1,4 +1,7 @@
 import { Router } from "express";
+import multer from 'multer';
+
+const pastaTemp = multer({ dest: 'temp/' });
 
 import controleClientes from "./controllers/controleClientes.js";
 import controleContrato from "./controllers/controleContratos.js";
@@ -30,6 +33,6 @@ router.post('/medicoes', controleMedicoes.createMedicao)
 router.get('/propostas', controlePropostas.getProposta)
 router.post('/propostas', controlePropostas.createProposta)
 
-router.post('/image/upload/json', imageController.uploadImageFormData)
+router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData)
 
 export default router
