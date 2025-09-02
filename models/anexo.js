@@ -2,9 +2,14 @@ import { Sequelize } from "sequelize";
 
 import database from "../db.js";
 
-const Anexo = database.define("anexos", {
-    anexo: {
-        type: Sequelize.STRING,
+const AnexoVersionamento = database.define("anexoVersionamento", {
+    //Aqui ele pega o id da tabela 
+    idVersionamento: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: "versionamentos", //Tabela
+            key: "id" //Coluna
+        },
         allowNull: false
     },
     path: {
@@ -13,4 +18,4 @@ const Anexo = database.define("anexos", {
     }
 });
 
-export default Anexo;
+export default AnexoVersionamento;

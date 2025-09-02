@@ -8,16 +8,20 @@ import Anexo from './anexo.js'
 
 Clientes.hasMany(Contratos, {foreignKey: "idCliente", as: "contratos"})
 Contratos.belongsTo(Clientes, {foreignKey: "idCliente", as: "cliente"})
+Clientes.hasMany(Proposta, {foreignKey: "idCliente", as: "proposta"})
 
-Clientes.hasMany(Proposta)
+// UM CLIENTE ESTÁ ATRELADO A VÁRIAS PROPOSTA - 1:N
+Clientes.hasMany(Proposta, {foreignKey: "idCliente", as: "cliente"})
 
-Proposta.belongsTo(Clientes)
+//UMA PROPOSTA TERÁ VÁRIOS VERSIONAMENTO - 1:N
+Proposta.hasMany(Versionamento, {foreignKey: "idProposta", as: "versionamento"})
+
+Versionamento.hasMany(Anexo, {foreignKey: ""})
 
 Medicoes.belongsTo(Contratos)
 
-Proposta.belongsTo(Versionamento, {foreignKey: "idProposta", as: "versionamento"})
-Versionamento.belongsTo(Anexo, {foreignKey: "idAnexo", as: "versionament"})
-Anexo.belongsTo(Versionamento, {foreignKey: "id"})
+
+
 /*
 
 - 1:1 (um para um) → .hasOne() e .belongsTo()
