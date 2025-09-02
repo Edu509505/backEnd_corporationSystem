@@ -2,6 +2,9 @@ import Clientes from './clientes.js'
 import Contratos from './contratos.js'
 import Medicoes from './medicoes.js'
 import Proposta from './propostas.js'
+import Versionamento from './versionamento.js'
+import Anexo from './anexo.js'
+
 
 Clientes.hasMany(Contratos, {foreignKey: "idCliente", as: "contratos"})
 Contratos.belongsTo(Clientes, {foreignKey: "idCliente", as: "cliente"})
@@ -12,9 +15,9 @@ Proposta.belongsTo(Clientes)
 
 Medicoes.belongsTo(Contratos)
 
-
-
-
+Proposta.belongsTo(Versionamento, {foreignKey: "idProposta", as: "versionamento"})
+Versionamento.belongsTo(Anexo, {foreignKey: "idAnexo", as: "versionament"})
+Anexo.belongsTo(Versionamento, {foreignKey: "id"})
 /*
 
 - 1:1 (um para um) → .hasOne() e .belongsTo()
