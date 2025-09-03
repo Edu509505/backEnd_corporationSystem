@@ -1,11 +1,11 @@
 import Proposta from "../models/propostas.js";
 
 async function createProposta(req, res) {
-    const { idCliente, tipoDeProposta } = req.body
-    const propostas = await Proposta.create({ idCliente, tipoDeProposta })
+    const { idCliente, nomeDaProposta, descricao } = req.body
+    const propostas = await Proposta.create({ idCliente, nomeDaProposta, descricao})
 
     if (propostas) {
-        res.status(200).json({ idCliente, tipoDeProposta })
+        res.status(200).json({ idCliente, nomeDaProposta, descricao})
     } else {
         res.status(500).json({ message: 'Não foi possivel criar' })
     }

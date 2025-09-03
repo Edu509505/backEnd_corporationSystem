@@ -3,6 +3,10 @@ import { Sequelize } from "sequelize";
 import database from "../db.js";
 
 const Versionamento = database.define("versionamentos", {
+    versao: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
     idProposta: {
         type: Sequelize.INTEGER,
         references: {
@@ -11,20 +15,18 @@ const Versionamento = database.define("versionamentos", {
         },
         allowNull: false,
     },
-    idAnexo: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: "anexo",
-            key: "id",
-        }
-    },
-    idStatus: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: "status",
-            key: "id",
-        }
+    status: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
+},
+{
+    indexes: [
+        {
+            unique: true,
+            fields: ['versao','idProposta']
+        }
+    ]
 });
 
 export default Versionamento;

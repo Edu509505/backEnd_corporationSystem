@@ -14,7 +14,12 @@ const Proposta = database.define("propostas", {
   nomeDaProposta: {
     type: Sequelize.STRING,
     allowNull: false,
+  },
+  descricao: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
+
 });
 
 export default Proposta;

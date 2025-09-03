@@ -10,29 +10,33 @@ import controlePropostas from "./controllers/controlePropostas.js";
 import imageController from "./controllers/controllerImage.js";
 import controllerLogin from "./controllers/controllerLogin.js";
 import controllerUser from "./controllers/controllerUser.js";
-const router = Router()
+import controleVersionamento from "./controllers/controleVersionamento.js";
+const router = Router();
 
-router.post('/login', controllerLogin.login)
+router.post('/login', controllerLogin.login);
 
-router.post('/usuario', controllerUser.createUsuario)
+router.post('/usuario', controllerUser.createUsuario);
 
-router.get('/clientes', controleClientes.getCliente)
-router.get('/clientes/:id', controleClientes.getClientId)
-router.post('/clientes', controleClientes.createCliente)
-router.put('/clientes/:id', controleClientes.updateCliente)
+router.get('/clientes', controleClientes.getCliente);
+router.get('/clientes/:id', controleClientes.getClientId);
+router.post('/clientes', controleClientes.createCliente);
+router.put('/clientes/:id', controleClientes.updateCliente);
 
-router.get('/clientes/:id/contratos', controleClientes.getClienteContrato)
+router.get('/clientes/:id/contratos', controleClientes.getClienteContrato);
 
-router.get('/contratos', controleContrato.getContrato)
-router.get('/contratos/:id', controleContrato.getContratoId)
-router.post('/contratos', controleContrato.createContrato)
+router.get('/contratos', controleContrato.getContrato);
+router.get('/contratos/:id', controleContrato.getContratoId);
+router.post('/contratos', controleContrato.createContrato);
 
-router.get('/medicoes', controleMedicoes.getMedicao)
-router.post('/medicoes', controleMedicoes.createMedicao)
+router.get('/medicoes', controleMedicoes.getMedicao);
+router.post('/medicoes', controleMedicoes.createMedicao);
 
-router.get('/propostas', controlePropostas.getProposta)
-router.post('/propostas', controlePropostas.createProposta)
+router.get('/propostas', controlePropostas.getProposta);
+router.post('/proposta', controlePropostas.createProposta);
 
-router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData)
+router.get('/versionamento', controleVersionamento.getVersionamento);
+router.post('/proposta/:idProposta/versao', controleVersionamento.createVersionamento);
+
+router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
 
 export default router
