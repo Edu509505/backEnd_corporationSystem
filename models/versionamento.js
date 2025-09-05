@@ -20,13 +20,14 @@ const Versionamento = database.define("versionamentos", {
         allowNull: false
     }
 },
-{
-    indexes: [
-        {
-            unique: true,
-            fields: ['versao','idProposta']
-        }
-    ]
-});
+// {
+//     indexes: [
+//         {
+//             unique: true,
+//             fields: ['versao','idProposta']
+//         }
+//     ]
+// }
+);
 
 export default Versionamento;

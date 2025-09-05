@@ -3,18 +3,18 @@ import Contratos from './contratos.js'
 import Medicoes from './medicoes.js'
 import Proposta from './propostas.js'
 import Versionamento from './versionamento.js'
-import Anexo from './anexo.js'
+import Anexo from './anexoVersionamento.js'
 
 
-Clientes.hasMany(Contratos, {foreignKey: "idCliente", as: "contratos"})
-Contratos.belongsTo(Clientes, {foreignKey: "idCliente", as: "cliente"})
-//Clientes.hasMany(Proposta, {foreignKey: "idCliente", as: "proposta"})
+Clientes.hasMany(Contratos, {foreignKey: "idCliente"})
+Contratos.belongsTo(Clientes, {foreignKey: "idCliente"})
+//Clientes.hasMany(Proposta, {foreignKey: "idCliente"})
 
 // UM CLIENTE ESTÁ ATRELADO A VÁRIAS PROPOSTA - 1:N
-Clientes.hasMany(Proposta, {foreignKey: "idCliente", as: "clienteProposta"})
+Clientes.hasMany(Proposta, {foreignKey: "idCliente"})
 
 //UMA PROPOSTA TERÁ VÁRIOS VERSIONAMENTO - 1:N
-Proposta.hasMany(Versionamento, {foreignKey: "idProposta", as: "versionamento"})
+Proposta.hasMany(Versionamento, {foreignKey: "idProposta"})
 
 //Versionamento.hasMany(Anexo, {foreignKey: ""})
 

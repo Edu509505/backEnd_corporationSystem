@@ -11,7 +11,7 @@ console.log('process.env.AWS_ACCESS_KEY_ID', process.env.AWS_ACCESS_KEY_ID);
 console.log('process.env.AWS_SECRET_ACCESS_KEY', process.env.AWS_SECRET_ACCESS_KEY);
 
 export const s3 = new S3Client({
-    region: "BLÁ",
+    region: "Horizon",
     credentials: {
         accessKeyId: keyId,
         secretAccessKey: secretKey
@@ -19,3 +19,4 @@ export const s3 = new S3Client({
     forcePathStyle: true,
     endpoint: 'https://minio-hos008kc8co8gc480sskkc8s.212.85.1.115.sslip.io'
 });
+

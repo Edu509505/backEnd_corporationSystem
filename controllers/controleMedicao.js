@@ -7,7 +7,7 @@ async function createUsuario (req, res){
     if(usuarios){
         res.status(200).json({ id, email, password, idProposta, idContrato, idMedicao, path })
     }else{
-        res.status(500).json({ message: "Não fpo possivel criar" })
+        res.status(500).json({ message: "Não foi possivel criar" })
     }
 }
 

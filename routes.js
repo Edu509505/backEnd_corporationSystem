@@ -7,10 +7,10 @@ import controleClientes from "./controllers/controleClientes.js";
 import controleContrato from "./controllers/controleContratos.js";
 import controleMedicoes from "./controllers/controleMedicoes.js";
 import controlePropostas from "./controllers/controlePropostas.js";
-import imageController from "./controllers/controllerImage.js";
 import controllerLogin from "./controllers/controllerLogin.js";
 import controllerUser from "./controllers/controllerUser.js";
 import controleVersionamento from "./controllers/controleVersionamento.js";
+import controleAnexoVersionamento from "./controllers/controleAnexoVersionamento.js";
 const router = Router();
 
 router.post('/login', controllerLogin.login);
@@ -37,6 +37,8 @@ router.post('/proposta', controlePropostas.createProposta);
 router.get('/versionamento', controleVersionamento.getVersionamento);
 router.post('/proposta/:idProposta/versao', controleVersionamento.createVersionamento);
 
-router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
+router.post('/anexoVersionamento', controleAnexoVersionamento.uploadAnexoVersionamento)
+
+//router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
 
 export default router
