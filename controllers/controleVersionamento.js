@@ -1,11 +1,36 @@
 import Versionamento from "../models/versionamento.js";
 
 async function createVersionamento(req, res) {
-    const { versao, idProposta, status } = req.body
-    const versionamento = await Versionamento.create({ versao: 1, idProposta, status: 'Em Análise'})
+    const { idProposta } = req.params
+
+    const contarVersao = await Versionamento.count({ 
+        where: {
+            idProposta
+        }
+     })
+
+    console.log('contarVersao', contarVersao)
+
+    const novaVersao = contarVersao+1;
+
+    const versionamento = await Versionamento.create({ versao: novaVersao, idProposta, status: 'EM_ANALISE'})
+
+    //UPANDO ARQUIVO
+    // const filePath = path.join(import.meta.dirname, '..', 'temp', req.file.filename);
+    // console.log('filePath', filePath)
+
+    // const file = readFileSync(filePath);
+    
+    //     const command = new PutObjectCommand({
+    //       Bucket: 'anexo-versionamento',
+    //       Key: `/${versionamento.idProposta}/${versionamento.id}`,
+    //       Body: file
+    //     });
+    
+    //     await s3.send(command);
 
     if (versionamento) {
-        res.status(200).json({ versao, idProposta, status })
+        res.status(200).json({ versao: versionamento.versao, idProposta, status: versionamento.status })
     } else {
         res.status(500).json({ message: 'Não foi possivel criar' })
     }

@@ -17,6 +17,6 @@ export const s3 = new S3Client({
         secretAccessKey: secretKey
     },
     forcePathStyle: true,
-    endpoint: 'https://minio-hos008kc8co8gc480sskkc8s.212.85.1.115.sslip.io'
+    endpoint: 'https://minio-qw0gws0gsog8oo48kgscgcsk.212.85.1.115.sslip.io'
 });
 
