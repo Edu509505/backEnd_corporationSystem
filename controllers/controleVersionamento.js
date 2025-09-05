@@ -1,33 +1,39 @@
+import { readFile, readFileSync } from 'node:fs'
+import * as path from 'node:path';
+import { s3 } from '../utils/s3.js';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
 import Versionamento from "../models/versionamento.js";
 
 async function createVersionamento(req, res) {
     const { idProposta } = req.params
 
-    const contarVersao = await Versionamento.count({ 
+    const contarVersao = await Versionamento.count({
         where: {
             idProposta
         }
-     })
+    })
 
     console.log('contarVersao', contarVersao)
 
-    const novaVersao = contarVersao+1;
+    const novaVersao = contarVersao + 1;
 
-    const versionamento = await Versionamento.create({ versao: novaVersao, idProposta, status: 'EM_ANALISE'})
+    const versionamento = await Versionamento.create({ versao: novaVersao, idProposta, status: 'EM_ANALISE' })
 
     //UPANDO ARQUIVO
-    // const filePath = path.join(import.meta.dirname, '..', 'temp', req.file.filename);
-    // console.log('filePath', filePath)
+    const filePath = path.join(import.meta.dirname, '..', 'temp', req.file.filename);
+    console.log('filePath', filePath)
 
-    // const file = readFileSync(filePath);
-    
-    //     const command = new PutObjectCommand({
-    //       Bucket: 'anexo-versionamento',
-    //       Key: `/${versionamento.idProposta}/${versionamento.id}`,
-    //       Body: file
-    //     });
-    
-    //     await s3.send(command);
+    const file = readFileSync(filePath);
+
+    let extensaoDoArquivo = 'jpg';
+
+    const command = new PutObjectCommand({
+        Bucket: 'anexo-versionamento',
+        Key: `/${versionamento.idProposta}/${versionamento.id}.${extensaoDoArquivo}`,
+        Body: file
+    });
+
+    await s3.send(command);
 
     if (versionamento) {
         res.status(200).json({ versao: versionamento.versao, idProposta, status: versionamento.status })

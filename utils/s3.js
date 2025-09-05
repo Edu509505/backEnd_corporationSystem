@@ -6,6 +6,7 @@ doteEnv.config()
 
 const keyId = process.env.AWS_ACCESS_KEY_ID;
 const secretKey = process.env.AWS_SECRET_ACCESS_KEY;
+const minioLink = process.env.MINIO_LINK
 
 console.log('process.env.AWS_ACCESS_KEY_ID', process.env.AWS_ACCESS_KEY_ID);
 console.log('process.env.AWS_SECRET_ACCESS_KEY', process.env.AWS_SECRET_ACCESS_KEY);
@@ -17,6 +18,6 @@ export const s3 = new S3Client({
         secretAccessKey: secretKey
     },
     forcePathStyle: true,
-    endpoint: 'https://minio-qw0gws0gsog8oo48kgscgcsk.212.85.1.115.sslip.io'
+    endpoint: minioLink
 });
 
