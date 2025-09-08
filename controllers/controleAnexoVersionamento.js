@@ -1,33 +1,50 @@
-import { readFileSync } from 'fs';
+import { readFile, readFileSync } from 'node:fs'
 import * as path from 'node:path';
-import { s3 } from '../utils/s3.js'
+import { s3 } from '../utils/s3.js';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
+import Anexo from "../models/anexoVersionamento.js";
 
-async function uploadAnexoVersionamento(req,res) {
-    console.log('req.body', req.body);
+async function createAnexoVersionamento(req, res) {
+    // Recebe o que eu coloquei na requisição 
+    const { idVersionamento, path } = req.body
 
-    const filePath = path.join(import.meta.dirname, '..', 'temp', req.file.filename);
-    console.log('filePath', filePath)
+    if (!idVersionamento) {
+        return res.status(400).json({ message: "Versionamento não encontrado" })
+    }
 
-    const file = readFileSync(filePath);
+    try {
+        // Esepra as informações do req.body cria um novo registro
+        const imagens = await Anexo.create({ idVersionamento, path })
 
-    const nomeDaImagem = Math.random()
-      .toString(36)
-      .slice(2, 15) + '-' + req.file.originalname;
+        //UPANDO ARQUIVO
+        const filePath = path.join(import.meta.dirname, '..', 'temp', req.file.filename);
+        //Explicando a linha: o path.join() é uma função que junta diferentes partes de um caminho,
+        // o import.meta.dirname está dizedo para o código "Estou nessa pasta"
+        // logo após os '..', 'temp' é como se você estivesse fazendo '../temp/arquivo
+        // req.file.filename é o nome do aqrquivo que eu estou colocando em meu diretório
 
-    console.log('salvando imagem', nomeDaImagem);
 
-    const command = new PutObjectCommand({
-      Bucket: 'anexo-versionamento',
-      Key: `/${req.proposta.id}/${nomeDaImagem}`,
-      Body: file
-    });
+        console.log('filePath', filePath)
 
-    await s3.send(command);
-    
-    res.status(200).json({
-      message: "Imagem salva no Minio com sucesso!"
-    })
-  }
+        const file = readFileSync(filePath);
+        //essa variável está lendo o arquivo
 
-export default { uploadAnexoVersionamento }
+        const extensaoDoArquivo = req.file.originalname.split('.').reverse()[0];
+
+        const command = new PutObjectCommand({
+            Bucket: 'anexo-versionamento',
+            Key: `/${imagens.idVersionamento}/${imagens.id}.${extensaoDoArquivo}`,
+            Body: file
+        });
+
+        await s3.send(command);
+
+        if (imagens) {
+            res.status(200).json({ idVersionamento, path })
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Não foi possível criar ", error })
+    }
+}
+
+export default { createAnexoVersionamento }

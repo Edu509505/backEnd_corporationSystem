@@ -10,7 +10,8 @@ import controlePropostas from "./controllers/controlePropostas.js";
 import controllerLogin from "./controllers/controllerLogin.js";
 import controllerUser from "./controllers/controllerUser.js";
 import controleVersionamento from "./controllers/controleVersionamento.js";
-import controleAnexoVersionamento from "./controllers/controleAnexoVersionamento.js";
+import AnexoVersionamento from "./models/anexoVersionamento.js";
+//import controleAnexoVersionamento from "./controllers/controleAnexoVersionamento.js";
 const router = Router();
 
 router.post('/login', controllerLogin.login);
@@ -39,7 +40,7 @@ router.post('/proposta/:idProposta/versao', controleVersionamento.createVersiona
 
 router.post('/versionamento/:idProposta', controleVersionamento.createVersionamento);
 
-router.post('/anexoVersionamento', controleAnexoVersionamento.uploadAnexoVersionamento)
+//router.post('/anexoVersionamento', controleAnexoVersionamento.uploadAnexoVersionamento)
 
 //router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
 

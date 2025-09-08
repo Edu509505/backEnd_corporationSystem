@@ -25,17 +25,18 @@ async function createVersionamento(req, res) {
 
     const file = readFileSync(filePath);
 
-    let extensaoDoArquivo = 'jpg';
+    //let extensaoDoArquivo = 'jpg';
 
     const command = new PutObjectCommand({
         Bucket: 'anexo-versionamento',
-        Key: `/${versionamento.idProposta}/${versionamento.id}.${extensaoDoArquivo}`,
+        Key: `/${versionamento.idProposta}/${versionamento.id}`,
         Body: file
     });
 
     await s3.send(command);
 
     if (versionamento) {
+        console.log('estou aqui')
         res.status(200).json({ versao: versionamento.versao, idProposta, status: versionamento.status })
     } else {
         res.status(500).json({ message: 'Não foi possivel criar' })

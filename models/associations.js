@@ -16,6 +16,7 @@ Clientes.hasMany(Proposta, {foreignKey: "idCliente"})
 //UMA PROPOSTA TERÁ VÁRIOS VERSIONAMENTO - 1:N
 Proposta.hasMany(Versionamento, {foreignKey: "idProposta"})
 
+Anexo.belongsTo(Versionamento, {foreignKey: "idVersionamento"})
 //Versionamento.hasMany(Anexo, {foreignKey: ""})
 
 Medicoes.belongsTo(Contratos)
