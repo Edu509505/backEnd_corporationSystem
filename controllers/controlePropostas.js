@@ -9,45 +9,108 @@ import Versionamento from "../models/versionamento.js";
 import AnexoVersionamento from '../models/anexoVersionamento.js';
 
 async function createProposta(req, res) {
-    const { idCliente, nomeDaProposta, descricao } = req.body
-    // const extensao = req.files.originalname.split('.').reverse()[0]
-    // console.log('req.file arrumado ', extensao);
+    const { idCliente, nomeDaProposta, descricao } = req.body;
 
-    const proposta = await Proposta.create({ idCliente, nomeDaProposta, descricao })
+    try {
+        const proposta = await Proposta.create({ idCliente, nomeDaProposta, descricao });
+        const versionamento = await Versionamento.create({ 
+            idProposta: proposta.id, 
+            versao: 1, 
+            status: 'EM_ANALISE' 
+        });
 
-    const versionamento = await Versionamento.create({ idProposta: proposta.id, versao: 1, status: 'EM_ANALISE' });
+        // Processar múltiplos arquivos
+        if (req.files && req.files.length > 0) {
+            // Iterar sobre cada arquivo enviado
+            for (let i = 0; i < req.files.length; i++) {
+                const file = req.files[i];
+                
+                // Caminho do arquivo
+                const filePath = path.join(import.meta.dirname, '..', 'temp', file.filename);
+                console.log('filePath', filePath);
 
-    //UPANDO ARQUIVO
-    const filePath = path.join(import.meta.dirname, '..', 'temp', req.files.filename);
-    //Explicando a linha: o path.join() é uma função que junta diferentes partes de um caminho,
-    // o import.meta.dirname está dizedo para o código "Estou nessa pasta"
-    // logo após os '..', 'temp' é como se você estivesse fazendo '../temp/arquivo
-    // req.file.filename é o nome do aqrquivo que eu estou colocando em meu diretório
+                // Ler o arquivo
+                const fileContent = readFileSync(filePath);
+                
+                // Extrair extensão do arquivo
+                const extensaoDoArquivo = file.originalname.split('.').reverse()[0];
+
+                // Upload para S3 - cada arquivo com nome único
+                const s3Key = `/${versionamento.idProposta}/${versionamento.id}_arquivo_${i + 1}.${extensaoDoArquivo}`;
+                const command = new PutObjectCommand({
+                    Bucket: 'anexo-versionamento',
+                    Key: s3Key ,
+                    Body: fileContent
+                });
+
+                await s3.send(command);
+
+                // Salvar referência no banco para cada arquivo
+                await AnexoVersionamento.create({ 
+                    idVersionamento: versionamento.id, 
+                    path: s3Key // salva o caminho direto do s3
+                });
+            }
+        }
+
+         console.log("Quantidade de arquivos recebidos:", req.files ? req.files.length : 0);
+         console.log("Arquivos processados:", req.files ? req.files.map(f => f.originalname) : []);
 
 
-    console.log('filePath', filePath)
+        res.status(200).json({ 
+            idCliente, 
+            nomeDaProposta, 
+            descricao, 
+            id: proposta.id,
+            totalArquivos: req.files ? req.files.length : 0 
+        });
 
-    const file = readFileSync(filePath);
-    //essa variável está lendo o arquivo
-
-    const extensaoDoArquivo = req.files.originalname.split('.').reverse()[0];
-
-    const command = new PutObjectCommand({
-        Bucket: 'anexo-versionamento',
-        Key: `/${versionamento.idProposta}/${versionamento.id}.${extensaoDoArquivo}`,
-        Body: file
-    });
-
-    await s3.send(command);
-
-    await AnexoVersionamento.create({ idVersionamento: versionamento.id, path: filePath })
-
-    if (proposta) {
-        res.status(200).json({ idCliente, nomeDaProposta, descricao, id: proposta.id })
-    } else {
-        res.status(500).json({ message: 'Não foi possivel criar' })
+    } catch (error) {
+        console.error('Erro ao criar proposta:', error);
+        res.status(500).json({ message: 'Não foi possível criar a proposta' });
     }
 }
+
+// async function createProposta(req, res) {
+//     const { idCliente, nomeDaProposta, descricao } = req.body
+//     // const extensao = req.files.originalname.split('.').reverse()[0]
+//     // console.log('req.file arrumado ', extensao);
+
+//     const proposta = await Proposta.create({ idCliente, nomeDaProposta, descricao })
+
+//     const versionamento = await Versionamento.create({ idProposta: proposta.id, versao: 1, status: 'EM_ANALISE' });
+
+//     //UPANDO ARQUIVO
+//     const filePath = path.join(import.meta.dirname, '..', 'temp', req.files.filename);
+//     //Explicando a linha: o path.join() é uma função que junta diferentes partes de um caminho,
+//     // o import.meta.dirname está dizedo para o código "Estou nessa pasta"
+//     // logo após os '..', 'temp' é como se você estivesse fazendo '../temp/arquivo
+//     // req.file.filename é o nome do aqrquivo que eu estou colocando em meu diretório
+
+
+//     console.log('filePath', filePath)
+
+//     const file = readFileSync(filePath);
+//     //essa variável está lendo o arquivo
+
+//     const extensaoDoArquivo = req.files.originalname.split('.').reverse()[0];
+
+//     const command = new PutObjectCommand({
+//         Bucket: 'anexo-versionamento',
+//         Key: `/${versionamento.idProposta}/${versionamento.id}.${extensaoDoArquivo}`,
+//         Body: file
+//     });
+
+//     await s3.send(command);
+
+//     await AnexoVersionamento.create({ idVersionamento: versionamento.id, path: filePath })
+
+//     if (proposta) {
+//         res.status(200).json({ idCliente, nomeDaProposta, descricao, id: proposta.id })
+//     } else {
+//         res.status(500).json({ message: 'Não foi possivel criar' })
+//     }
+// }
 
 async function getProposta(req, res) {
     console.log('por favor funciona véi')

@@ -1,7 +1,10 @@
 import { Router } from "express";
 import multer from 'multer';
 
-const pastaTemp = multer({ dest: 'temp/' });
+const pastaTemp = multer({ dest: 'temp/',  limits: {
+        fileSize: 50 * 1024 * 1024, // 50MB
+        files: 10 // máximo 10 arquivos
+    } });
 
 import controleClientes from "./controllers/controleClientes.js";
 import controleContrato from "./controllers/controleContratos.js";
