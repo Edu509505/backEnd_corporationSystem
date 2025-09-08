@@ -20,7 +20,7 @@ async function createVersionamento(req, res) {
     const versionamento = await Versionamento.create({ versao: novaVersao, idProposta, status: 'EM_ANALISE' })
 
     //UPANDO ARQUIVO
-    const filePath = path.join(import.meta.dirname, '..', 'temp', req.file.filename);
+    const filePath = path.join(import.meta.dirname, '..', 'temp', req.files.filename);
     console.log('filePath', filePath)
 
     const file = readFileSync(filePath);

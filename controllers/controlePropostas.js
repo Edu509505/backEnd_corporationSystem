@@ -10,15 +10,15 @@ import AnexoVersionamento from '../models/anexoVersionamento.js';
 
 async function createProposta(req, res) {
     const { idCliente, nomeDaProposta, descricao } = req.body
-    const extensao = req.file.originalname.split('.').reverse()[0]
-    console.log('req.file arrumado ', extensao);
+    // const extensao = req.files.originalname.split('.').reverse()[0]
+    // console.log('req.file arrumado ', extensao);
 
     const proposta = await Proposta.create({ idCliente, nomeDaProposta, descricao })
 
     const versionamento = await Versionamento.create({ idProposta: proposta.id, versao: 1, status: 'EM_ANALISE' });
 
     //UPANDO ARQUIVO
-    const filePath = path.join(import.meta.dirname, '..', 'temp', req.file.filename);
+    const filePath = path.join(import.meta.dirname, '..', 'temp', req.files.filename);
     //Explicando a linha: o path.join() é uma função que junta diferentes partes de um caminho,
     // o import.meta.dirname está dizedo para o código "Estou nessa pasta"
     // logo após os '..', 'temp' é como se você estivesse fazendo '../temp/arquivo
@@ -30,7 +30,7 @@ async function createProposta(req, res) {
     const file = readFileSync(filePath);
     //essa variável está lendo o arquivo
 
-    const extensaoDoArquivo = req.file.originalname.split('.').reverse()[0];
+    const extensaoDoArquivo = req.files.originalname.split('.').reverse()[0];
 
     const command = new PutObjectCommand({
         Bucket: 'anexo-versionamento',

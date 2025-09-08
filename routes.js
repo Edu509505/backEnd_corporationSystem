@@ -33,7 +33,7 @@ router.get('/medicoes', controleMedicoes.getMedicao);
 router.post('/medicoes', controleMedicoes.createMedicao);
 
 router.get('/propostas', controlePropostas.getProposta);
-router.post('/proposta', pastaTemp.single('file'), controlePropostas.createProposta);
+router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createProposta);
 
 router.get('/versionamento', controleVersionamento.getVersionamento);
 router.post('/proposta/:idProposta/versao', controleVersionamento.createVersionamento);
