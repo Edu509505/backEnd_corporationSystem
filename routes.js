@@ -32,7 +32,7 @@ router.post('/contratos', controleContrato.createContrato);
 router.get('/medicoes', controleMedicoes.getMedicao);
 router.post('/medicoes', controleMedicoes.createMedicao);
 
-router.get('/proposta', controlePropostas.getProposta);
+router.get('/propostas', controlePropostas.getProposta);
 router.post('/proposta', pastaTemp.single('file'), controlePropostas.createProposta);
 
 router.get('/versionamento', controleVersionamento.getVersionamento);
