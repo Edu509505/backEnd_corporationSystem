@@ -24,6 +24,12 @@ async function createAnexoVersionamento(req, res) {
     }
 }
 
+async function getAnexoVersionamento(req, res){
+    const anexoVersionamento = await Anexo.findAll()
 
+    if(anexoVersionamento){
+        res.json(anexoVersionamento.map(anexoVersionamento => anexoVersionamento.toJSON()))
+    }
+}
 
-export default { createAnexoVersionamento }
+export default { createAnexoVersionamento, getAnexoVersionamento }

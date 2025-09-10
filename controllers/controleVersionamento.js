@@ -56,7 +56,12 @@ async function getVersionamento(req, res) {
 }
 
 async function getImageVersionamento(req, res) {
-    const versionamento = await Versionamento.get()
+    const { idProposta, versionamentoid } = req.params
+    const versionamento = await Versionamento.findAll({
+        where:{
+            id
+        }
+    })
     const command = new GetObjectCommand({
         bucket: 'anexo-versionamento',
         key: `/${versionamento.idProposta}/${versionamento.id}`
@@ -65,4 +70,4 @@ async function getImageVersionamento(req, res) {
     return res.status(200).json({ url: signedUrl })
 }
 
-export default { createVersionamento, getVersionamento }
+export default { createVersionamento, getVersionamento, getImageVersionamento }
