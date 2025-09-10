@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize";
+import Versionamento from "./versionamento.js";
 
 import database from "../db.js";
 
@@ -7,7 +8,7 @@ const AnexoVersionamento = database.define("anexoVersionamento", {
     idVersionamento: {
         type: Sequelize.INTEGER,
         references: {
-            model: "versionamentos", //Tabela
+            model: Versionamento, //Tabela
             key: "id" //Coluna
         },
         allowNull: false

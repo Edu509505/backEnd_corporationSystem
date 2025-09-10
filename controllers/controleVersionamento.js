@@ -1,8 +1,10 @@
 import { readFile, readFileSync } from 'node:fs'
 import * as path from 'node:path';
 import { s3 } from '../utils/s3.js';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import Versionamento from "../models/versionamento.js";
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { url } from 'node:inspector';
 
 async function createVersionamento(req, res) {
     const { idProposta } = req.params
@@ -51,6 +53,16 @@ async function getVersionamento(req, res) {
     } else {
         res.status(500).json({ message: 'Não foi possível buscar usuários' })
     }
+}
+
+async function getImageVersionamento(req, res) {
+    const versionamento = await Versionamento.get()
+    const command = new GetObjectCommand({
+        bucket: 'anexo-versionamento',
+        key: `/${versionamento.idProposta}/${versionamento.id}`
+    })
+    const signedUrl = await getSignedUrl(minioClient, command, { expiresIn: 3600 });
+    return res.status(200).json({ url: signedUrl })
 }
 
 export default { createVersionamento, getVersionamento }
