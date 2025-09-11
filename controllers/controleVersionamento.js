@@ -5,6 +5,7 @@ import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import Versionamento from "../models/versionamento.js";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { url } from 'node:inspector';
+import AnexoVersionamento from '../models/anexoVersionamento.js'
 
 async function createVersionamento(req, res) {
     const { idProposta } = req.params
@@ -56,19 +57,35 @@ async function getVersionamento(req, res) {
 }
 
 async function getImageVersionamento(req, res) {
-    const { idProposta, idVersionamento } = req.params
-    const versionamento = await Versionamento.findAll({
-        where:{
-            id: idVersionamento,
-            idProposta: idProposta
+    const { idVersionamento } = req.params
+    const anexos = await AnexoVersionamento.findAll({
+        where: {
+            idVersionamento: idVersionamento
         }
     })
-    const command = new GetObjectCommand({
-        bucket: 'anexo-versionamento',
-        key: `/${versionamento.idProposta}/${versionamento.idVersionamento}`
-    })
-    const signedUrl = await getSignedUrl(minioClient, command, { expiresIn: 3600 });
-    return res.status(200).json({ url: signedUrl })
+
+    console.log(anexos)
+
+    const urlAnexos = []
+
+    for (let i = 0; i < anexos.length; i++) {
+        console.log('Entrei no For')
+        const command = new GetObjectCommand({
+            Bucket: 'anexo-versionamento',
+            Key: anexos[i].path
+        })
+
+        console.log(anexos[i].path)
+
+        console.log('Passei pelo commend')
+        const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
+
+        urlAnexos.push(signedUrl)
+
+        console.log('Estou aqui ',signedUrl)
+    }
+    return res.status(200).json({ url: urlAnexos })
+
 }
 
 export default { createVersionamento, getVersionamento, getImageVersionamento }
