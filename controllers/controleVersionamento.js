@@ -56,15 +56,16 @@ async function getVersionamento(req, res) {
 }
 
 async function getImageVersionamento(req, res) {
-    const { idProposta, versionamentoid } = req.params
+    const { idProposta, idVersionamento } = req.params
     const versionamento = await Versionamento.findAll({
         where:{
-            id
+            id: idVersionamento,
+            idProposta: idProposta
         }
     })
     const command = new GetObjectCommand({
         bucket: 'anexo-versionamento',
-        key: `/${versionamento.idProposta}/${versionamento.id}`
+        key: `/${versionamento.idProposta}/${versionamento.idVersionamento}`
     })
     const signedUrl = await getSignedUrl(minioClient, command, { expiresIn: 3600 });
     return res.status(200).json({ url: signedUrl })
