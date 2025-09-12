@@ -13,10 +13,10 @@ async function createProposta(req, res) {
 
     try {
         const proposta = await Proposta.create({ idCliente, nomeDaProposta, descricao });
-        const versionamento = await Versionamento.create({ 
-            idProposta: proposta.id, 
-            versao: 1, 
-            status: 'EM_ANALISE' 
+        const versionamento = await Versionamento.create({
+            idProposta: proposta.id,
+            versao: 1,
+            status: 'EM_ANALISE'
         });
 
         // Processar múltiplos arquivos
@@ -24,14 +24,14 @@ async function createProposta(req, res) {
             // Iterar sobre cada arquivo enviado
             for (let i = 0; i < req.files.length; i++) {
                 const file = req.files[i];
-                
+
                 // Caminho do arquivo
                 const filePath = path.join(import.meta.dirname, '..', 'temp', file.filename);
                 console.log('filePath', filePath);
 
                 // Ler o arquivo
                 const fileContent = readFileSync(filePath);
-                
+
                 // Extrair extensão do arquivo
                 const extensaoDoArquivo = file.originalname.split('.').reverse()[0];
 
@@ -39,30 +39,30 @@ async function createProposta(req, res) {
                 const s3Key = `/${versionamento.idProposta}/${versionamento.id}.${extensaoDoArquivo}`;
                 const command = new PutObjectCommand({
                     Bucket: 'anexo-versionamento',
-                    Key: s3Key ,
+                    Key: s3Key,
                     Body: fileContent
                 });
 
                 await s3.send(command);
 
                 // Salvar referência no banco para cada arquivo
-                await AnexoVersionamento.create({ 
-                    idVersionamento: versionamento.id, 
+                await AnexoVersionamento.create({
+                    idVersionamento: versionamento.id,
                     path: s3Key // salva o caminho direto do s3
                 });
             }
         }
 
-         console.log("Quantidade de arquivos recebidos:", req.files ? req.files.length : 0);
-         console.log("Arquivos processados:", req.files ? req.files.map(f => f.originalname) : []);
+        console.log("Quantidade de arquivos recebidos:", req.files ? req.files.length : 0);
+        console.log("Arquivos processados:", req.files ? req.files.map(f => f.originalname) : []);
 
 
-        res.status(200).json({ 
-            idCliente, 
-            nomeDaProposta, 
-            descricao, 
+        res.status(200).json({
+            idCliente,
+            nomeDaProposta,
+            descricao,
             id: proposta.id,
-            totalArquivos: req.files ? req.files.length : 0 
+            totalArquivos: req.files ? req.files.length : 0
         });
 
     } catch (error) {
@@ -113,8 +113,7 @@ async function createProposta(req, res) {
 // }
 
 async function getProposta(req, res) {
-    console.log('por favor funciona véi')
-    const propostas = await Proposta.findAll()
+    const propostas = await Proposta.findAll({ include: 'cliente' });
 
     if (propostas) {
         res.json(propostas.map(propostas => propostas.toJSON()))
