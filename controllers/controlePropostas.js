@@ -9,10 +9,17 @@ import Versionamento from "../models/versionamento.js";
 import AnexoVersionamento from '../models/anexoVersionamento.js';
 
 async function createProposta(req, res) {
-    const { idCliente, nomeDaProposta, descricao } = req.body;
+    const { idCliente, nomeDaProposta, descricao, valorProposta } = req.body;
 
     try {
-        const proposta = await Proposta.create({ idCliente, nomeDaProposta, descricao });
+        const proposta = await Proposta.create({ 
+            idCliente, 
+            nomeDaProposta, 
+            descricao, 
+            valorProposta, 
+            statusProposta: 'EM_ANALISE' 
+        });
+
         const versionamento = await Versionamento.create({
             idProposta: proposta.id,
             versao: 1,
@@ -61,6 +68,8 @@ async function createProposta(req, res) {
             idCliente,
             nomeDaProposta,
             descricao,
+            valorProposta,
+            statusProposta: proposta.statusProposta,
             id: proposta.id,
             totalArquivos: req.files ? req.files.length : 0
         });
@@ -113,6 +122,18 @@ async function createProposta(req, res) {
 // }
 
 async function getProposta(req, res) {
+    const {id} = req.params
+
+    const proposta = await Proposta.findByPk(id);
+
+    if(proposta){
+        res.status(200).json(proposta.toJSON());
+    } else {
+        res.status(500).json({ message: 'Não foi possível buscar por essa proposta!' });
+    }
+}
+
+async function getPropostas(req, res) {
     const propostas = await Proposta.findAll({ include: 'cliente' });
 
     if (propostas) {
@@ -122,4 +143,4 @@ async function getProposta(req, res) {
     }
 }
 
-export default { createProposta, getProposta }
+export default { createProposta, getProposta ,getPropostas }

@@ -18,6 +18,14 @@ const Proposta = database.define("propostas", {
   descricao: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  valorProposta: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  statusProposta: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 
 });

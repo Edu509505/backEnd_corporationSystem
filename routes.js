@@ -35,7 +35,8 @@ router.post('/contratos', controleContrato.createContrato);
 router.get('/medicoes', controleMedicoes.getMedicao);
 router.post('/medicoes', controleMedicoes.createMedicao);
 
-router.get('/propostas', controlePropostas.getProposta);
+router.get('/proposta', controlePropostas.getProposta);
+router.get('/propostas', controlePropostas.getPropostas);
 router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createProposta);
 
 router.get('/versionamento', controleVersionamento.getVersionamento);
