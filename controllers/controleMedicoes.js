@@ -1,24 +1,77 @@
 import Medicoes from "../models/medicoes.js";
 
-async function createMedicao(req, res){
-    const { idCliente, idContrato, obra, local, periodo, descricao, tipo, observacoes, quantidade, valorUnitario, valor, valorTotalDaMedicao } = req.body
-    const medicoes = await Medicoes.create({ idCliente, idContrato, obra, local, periodo, descricao, tipo, observacoes, quantidade, valorUnitario, valor, valorTotalDaMedicao })
+async function createMedicao(req, res) {
+    const {
+        idCliente,
+        idContrato,
+        obra,
+        local,
+        periodo,
+        descricao,
+        tipo,
+        observacoes,
+        quantidade,
+        valorUnitario,
+        valor,
+        valorTotalDaMedicao
+    } = req.body;
 
-    if(medicoes){
-        res.status(200).json({idCliente, idContrato, obra, local, periodo, descricao, tipo, observacoes, quantidade, valorUnitario, valor, valorTotalDaMedicao})
-    }else{
-        res.status(500).json({message: 'Não foi possivel criar'})
+    const medicoes = await Medicoes.create({
+        idCliente,
+        idContrato,
+        obra,
+        local,
+        periodo,
+        descricao,
+        tipo,
+        observacoes,
+        quantidade,
+        valorUnitario,
+        valor,
+        valorTotalDaMedicao
+    });
+
+    if (medicoes) {
+        res.status(200).json({
+            idCliente,
+            idContrato,
+            obra,
+            local,
+            periodo,
+            descricao,
+            tipo,
+            observacoes,
+            quantidade,
+            valorUnitario,
+            valor,
+            valorTotalDaMedicao
+        });
+    } else {
+        res.status(500).json({ message: 'Não foi possivel criar' });
     }
 }
 
-async function getMedicao(req,res){
+
+async function getMedicao(req, res) {
+    const { id } = req.params;
+
+    const medicao = await Medicoes.findByPk(id);
+
+    if (medicao) {
+        res.status(200).json(medicao.toJSON());
+    } else {
+        res.status(500).json({ message: 'Não foi possível encontrar esta medição' });
+    }
+}
+
+async function getMedicoes(req, res) {
     const medicoes = await Medicoes.findAll()
 
-    if(medicoes){
+    if (medicoes) {
         res.json(medicoes.map(medicoes => medicoes.toJSON()))
     } else {
-        res.status(500).json({message: 'Não foi possível buscar usuários'})
+        res.status(500).json({ message: 'Não foi possível buscar usuários' })
     }
 }
 
-export default { createMedicao, getMedicao }
+export default { createMedicao, getMedicoes }

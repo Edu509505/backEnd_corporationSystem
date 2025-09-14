@@ -12,12 +12,12 @@ async function createProposta(req, res) {
     const { idCliente, nomeDaProposta, descricao, valorProposta } = req.body;
 
     try {
-        const proposta = await Proposta.create({ 
-            idCliente, 
-            nomeDaProposta, 
-            descricao, 
-            valorProposta, 
-            statusProposta: 'EM_ANALISE' 
+        const proposta = await Proposta.create({
+            idCliente,
+            nomeDaProposta,
+            descricao,
+            valorProposta,
+            statusProposta: 'EM_ANALISE'
         });
 
         const versionamento = await Versionamento.create({
@@ -122,11 +122,11 @@ async function createProposta(req, res) {
 // }
 
 async function getProposta(req, res) {
-    const {id} = req.params
+    const { id } = req.params
 
     const proposta = await Proposta.findByPk(id);
 
-    if(proposta){
+    if (proposta) {
         res.status(200).json(proposta.toJSON());
     } else {
         res.status(500).json({ message: 'Não foi possível buscar por essa proposta!' });
@@ -143,4 +143,4 @@ async function getPropostas(req, res) {
     }
 }
 
-export default { createProposta, getProposta ,getPropostas }
+export default { createProposta, getProposta, getPropostas }

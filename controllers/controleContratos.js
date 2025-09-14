@@ -1,13 +1,38 @@
 import Contratos from "../models/contratos.js";
 
 async function createContrato(req, res) {
-    const { idCliente, idProposta, contrato, nome, descricao, status, local } = req.body
-    const contratos = await Contratos.create({ idCliente, idProposta, contrato, nome, descricao, status, local })
+    const {
+        idCliente,
+        idProposta,
+        contrato,
+        nome,
+        descricao,
+        status,
+        local
+    } = req.body
+
+    const contratos = await Contratos.create({
+        idCliente,
+        idProposta,
+        contrato,
+        nome,
+        descricao,
+        status,
+        local
+    });
 
     if (contratos) {
-        res.status(200).json({ idCliente, idProposta, contrato, nome, descricao, status, local })
+        res.status(200).json({
+            idCliente,
+            idProposta,
+            contrato,
+            nome,
+            descricao,
+            status,
+            local
+        });
     } else {
-        res.status(500).json({ message: 'Não foi possivel criar' })
+        res.status(500).json({ message: 'Não foi possivel criar' });
     }
 }
 
@@ -25,7 +50,7 @@ async function getContratoId(req, res) {
     const { id } = req.params;
 
     try {
-        const contratoId = await Contratos.findOne({ where: { id } })
+        const contratoId = await Contratos.findOne({ where: id})
 
         if (contratoId) {
             res.json(contratoId.toJSON())

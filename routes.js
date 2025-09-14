@@ -32,7 +32,7 @@ router.get('/contratos', controleContrato.getContrato);
 router.get('/contratos/:id', controleContrato.getContratoId);
 router.post('/contratos', controleContrato.createContrato);
 
-router.get('/medicoes', controleMedicoes.getMedicao);
+router.get('/medicoes', controleMedicoes.getMedicoes);
 router.post('/medicoes', controleMedicoes.createMedicao);
 
 router.get('/proposta', controlePropostas.getProposta);
@@ -40,6 +40,7 @@ router.get('/propostas', controlePropostas.getPropostas);
 router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createProposta);
 
 router.get('/versionamento', controleVersionamento.getVersionamento);
+router.get('/versionamentos', controleVersionamento.getVersionamentos);
 router.post('/proposta/:idProposta/versao', controleVersionamento.createVersionamento);
 
 router.get('/versionamento/:idVersionamento/anexos/urls', controleVersionamento.getImageVersionamento)

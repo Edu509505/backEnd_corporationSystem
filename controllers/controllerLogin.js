@@ -3,11 +3,11 @@ import jwt from 'jsonwebtoken'
 
 const SECRET_KEY = '123456789012345'
 
- async function login (req, res) {
+async function login(req, res) {
     console.log('req.body', req.body);
     const { email, password } = req.body
 
-    console.log('to aqui', req.body); 
+    console.log('to aqui', req.body);
 
     const user = await Usuarios.findOne({ where: { email } })
 
@@ -21,7 +21,14 @@ const SECRET_KEY = '123456789012345'
 
     const token = jwt.sign({ id: user.id }, SECRET_KEY);
 
-    res.json({ token, usuario: { id: user.id, nome: user.username, email: user.email } });
+    res.json({ 
+        token, 
+        usuario: { 
+            id: user.id, 
+            nome: user.username, 
+            email: user.email 
+        } 
+    });
 }
 
 export default { login }

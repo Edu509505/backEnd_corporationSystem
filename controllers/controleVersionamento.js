@@ -47,10 +47,23 @@ async function createVersionamento(req, res) {
 }
 
 async function getVersionamento(req, res) {
-    const versionamento = await Versionamento.findAll()
+    const { id } = req.params
+
+    const versionamento = await Versionamento.findByPk(id);
 
     if (versionamento) {
-        res.json(versionamento.map(versionamento => versionamento.toJSON()))
+        res.status(200).json(versionamento.toJSON);
+    } else {
+        res.status(500).json({ message: 'Não foi possível buscar este versionamento' });
+    }
+
+}
+
+async function getVersionamentos(req, res) {
+    const versionamentos = await Versionamento.findAll()
+
+    if (versionamentos) {
+        res.json(versionamentos.map(versionamento => versionamento.toJSON()))
     } else {
         res.status(500).json({ message: 'Não foi possível buscar usuários' })
     }
@@ -82,10 +95,15 @@ async function getImageVersionamento(req, res) {
 
         urlAnexos.push(signedUrl)
 
-        console.log('Estou aqui ',signedUrl)
+        console.log('Estou aqui ', signedUrl)
     }
     return res.status(200).json({ url: urlAnexos })
 
 }
 
-export default { createVersionamento, getVersionamento, getImageVersionamento }
+export default { 
+    createVersionamento, 
+    getVersionamentos, 
+    getVersionamento, 
+    getImageVersionamento
+}
