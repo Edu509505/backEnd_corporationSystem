@@ -22,20 +22,20 @@ router.post('/login', controllerLogin.login);
 router.post('/usuario', controllerUser.createUsuario);
 
 router.get('/clientes', controleClientes.getCliente);
-router.get('/clientes/:id', controleClientes.getClientId);
+router.get('/cliente/:id', controleClientes.getClientId);
 router.post('/clientes', controleClientes.createCliente);
-router.put('/clientes/:id', controleClientes.updateCliente);
+router.put('/cliente/:id', controleClientes.updateCliente);
 
 router.get('/clientes/:id/contratos', controleClientes.getClienteContrato);
 
 router.get('/contratos', controleContrato.getContrato);
-router.get('/contratos/:id', controleContrato.getContratoId);
+router.get('/contrato/:id', controleContrato.getContratoId);
 router.post('/contratos', controleContrato.createContrato);
 
 router.get('/medicoes', controleMedicoes.getMedicoes);
 router.post('/medicoes', controleMedicoes.createMedicao);
 
-router.get('/proposta', controlePropostas.getProposta);
+router.get('/proposta/:id', controlePropostas.getProposta);
 router.get('/propostas', controlePropostas.getPropostas);
 router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createProposta);
 
