@@ -39,7 +39,7 @@ router.get('/proposta/:id', controlePropostas.getProposta);
 router.get('/propostas', controlePropostas.getPropostas);
 router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createProposta);
 
-router.get('/versionamento', controleVersionamento.getVersionamento);
+router.get('/versionamento/:id', controleVersionamento.getVersionamento);
 router.get('/versionamentos', controleVersionamento.getVersionamentos);
 router.post('/proposta/:idProposta/versao', controleVersionamento.createVersionamento);
 
