@@ -7,6 +7,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { url } from 'node:inspector';
 import AnexoVersionamento from '../models/anexoVersionamento.js'
 
+
 async function createVersionamento(req, res) {
     const { idProposta } = req.params
 
@@ -68,6 +69,25 @@ async function getVersionamentos(req, res) {
         res.status(500).json({ message: 'Não foi possível buscar usuários' })
     }
 }
+
+async function getPropostaVersionamentos(req, res) {
+    const propostaVersionamentos = await Versionamento.findAll({
+        where: {
+            idProposta
+        }
+    });
+
+    if(propostaVersionamentos){
+        res.json(propostaVersionamentos.map
+            (propostaVersionamento => propostaVersionamento.toJSON()));
+    }else {
+        res.status(500).
+        json({ 
+            message: 'Não foi possivel buscar pelos versionamentos desta proposta' 
+        });
+    }
+}
+
 
 async function getImageVersionamento(req, res) {
     const { idVersionamento } = req.params

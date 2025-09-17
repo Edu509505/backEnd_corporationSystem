@@ -41,6 +41,7 @@ router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createP
 
 router.get('/versionamento/:id', controleVersionamento.getVersionamento);
 router.get('/versionamentos', controleVersionamento.getVersionamentos);
+router.get('/proposta/:idProposta/versionamentos', controleVersionamento.createVersionamento);
 router.post('/proposta/:idProposta/versao', controleVersionamento.createVersionamento);
 
 router.get('/versionamento/:idVersionamento/anexos/urls', controleVersionamento.getImageVersionamento)
