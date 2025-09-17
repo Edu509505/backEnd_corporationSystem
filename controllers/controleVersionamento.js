@@ -77,15 +77,18 @@ async function getPropostaVersionamentos(req, res) {
         }
     });
 
-    if(propostaVersionamentos){
-        res.json(propostaVersionamentos.map
-            (propostaVersionamento => propostaVersionamento.toJSON()));
-    }else {
+    if (!propostaVersionamentos) {
         res.status(500).
         json({ 
             message: 'Não foi possivel buscar pelos versionamentos desta proposta' 
         });
     }
+
+    res.json(
+        propostaVersionamentos
+            .map(propostaVersionamento => 
+                propostaVersionamento.toJSON())
+    )
 }
 
 
@@ -125,5 +128,6 @@ export default {
     createVersionamento, 
     getVersionamentos, 
     getVersionamento, 
-    getImageVersionamento
+    getImageVersionamento,
+    getPropostaVersionamentos
 }
