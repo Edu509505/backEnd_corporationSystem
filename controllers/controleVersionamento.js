@@ -71,6 +71,7 @@ async function getVersionamentos(req, res) {
 }
 
 async function getPropostaVersionamentos(req, res) {
+    const { idProposta } = req.params
     const propostaVersionamentos = await Versionamento.findAll({
         where: {
             idProposta
