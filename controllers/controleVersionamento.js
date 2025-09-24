@@ -85,7 +85,7 @@ async function getVersionamentos(req, res) {
         res.json(versionamentos.map(versionamento => versionamento.toJSON()))
     } else {
         res.status(500).json({ message: 'Não foi possível buscar usuários' })
-    }
+    } 
 }
 
 async function getPropostaVersionamentos(req, res) {
