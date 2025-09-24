@@ -24,20 +24,38 @@ async function createVersionamento(req, res) {
     const versionamento = await Versionamento.create({ versao: novaVersao, idProposta, status: 'EM_ANALISE' })
 
     //UPANDO ARQUIVO
-    const filePath = path.join(import.meta.dirname, '..', 'temp', req.files.filename);
-    console.log('filePath', filePath)
+    if (req.files && req.files.length > 0) {
+        // Iterar sobre cada arquivo enviado
+        for (let i = 0; i < req.files.length; i++) {
+            const file = req.files[i];
 
-    const file = readFileSync(filePath);
+            // Caminho do arquivo
+            const filePath = path.join(import.meta.dirname, '..', 'temp', file.filename);
+            console.log('filePath', filePath);
 
-    //let extensaoDoArquivo = 'jpg';
+            // Ler o arquivo
+            const fileContent = readFileSync(filePath);
 
-    const command = new PutObjectCommand({
-        Bucket: 'anexo-versionamento',
-        Key: `/${versionamento.idProposta}/${versionamento.id}`,
-        Body: file
-    });
+            // Extrair extensão do arquivo
+            const extensaoDoArquivo = file.originalname.split('.').reverse()[0];
 
-    await s3.send(command);
+            // Upload para S3 - cada arquivo com nome único
+            const s3Key = `/${versionamento.idProposta}/${versionamento.id}.${extensaoDoArquivo}`;
+            const command = new PutObjectCommand({
+                Bucket: 'anexo-versionamento',
+                Key: s3Key,
+                Body: fileContent
+            });
+
+            await s3.send(command);
+
+            // Salvar referência no banco para cada arquivo
+            await AnexoVersionamento.create({
+                idVersionamento: versionamento.id,
+                path: s3Key // salva o caminho direto do s3
+            });
+        }
+    }
 
     if (versionamento) {
         console.log('estou aqui')
