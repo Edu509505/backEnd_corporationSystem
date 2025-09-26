@@ -11,19 +11,20 @@ import AnexoVersionamento from '../models/anexoVersionamento.js';
 
 async function createProposta(req, res) {
 
-    const validacaoSchema = z.object({
-        idCliente: z.number(),
-        nomeDaProposta: z.string(),
-        descricao: z.string(),
-        valorProposta: z.number(),
-        status: z.enum(['EM_ANALISE', 'APROVADO', 'REPROVADO']).default('EM_ANALISE') 
-    });
+    const { idCliente, nomeDaProposta, descricao, valorProposta } = req.body;
 
-    const resposta = await validacaoSchema.safeParseAsync(req.body);
+    // const validacaoSchema = z.object({
+    //     idCliente: z.number(),
+    //     nomeDaProposta: z.string(),
+    //     descricao: z.string(),
+    //     valorProposta: z.number(),  
+    // });
+
+    // const resposta = await validacaoSchema.safeParseAsync(req.body);
     
-    if(!resposta.success){
-        res.status(400).json(resposta.error)
-    }
+    // if(!resposta.success){
+    //     res.status(400).json(resposta.error)
+    // }
 
     try {
         const proposta = await Proposta.create({

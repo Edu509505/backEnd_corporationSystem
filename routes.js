@@ -13,6 +13,7 @@ import controlePropostas from "./controllers/controlePropostas.js";
 import controllerLogin from "./controllers/controllerLogin.js";
 import controllerUser from "./controllers/controllerUser.js";
 import controleVersionamento from "./controllers/controleVersionamento.js";
+import controlerQuantitativa from "./controllers/controlerQuantitativa.js";
 import AnexoVersionamento from "./models/anexoVersionamento.js";
 //import controleAnexoVersionamento from "./controllers/controleAnexoVersionamento.js";
 const router = Router();
@@ -45,6 +46,9 @@ router.get('/versionamentos', controleVersionamento.getVersionamentos);
 router.get('/proposta/:idProposta/versionamentos', controleVersionamento.getPropostaVersionamentos);
 router.put('/versionamento/:id', controleVersionamento.updateVersionamento);
 
+router.post('/quantitativa', controlerQuantitativa.createQuantitativa);
+router.get('/quantitativa/:id', controlerQuantitativa.getQuantitativa);
+router.put('/quantitativa/:id', controlerQuantitativa.updateQuantitativa);
 
 router.get('/versionamento/:idVersionamento/anexos/urls', controleVersionamento.getImageVersionamento)
 
