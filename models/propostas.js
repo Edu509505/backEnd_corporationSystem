@@ -20,7 +20,7 @@ const Proposta = database.define("propostas", {
     allowNull: false
   },
   valorProposta: {
-    type: Sequelize.STRING,
+    type: Sequelize.NUMBER,
     allowNull: false
   },
   statusProposta: {

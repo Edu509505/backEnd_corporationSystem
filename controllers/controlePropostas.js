@@ -2,6 +2,7 @@ import { readFile, readFileSync } from 'node:fs'
 import * as path from 'node:path';
 import { s3 } from '../utils/s3.js';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
+import z from 'zod';
 //import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 import Proposta from "../models/propostas.js";
@@ -9,7 +10,20 @@ import Versionamento from "../models/versionamento.js";
 import AnexoVersionamento from '../models/anexoVersionamento.js';
 
 async function createProposta(req, res) {
-    const { idCliente, nomeDaProposta, descricao, valorProposta } = req.body;
+
+    const validacaoSchema = z.object({
+        idCliente: z.number(),
+        nomeDaProposta: z.string(),
+        descricao: z.string(),
+        valorProposta: z.number(),
+        status: z.enum(['EM_ANALISE', 'APROVADO', 'REPROVADO']).default('EM_ANALISE')  
+    });
+
+    const resposta = await validacaoSchema.safeParseAsync(req.body);
+    
+    if(!resposta.success){
+        res.status(400).json(resposta.error)
+    }
 
     try {
         const proposta = await Proposta.create({
