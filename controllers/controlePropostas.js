@@ -16,7 +16,7 @@ async function createProposta(req, res) {
         nomeDaProposta: z.string(),
         descricao: z.string(),
         valorProposta: z.number(),
-        status: z.enum(['EM_ANALISE', 'APROVADO', 'REPROVADO']).default('EM_ANALISE')  
+        status: z.enum(['EM_ANALISE', 'APROVADO', 'REPROVADO']).default('EM_ANALISE') 
     });
 
     const resposta = await validacaoSchema.safeParseAsync(req.body);
