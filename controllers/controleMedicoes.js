@@ -74,4 +74,4 @@ async function getMedicoes(req, res) {
     }
 }
 
-export default { createMedicao, getMedicoes }
+export default { createMedicao, getMedicao, getMedicoes }

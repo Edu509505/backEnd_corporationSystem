@@ -143,10 +143,23 @@ async function getImageVersionamento(req, res) {
 
 }
 
+async function updateVersionamento(req, res) {
+    const { id } = req.params
+    const { status } = req.body
+    const versionamento = await Versionamento.findByPk(id)
+    if (!versionamento) {
+        return res.status(404).json({ message: 'Versionamento não encontrado' })
+    }
+    versionamento.status = status || versionamento.status
+    await versionamento.save()
+    return res.status(200).json(versionamento.toJSON())
+}
+
 export default { 
     createVersionamento, 
     getVersionamentos, 
     getVersionamento, 
     getImageVersionamento,
-    getPropostaVersionamentos
+    getPropostaVersionamentos,
+    updateVersionamento,
 }
