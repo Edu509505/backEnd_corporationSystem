@@ -36,11 +36,16 @@ router.post('/contratos', controleContrato.createContrato);
 router.get('/medicoes', controleMedicoes.getMedicoes);
 router.post('/medicoes', controleMedicoes.createMedicao);
 
+router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createProposta);
 router.get('/proposta/:id', controlePropostas.getProposta);
 router.get('/propostas', controlePropostas.getPropostas);
-router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createProposta);
 
-router.post('/proposta/:idProposta/versao', controleVersionamento.createVersionamento);
+router.post(
+    '/proposta/:idProposta/versao', 
+    pastaTemp.array('files', 10), 
+    controleVersionamento.createVersionamento
+);
+
 router.get('/versionamento/:id', controleVersionamento.getVersionamento);
 router.get('/versionamentos', controleVersionamento.getVersionamentos);
 router.get('/proposta/:idProposta/versionamentos', controleVersionamento.getPropostaVersionamentos);
