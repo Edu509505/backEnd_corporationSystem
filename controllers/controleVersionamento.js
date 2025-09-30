@@ -4,7 +4,7 @@ import { s3 } from '../utils/s3.js';
 import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import Versionamento from "../models/versionamento.js";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { url } from 'node:inspector';
+//import { url } from 'node:inspector';
 import AnexoVersionamento from '../models/anexoVersionamento.js'
 
 
@@ -85,7 +85,7 @@ async function getVersionamentos(req, res) {
         res.json(versionamentos.map(versionamento => versionamento.toJSON()))
     } else {
         res.status(500).json({ message: 'Não foi possível buscar usuários' })
-    } 
+    }
 }
 
 async function getPropostaVersionamentos(req, res) {
@@ -98,14 +98,14 @@ async function getPropostaVersionamentos(req, res) {
 
     if (!propostaVersionamentos) {
         res.status(500).
-        json({ 
-            message: 'Não foi possivel buscar pelos versionamentos desta proposta' 
-        });
+            json({
+                message: 'Não foi possivel buscar pelos versionamentos desta proposta'
+            });
     }
 
     res.json(
         propostaVersionamentos
-            .map(propostaVersionamento => 
+            .map(propostaVersionamento =>
                 propostaVersionamento.toJSON())
     )
 }
@@ -155,10 +155,10 @@ async function updateVersionamento(req, res) {
     return res.status(200).json(versionamento.toJSON())
 }
 
-export default { 
-    createVersionamento, 
-    getVersionamentos, 
-    getVersionamento, 
+export default {
+    createVersionamento,
+    getVersionamentos,
+    getVersionamento,
     getImageVersionamento,
     getPropostaVersionamentos,
     updateVersionamento,

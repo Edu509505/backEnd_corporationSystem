@@ -2,16 +2,14 @@ import Quantitativa from '../models/quantitativa.js';
 
 async function createQuantitativa(req, res) {
     try {
-        const { idVersionamento, numeracao, descricao, quantidade, valorUnitario, unidadeDeMedida, valorTotal } = req.body;
+        const { idVersionamento, nome, quantidadePrevista, valor, unidade } = req.body;
 
         const novaQuantitativa = await Quantitativa.create({
             idVersionamento,
-            numeracao,
-            descricao,
-            quantidade,
-            valorUnitario,
-            unidadeDeMedida,
-            valorTotal
+            nome,
+            quantidadePrevista,
+            valor,
+            unidade,
         });
 
         return res.status(201).json(novaQuantitativa);

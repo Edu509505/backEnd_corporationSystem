@@ -3,33 +3,32 @@ import { Sequelize } from "sequelize";
 import database from '../db.js';
 
 const Quantitativa = database.define("quantitativa", {
-    idVersionamento:{
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    numeracao:{
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    descricao:{
+    idVersionamento: {
         type: Sequelize.STRING,
-        allowNull: false
-    },  
-    quantidade:{
-        type: Sequelize.INTEGER,
-        allowNull: false
+
     },
-    valorUnitario:{
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    unidadeDeMedida:{
+    numeracao: {
         type: Sequelize.STRING,
-        allowNull: false
+
     },
-    valorTotal:{
-        type: Sequelize.INTEGER,
-        allowNull: false
+    descricao: {
+        type: Sequelize.STRING,
+
+    },
+    quantidade: {
+        type: Sequelize.STRING,
+
+    },
+    valorUnitario: {
+        type: Sequelize.STRING,
+
+    },
+    unidadeDeMedida: {
+        type: Sequelize.STRING,
+
+    },
+    valorTotal: {
+        type: Sequelize.STRING,
     }
 });
 
