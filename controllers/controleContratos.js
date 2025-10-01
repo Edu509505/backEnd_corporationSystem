@@ -4,7 +4,7 @@ async function createContrato(req, res) {
     const  validacaoSchema = z.object({
         idCliente: z.coerce.number().nonempty("Campo Obrigatório"),
         idProposta: z.coerce.number().nonempty("Campo Obrigatório"),
-        contrato: z.string().nonempty("Campo Obrigatório"),
+        contrato_validado: z.string().nonempty("Campo Obrigatório"),
         nome: z.string().nonempty("Campo Obrigatório"),
         descricao: z.string().nonempty("Campo Obrigatório"),
         local: z.string().nonempty("Campo Obrigatório")
@@ -22,7 +22,7 @@ async function createContrato(req, res) {
         const contrato = await Contratos.create({
             idCliente: contratoValidada.idCliente,
             idProposta: contratoValidada.idProposta,
-            contrato: contratoValidada.contrato,
+            contrato_: contratoValidada.contrato_validado,
             nome: contratoValidada.nome,
             descricao: contratoValidada.descricao,
             status: 'ATIVO',
@@ -32,7 +32,7 @@ async function createContrato(req, res) {
             res.status(200).json({
                 idCliente,
                 idProposta,
-                contrato,
+                contrato_,
                 nome,
                 descricao,
                 status: contrato.status,
@@ -44,7 +44,7 @@ async function createContrato(req, res) {
 }
 
 async function getContratos(req, res) {
-    const contratos = await Contratos.findAll()
+    const contratos = await Contratos.findAll({include: ['cliente_contrato', 'proposta']});
 
     if (contratos) {
         res.json(contratos.map(contratos => contratos.toJSON()))
