@@ -18,7 +18,7 @@ const Proposta = database.define("propostas", {
   descricao: {
     type: Sequelize.STRING,
     allowNull: false
-  },
+  }, 
   valorProposta: {
     type: Sequelize.NUMBER,
     allowNull: false
