@@ -1,43 +1,50 @@
 import Contratos from "../models/contratos.js";
 
 async function createContrato(req, res) {
-    const {
-        idCliente,
-        idProposta,
-        contrato,
-        nome,
-        descricao,
-        status,
-        local
-    } = req.body
-
-    const contratos = await Contratos.create({
-        idCliente,
-        idProposta,
-        contrato,
-        nome,
-        descricao,
-        status,
-        local
+    const  validacaoSchema = z.object({
+        idCliente: z.coerce.number().nonempty("Campo Obrigatório"),
+        idProposta: z.coerce.number().nonempty("Campo Obrigatório"),
+        contrato_validado: z.string().nonempty("Campo Obrigatório"),
+        nome: z.string().nonempty("Campo Obrigatório"),
+        descricao: z.string().nonempty("Campo Obrigatório"),
+        local: z.string().nonempty("Campo Obrigatório")
     });
 
-    if (contratos) {
-        res.status(200).json({
-            idCliente,
-            idProposta,
-            contrato,
-            nome,
-            descricao,
-            status,
-            local
-        });
-    } else {
-        res.status(500).json({ message: 'Não foi possivel criar' });
+    const resposta = await validacaoSchema.safeParseAsync(req.body);
+
+    if (!resposta.success) {
+        return res.status(400).json(resposta.error);
     }
+
+    const contratoValidada = resposta.data;
+
+    try {
+        const contrato = await Contratos.create({
+            idCliente: contratoValidada.idCliente,
+            idProposta: contratoValidada.idProposta,
+            contrato_: contratoValidada.contrato_validado,
+            nome: contratoValidada.nome,
+            descricao: contratoValidada.descricao,
+            status: 'ATIVO',
+            local: contratoValidada.local    
+        });
+
+            res.status(200).json({
+                idCliente,
+                idProposta,
+                contrato_,
+                nome,
+                descricao,
+                status: contrato.status,
+                local
+            });
+        } catch (error) {
+            res.status(500).json({ message: "Erro ao criar contrato", error });
+        }
 }
 
-async function getContrato(req, res) {
-    const contratos = await Contratos.findAll()
+async function getContratos(req, res) {
+    const contratos = await Contratos.findAll({include: ['cliente_contrato', 'proposta']});
 
     if (contratos) {
         res.json(contratos.map(contratos => contratos.toJSON()))
@@ -64,4 +71,4 @@ async function getContratoId(req, res) {
 }
 
 
-export default { createContrato, getContrato, getContratoId }
+export default { createContrato, getContratos, getContratoId }

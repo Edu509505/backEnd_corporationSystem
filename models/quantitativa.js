@@ -5,6 +5,13 @@ import database from '../db.js';
 const Quantitativa = database.define("quantitativa", {
     idVersionamento: {
         type: Sequelize.INTEGER,
+        references: {
+            model: "versionamentos",
+            key: "id",
+        }
+    },
+    numeracao: {
+        type: Sequelize.INTEGER,
 
     },
     descricao: {
@@ -16,7 +23,7 @@ const Quantitativa = database.define("quantitativa", {
 
     },
     valorUnitario: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
 
     },
     unidadeDeMedida: {

@@ -8,7 +8,7 @@ import Quantitativa from './quantitativa.js';
 
 
 Clientes.hasMany(Contratos, {foreignKey: "idCliente"});
-Contratos.belongsTo(Clientes, {foreignKey: "idCliente"});
+Contratos.belongsTo(Clientes, {foreignKey: "idCliente", as: "cliente_contrato"});
 //Clientes.hasMany(Proposta, {foreignKey: "idCliente"})
 
 // UM CLIENTE ESTÁ ATRELADO A VÁRIAS PROPOSTA - 1:N
@@ -25,6 +25,7 @@ Medicoes.belongsTo(Contratos);
 
 Quantitativa.belongsTo(Versionamento, {foreignKey: "idVersionamento"});
 
+Contratos.belongsTo(Proposta, {foreignKey: "idProposta", as: "proposta"});
 
 /*
 
