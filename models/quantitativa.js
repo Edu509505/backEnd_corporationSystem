@@ -10,20 +10,16 @@ const Quantitativa = database.define("quantitativa", {
             key: "id",
         }
     },
-    numeracao: {
-        type: Sequelize.INTEGER,
-
-    },
     descricao: {
         type: Sequelize.STRING,
 
     },
-    quantidadePrevista: {
+    quantidade: {
         type: Sequelize.STRING,
 
     },
     valorUnitario: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
 
     },
     unidadeDeMedida: {

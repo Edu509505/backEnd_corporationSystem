@@ -2,22 +2,35 @@ import Quantitativa from '../models/quantitativa.js';
 
 async function createQuantitativa(req, res) {
     try {
-        const { idVersionamento, nome, quantidadePrevista, valor, unidade } = req.body;
+        const { itens } = req.body;
 
-        const novaQuantitativa = await Quantitativa.create({
-            idVersionamento,
-            nome,
-            quantidadePrevista,
-            valor,
-            unidade,
-        });
+        const novasQuantitativas = await Promise.all(
+            itens.map(async (item) => {
+                const {
+                    idVersionamento,
+                    descricao,
+                    quantidade,
+                    valorUnitario, // aqui é "valor", não "valorUnitario"
+                    unidadeDeMedida,
+                } = item;
 
-        return res.status(201).json(novaQuantitativa);
+                return await Quantitativa.create({
+                    idVersionamento,
+                    descricao,
+                    quantidade,
+                    valorUnitario: valorUnitario, // se quiser renomear aqui
+                    unidadeDeMedida,
+                });
+            })
+        );
+
+        return res.status(201).json(novasQuantitativas);
     } catch (error) {
         console.error("Erro ao criar quantitativa:", error);
         return res.status(500).json({ error: "Erro ao criar quantitativa" });
     }
 }
+
 
 async function getQuantitativa(req, res) {
     try {
