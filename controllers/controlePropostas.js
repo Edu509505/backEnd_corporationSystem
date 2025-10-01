@@ -12,10 +12,10 @@ import AnexoVersionamento from '../models/anexoVersionamento.js';
 async function createProposta(req, res) {
 
     const validacaoSchema = z.object({
-        idCliente: z.coerce.number(),
-        nomeDaProposta: z.string(),
-        descricao: z.string(),
-        valorProposta: z.coerce.number(),  
+        idCliente: z.coerce.number().nonempty("Campo Obrigatório"),
+        nomeDaProposta: z.string().nonempty("Campo Obrigatório"),
+        descricao: z.string().nonempty("Campo Obrigatório"),
+        valorProposta: z.coerce.number().nonempty("Campo Obrigatório"),  
     });
 
     const resposta = await validacaoSchema.safeParseAsync(req.body);

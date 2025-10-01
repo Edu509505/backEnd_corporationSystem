@@ -25,6 +25,7 @@ Medicoes.belongsTo(Contratos);
 
 Quantitativa.belongsTo(Versionamento, {foreignKey: "idVersionamento"});
 
+Contratos.belongsTo(Proposta, {foreignKey: "idProposta"});
 
 /*
 

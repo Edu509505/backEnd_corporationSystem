@@ -29,7 +29,7 @@ router.put('/cliente/:id', controleClientes.updateCliente);
 
 router.get('/clientes/:id/contratos', controleClientes.getClienteContrato);
 
-router.get('/contratos', controleContrato.getContrato);
+router.get('/contratos', controleContrato.getContratos);
 router.get('/contrato/:id', controleContrato.getContratoId);
 router.post('/contratos', controleContrato.createContrato);
 
