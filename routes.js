@@ -15,6 +15,7 @@ import controllerUser from "./controllers/controllerUser.js";
 import controleVersionamento from "./controllers/controleVersionamento.js";
 import controlerQuantitativa from "./controllers/controlerQuantitativa.js";
 import AnexoVersionamento from "./models/anexoVersionamento.js";
+import controleDiarioDeObra from "./controllers/controleDiarioDeObra.js";
 //import controleAnexoVersionamento from "./controllers/controleAnexoVersionamento.js";
 const router = Router();
 
@@ -55,7 +56,11 @@ router.post('/quantitativa', controlerQuantitativa.createQuantitativa);
 router.get('/quantitativa/:id', controlerQuantitativa.getQuantitativa);
 router.put('/quantitativa/:id', controlerQuantitativa.updateQuantitativa);
 
-router.get('/versionamento/:idVersionamento/anexos/urls', controleVersionamento.getImageVersionamento)
+router.get('/versionamento/:idVersionamento/anexos/urls', controleVersionamento.getImageVersionamento);
+
+router.post('/diarioDeObra', controleDiarioDeObra.createDiarioDeObra);
+router.get('/diarioDeObra/:id', controleDiarioDeObra.getDiarioDeObra);
+
 
 // router.post('/versionamento/:idProposta', controleVersionamento.createVersionamento);
 

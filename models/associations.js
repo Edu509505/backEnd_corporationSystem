@@ -5,6 +5,8 @@ import Proposta from './propostas.js';
 import Versionamento from './versionamento.js';
 import Anexo from './anexoVersionamento.js';
 import Quantitativa from './quantitativa.js';
+import DiarioDeObra  from './diarioDeObra.js';
+import ItensDoDia  from './itensDoDia.js';
 
 
 Clientes.hasMany(Contratos, {foreignKey: "idCliente"});
@@ -21,11 +23,20 @@ Proposta.hasMany(Versionamento, {foreignKey: "idProposta"});
 Anexo.belongsTo(Versionamento, {foreignKey: "idVersionamento"});
 //Versionamento.hasMany(Anexo, {foreignKey: ""})
 
+//N:1
 Medicoes.belongsTo(Contratos);
 
+//N:1
 Quantitativa.belongsTo(Versionamento, {foreignKey: "idVersionamento"});
 
-Contratos.belongsTo(Proposta, {foreignKey: "idProposta", as: "proposta"});
+//1:1
+Contratos.hasOne(Proposta, {foreignKey: "idProposta", as: "proposta"});
+
+//N:1
+DiarioDeObra.belongsTo(Proposta, {foreignKey: "idProposta", as: "propostaDiario" });
+
+//N:1
+ItensDoDia.belongsTo(DiarioDeObra, {foreignKey: "idDiaDeObra", as: "diaDeObra"});
 
 /*
 

@@ -1,0 +1,9 @@
+POST http://localhost:3000/diarioDeObra
+Content-Type: application/json
+
+{
+    "idProposta": 4,
+    "dataDia": "2025-10-01",
+    "itensDia": "Instalação de vigas e concretagem da laje"
+
+} 
