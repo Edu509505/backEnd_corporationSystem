@@ -139,7 +139,7 @@ async function createProposta(req, res) {
 async function getProposta(req, res) {
     const { id } = req.params
 
-    const proposta = await Proposta.findByPk(id);
+    const proposta = await Proposta.findByPk(id, { include: 'cliente' });
 
     if (proposta) {
         res.status(200).json(proposta.toJSON());
