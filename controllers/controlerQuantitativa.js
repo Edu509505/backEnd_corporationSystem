@@ -35,7 +35,7 @@ async function createQuantitativa(req, res) {
 async function getQuantitativa(req, res) {
     try {
         const { idVersionamento } = req.params;
-        const quantitativa = await Quantitativa.findByPk(idVersionamento);
+        const quantitativa = await Quantitativa.findOne({ where: idVersionamento});
 
         console.log(idVersionamento)
 

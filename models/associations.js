@@ -28,6 +28,7 @@ Medicoes.belongsTo(Contratos);
 
 //N:1
 Quantitativa.belongsTo(Versionamento, {foreignKey: "idVersionamento"});
+Versionamento.hasMany(Quantitativa, {foreignKey: "idVersionamento"});
 
 //1:1
 Contratos.hasOne(Proposta, {foreignKey: "idProposta", as: "proposta"});
