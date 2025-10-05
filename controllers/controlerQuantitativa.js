@@ -32,24 +32,26 @@ async function createQuantitativa(req, res) {
 }
 
 
-async function getQuantitativa(req, res) {
+async function getQuantitativas(req, res) {
     try {
         const { idVersionamento } = req.params;
-        const quantitativa = await Quantitativa.findOne({ where: idVersionamento});
 
-        console.log(idVersionamento)
+        const quantitativas = await Quantitativa.findAll({
+            where: { idVersionamento }
+        });
 
+        console.log(idVersionamento);
 
-        if (!quantitativa) {
-            return res.status(404).json({ error: "Quantitativa não encontrada" });
+        if (!quantitativas || quantitativas.length === 0) {
+            return res.status(404).json({ error: "Nenhuma quantitativa encontrada" });
         }
-        return res.status(200).json(quantitativa);
+
+        return res.status(200).json(quantitativas);
     } catch (error) {
-        console.error("Erro ao buscar quantitativa:", error);
-        return res.status(500).json({ error: "Erro ao buscar quantitativa" });
+        console.error("Erro ao buscar quantitativas:", error);
+        return res.status(500).json({ error: "Erro ao buscar quantitativas" });
     }
 }
-
 
 async function updateQuantitativa(req, res) {
     try {
