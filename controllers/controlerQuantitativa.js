@@ -87,4 +87,4 @@ async function updateQuantitativa(req, res) {
 }
 
 
-export default { createQuantitativa, getQuantitativa, updateQuantitativa };
+export default { createQuantitativa, getQuantitativas, updateQuantitativa };

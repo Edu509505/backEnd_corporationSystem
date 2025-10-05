@@ -55,7 +55,7 @@ router.get('/proposta/:idProposta/versionamentos', controleVersionamento.getProp
 router.put('/versionamento/:id', controleVersionamento.updateVersionamento);
 
 router.post('/quantitativa', controlerQuantitativa.createQuantitativa);
-router.get('/quantitativa/:idVersionamento', controlerQuantitativa.getQuantitativa);
+router.get('/quantitativa/:idVersionamento', controlerQuantitativa.getQuantitativas);
 router.put('/quantitativa/:id', controlerQuantitativa.updateQuantitativa);
 
 router.get('/versionamento/:idVersionamento/anexos/urls', controleVersionamento.getImageVersionamento);
