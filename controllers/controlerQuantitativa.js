@@ -34,8 +34,11 @@ async function createQuantitativa(req, res) {
 
 async function getQuantitativa(req, res) {
     try {
-        const { id } = req.params;
-        const quantitativa = await Quantitativa.findByPk(id);
+        const { idVersionamento } = req.params;
+        const quantitativa = await Quantitativa.findByPk(idVersionamento);
+
+        console.log(idVersionamento)
+
 
         if (!quantitativa) {
             return res.status(404).json({ error: "Quantitativa não encontrada" });

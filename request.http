@@ -7,3 +7,7 @@ Content-Type: application/json
     "itensDia": "Instalação de vigas e concretagem da laje"
 
 } 
+
+###
+
+GET http://localhost:3000/quantitativa/5

@@ -1,10 +1,12 @@
 import { Router } from "express";
 import multer from 'multer';
 
-const pastaTemp = multer({ dest: 'temp/',  limits: {
+const pastaTemp = multer({
+    dest: 'temp/', limits: {
         fileSize: 50 * 1024 * 1024, // 50MB
         files: 10 // máximo 10 arquivos
-    } });
+    }
+});
 
 import controleClientes from "./controllers/controleClientes.js";
 import controleContrato from "./controllers/controleContratos.js";
@@ -42,8 +44,8 @@ router.get('/proposta/:id', controlePropostas.getProposta);
 router.get('/propostas', controlePropostas.getPropostas);
 
 router.post(
-    '/proposta/:idProposta/versao', 
-    pastaTemp.array('files', 10), 
+    '/proposta/:idProposta/versao',
+    pastaTemp.array('files', 10),
     controleVersionamento.createVersionamento
 );
 
@@ -53,7 +55,7 @@ router.get('/proposta/:idProposta/versionamentos', controleVersionamento.getProp
 router.put('/versionamento/:id', controleVersionamento.updateVersionamento);
 
 router.post('/quantitativa', controlerQuantitativa.createQuantitativa);
-router.get('/quantitativa/:id', controlerQuantitativa.getQuantitativa);
+router.get('/quantitativa/:idVersionamento', controlerQuantitativa.getQuantitativa);
 router.put('/quantitativa/:id', controlerQuantitativa.updateQuantitativa);
 
 router.get('/versionamento/:idVersionamento/anexos/urls', controleVersionamento.getImageVersionamento);
