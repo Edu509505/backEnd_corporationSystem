@@ -3,12 +3,12 @@ import  z  from "zod";
 
 async function createContrato(req, res) {
     const  validacaoSchema = z.object({
-        idCliente: z.coerce.number().nonempty("Campo Obrigatório"),
-        idProposta: z.coerce.number().nonempty("Campo Obrigatório"),
-        contrato_validado: z.string().nonempty("Campo Obrigatório"),
-        nome: z.string().nonempty("Campo Obrigatório"),
-        descricao: z.string().nonempty("Campo Obrigatório"),
-        local: z.string().nonempty("Campo Obrigatório")
+        idCliente: z.coerce.number(),
+        idProposta: z.coerce.number(),
+        contrato_validado: z.string(),
+        nome: z.string(),
+        descricao: z.string(),
+        local: z.string()
     });
 
     const resposta = await validacaoSchema.safeParseAsync(req.body);
