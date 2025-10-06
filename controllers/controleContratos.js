@@ -23,7 +23,7 @@ async function createContrato(req, res) {
         const contrato = await Contratos.create({
             idCliente: contratoValidada.idCliente,
             idProposta: contratoValidada.idProposta,
-            contrato_: contratoValidada.contrato_validado,
+            contrato_validado: contratoValidada.contrato_validado,
             nome: contratoValidada.nome,
             descricao: contratoValidada.descricao,
             status: 'ATIVO',
@@ -33,7 +33,7 @@ async function createContrato(req, res) {
             res.status(200).json({
                 idCliente: contrato.idCliente,
                 idProposta: contrato.idProposta,
-                contrato_: contrato.contrato_,
+                contrato_validado: contrato.contrato_validado,
                 nome: contrato.nome,
                 descricao: contrato.descricao,
                 status: contrato.status,
