@@ -30,13 +30,13 @@ async function createContrato(req, res) {
         });
 
             res.status(200).json({
-                idCliente,
-                idProposta,
-                contrato_,
-                nome,
-                descricao,
+                idCliente: contrato.idCliente,
+                idProposta: contrato.idProposta,
+                contrato_: contrato.contrato_,
+                nome: contrato.nome,
+                descricao: contrato.descricao,
                 status: contrato.status,
-                local
+                local: contrato.local
             });
         } catch (error) {
             res.status(500).json({ message: "Erro ao criar contrato", error });
