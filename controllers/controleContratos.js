@@ -1,4 +1,5 @@
 import Contratos from "../models/contratos.js";
+import  z  from "zod";
 
 async function createContrato(req, res) {
     const  validacaoSchema = z.object({
