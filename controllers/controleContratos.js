@@ -5,7 +5,7 @@ async function createContrato(req, res) {
     const  validacaoSchema = z.object({
         idCliente: z.coerce.number(),
         idProposta: z.coerce.number(),
-        contrato_validado: z.string(),
+        contrato: z.string(),
         nome: z.string(),
         descricao: z.string(),
         local: z.string()
@@ -23,7 +23,7 @@ async function createContrato(req, res) {
         const contrato = await Contratos.create({
             idCliente: contratoValidada.idCliente,
             idProposta: contratoValidada.idProposta,
-            contrato_validado: contratoValidada.contrato_validado,
+            contrato: contratoValidada.contrato,
             nome: contratoValidada.nome,
             descricao: contratoValidada.descricao,
             status: 'ATIVO',
@@ -33,7 +33,7 @@ async function createContrato(req, res) {
             res.status(200).json({
                 idCliente: contrato.idCliente,
                 idProposta: contrato.idProposta,
-                contrato_validado: contrato.contrato_validado,
+                contrato: contrato.contrato,
                 nome: contrato.nome,
                 descricao: contrato.descricao,
                 status: contrato.status,
