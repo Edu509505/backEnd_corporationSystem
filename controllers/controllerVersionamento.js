@@ -6,7 +6,8 @@ import Versionamento from "../models/versionamento.js";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 //import { url } from 'node:inspector';
 import AnexoVersionamento from '../models/anexoVersionamento.js'
-
+import Proposta from '../models/propostas.js';
+import z from 'zod';
 
 async function createVersionamento(req, res) {
     const { idProposta } = req.params
@@ -143,14 +144,27 @@ async function getImageVersionamento(req, res) {
 
 }
 
+const validaSchema = z.object({
+    status: z.enum(['EM_ANALISE', 'APROVADO', 'REPROVADO'])
+});
+
 async function updateVersionamento(req, res) {
+    const verification = await validaSchema.safeParseAsync(req.body);
+    if (!verification.success) {
+        return res.status(400).json({ message: 'Status inválido. Valores permitidos: EM_ANALISE, APROVADO, REPROVADO' });
+    }
+    
     const { id } = req.params
-    const { status } = req.body
+    const { status } = verification.data
     const versionamento = await Versionamento.findByPk(id)
     if (!versionamento) {
         return res.status(404).json({ message: 'Versionamento não encontrado' })
     }
-    versionamento.status = status || versionamento.status
+    versionamento.status = status 
+
+    await Proposta.update(
+        { statusProposta: status }, { where: { id: versionamento.idProposta } })
+
     await versionamento.save()
     return res.status(200).json(versionamento.toJSON())
 }
