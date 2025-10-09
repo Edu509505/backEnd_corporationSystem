@@ -34,7 +34,9 @@ Quantitativa.belongsTo(Versionamento, {foreignKey: "idVersionamento"});
 Versionamento.hasMany(Quantitativa, {foreignKey: "idVersionamento"});
 
 //1:1
-Contratos.hasOne(Proposta, {foreignKey: "idProposta", as: "proposta"});
+Proposta.hasOne(Contratos, { foreignKey: "idProposta", as: "contrato" });
+Contratos.belongsTo(Proposta, { foreignKey: "idProposta", as: "proposta" });
+
 
 //N:1
 DiarioDeObra.belongsTo(Proposta, {foreignKey: "idProposta", as: "propostaDiario" });
