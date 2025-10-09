@@ -17,7 +17,7 @@ const criarClienteSchema = z.object({
     .string()
     .min(3, "Escreva um nome válido")
     .nonempty("Campo Obrigatório"),
-  status: z.enum(["Ativo", "Inativo","Pendente"])
+  status: z.enum(["ATIVO", "INATIVO"])
 })
 
 async function createCliente(req, res) {
@@ -62,7 +62,7 @@ async function updateCliente(req, res) {
 
   // const visualizarAtualizcao = await 
 
-  if(!verificar.success) return res.status(400).json(verificar.error)
+  if (!verificar.success) return res.status(400).json(verificar.error)
   try {
     const { id } = req.params
     const [rowsUpdate] = await Clientes.update(
@@ -74,7 +74,7 @@ async function updateCliente(req, res) {
     }
     res.status(200).json(verificar, { message: 'Cliente Atualizado' })
   } catch {
-    res.status(500).json(verificar, { message: 'Erro ao atualizar Cliente'})
+    res.status(500).json(verificar, { message: 'Erro ao atualizar Cliente' })
   }
 }
 
