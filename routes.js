@@ -24,6 +24,7 @@ const router = Router();
 router.post('/login', controllerLogin.login);
 
 router.post('/usuario', controllerUser.createUsuario);
+router.get('/usuarios', controllerUser.getUsuarios);
 
 router.get('/clientes', controleClientes.getCliente);
 router.get('/cliente/:id', controleClientes.getClientId);

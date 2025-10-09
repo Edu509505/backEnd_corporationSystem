@@ -1,11 +1,30 @@
 import Usuarios from "../models/usuarios.js";
+import z from "zod";
+
+const validaSchema = z.object({
+  username: z.string().min(3).max(20),
+  email: z.email(),
+  password: z.string().min(6).max(100),
+});
 
 async function createUsuario(req, res) {
-  const { username, email, password, path } = req.body
-  const usuario = await Usuarios.create({ username, email, password, path })
+  const resposta = await validaSchema.safeParseAsync(req.body);
+
+  if (!resposta.success) {
+    return res.status(400).json(resposta.error)
+  }
+
+  const propostaValidada = resposta.data;
+
+  const usuario = await Usuarios.create({
+    username: propostaValidada.username,
+    email: propostaValidada.email,
+    password: propostaValidada.password,
+    path
+  });
 
   if (usuario) {
-    res.status(200).json({ username, email, password, path })
+    res.status(200).json({ usuario, message: 'Usuario criado com sucesso' })
   } else {
     res.status(500).json({ message: 'Não foi possivel criar' })
   }
@@ -22,10 +41,14 @@ async function getUsuario(req, res) {
 }
 
 async function updateUsuario(req, res) {
+  const resposta = await validaSchema.safeParseAsync(req.body);
+  if (!resposta.success) {
+    return res.status(400).json(resposta.error)
+  }
 
   try {
     const { id } = req.params
-    const { username, email, password, path } = req.body
+    const { username, email, password } = resposta.data
 
     const [rowsUpdate] = await Usuarios.update(
       { username, email, password, path },
