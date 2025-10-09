@@ -11,3 +11,12 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/quantitativa/5
+
+
+###
+PUT http://localhost:3000/proposta/1
+Content-Type: application/json
+
+{
+    "statusProposta": "REPROVADA"
+}

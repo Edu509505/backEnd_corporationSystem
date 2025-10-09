@@ -87,7 +87,7 @@ async function getVersionamentos(req, res) {
         res.status(500).json({ message: 'Não foi possível buscar usuários' })
     }
 }
-
+    
 async function getPropostaVersionamentos(req, res) {
     const { idProposta } = req.params
     const propostaVersionamentos = await Versionamento.findAll({

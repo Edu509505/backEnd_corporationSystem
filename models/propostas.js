@@ -24,7 +24,7 @@ const Proposta = database.define("propostas", {
     allowNull: false
   },
   statusProposta: {
-    type: Sequelize.STRING,
+    type: Sequelize.ENUM('EM_ANALISE', 'APROVADA', 'REPROVADA'),
     allowNull: false
   }
 

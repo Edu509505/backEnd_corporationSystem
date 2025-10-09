@@ -9,15 +9,17 @@ import Proposta from "../models/propostas.js";
 import Versionamento from "../models/versionamento.js";
 import AnexoVersionamento from '../models/anexoVersionamento.js';
 
-async function createProposta(req, res) {
-
-    const validacaoSchema = z.object({
+const validacaoSchema = z.object({
         idCliente: z.coerce.number(),
         nomeDaProposta: z.string(),
         descricao: z.string(),
         valorProposta: z.coerce.number(),
+        statusProposta: z.enum(['EM_ANALISE', 'APROVADA', 'REPROVADA']).default('EM_ANALISE')
     });
 
+    
+
+async function createProposta(req, res) {
     const resposta = await validacaoSchema.safeParseAsync(req.body);
 
     if (!resposta.success) {
@@ -25,6 +27,7 @@ async function createProposta(req, res) {
     }
 
     const propostaValidada = resposta.data;
+
 
     try {
         const proposta = await Proposta.create({
@@ -80,13 +83,12 @@ async function createProposta(req, res) {
 
 
         res.status(200).json({
-            idCliente,
-            nomeDaProposta,
-            descricao,
-            valorProposta,
+            idCliente: proposta.idCliente,
+            nomeDaProposta: proposta.nomeDaProposta,
+            descricao: proposta.descricao,
+            valorProposta: proposta.valorProposta,
             statusProposta: proposta.statusProposta,
             id: proposta.id,
-            totalArquivos: req.files ? req.files.length : 0
         });
 
     } catch (error) {
@@ -158,4 +160,26 @@ async function getPropostas(req, res) {
     }
 }
 
-export default { createProposta, getProposta, getPropostas }
+
+async function updateProposta(req, res) {
+ try {
+    const { id } = req.params;
+    const { statusProposta } = req.body;
+
+    const proposta = await Proposta.findByPk(id);
+    if (!proposta) {
+      return res.status(404).json({ message: 'Proposta não encontrada' });
+    }
+
+    proposta.statusProposta = statusProposta || proposta.statusProposta;
+    await proposta.save();
+
+    return res.status(200).json(proposta.toJSON());
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+
+}
+
+export default { createProposta, getProposta, getPropostas, updateProposta }
