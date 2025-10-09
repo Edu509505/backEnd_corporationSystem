@@ -8,16 +8,16 @@ const pastaTemp = multer({
     }
 });
 
-import controleClientes from "./controllers/controleClientes.js";
-import controleContrato from "./controllers/controleContratos.js";
-import controleMedicoes from "./controllers/controleMedicoes.js";
-import controlePropostas from "./controllers/controlePropostas.js";
+import controleClientes from "./controllers/controllerClientes.js";
+import controleContrato from "./controllers/controllerContratos.js";
+import controleMedicoes from "./controllers/controllerMedicoes.js";
+import controlePropostas from "./controllers/controllerPropostas.js";
 import controllerLogin from "./controllers/controllerLogin.js";
 import controllerUser from "./controllers/controllerUser.js";
-import controleVersionamento from "./controllers/controleVersionamento.js";
-import controlerQuantitativa from "./controllers/controlerQuantitativa.js";
+import controleVersionamento from "./controllers/controllerVersionamento.js";
+import controlerQuantitativa from "./controllers/controllerQuantitativa.js";
 import AnexoVersionamento from "./models/anexoVersionamento.js";
-import controleDiarioDeObra from "./controllers/controleDiarioDeObra.js";
+import controleDiarioDeObra from "./controllers/controllerDiarioDeObra.js";
 //import controleAnexoVersionamento from "./controllers/controleAnexoVersionamento.js";
 const router = Router();
 
