@@ -161,25 +161,5 @@ async function getPropostas(req, res) {
 }
 
 
-async function updateProposta(req, res) {
- try {
-    const { id } = req.params;
-    const { statusProposta } = req.body;
 
-    const proposta = await Proposta.findByPk(id);
-    if (!proposta) {
-      return res.status(404).json({ message: 'Proposta não encontrada' });
-    }
-
-    proposta.statusProposta = statusProposta || proposta.statusProposta;
-    await proposta.save();
-
-    return res.status(200).json(proposta.toJSON());
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: 'Erro interno do servidor' });
-  }
-
-}
-
-export default { createProposta, getProposta, getPropostas, updateProposta }
+export default { createProposta, getProposta, getPropostas}

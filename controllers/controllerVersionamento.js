@@ -145,7 +145,7 @@ async function getImageVersionamento(req, res) {
 }
 
 const validaSchema = z.object({
-    status: z.enum(['EM_ANALISE', 'APROVADO', 'REPROVADO'])
+    status: z.enum(['EM_ANALISE', 'APROVADA', 'REPROVADA'])
 });
 
 async function updateVersionamento(req, res) {
