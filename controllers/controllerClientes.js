@@ -17,7 +17,8 @@ const criarClienteSchema = z.object({
     .string()
     .min(3, "Escreva um nome válido")
     .nonempty("Campo Obrigatório"),
-  status: z.enum(["ATIVO", "INATIVO"])
+  status: z.enum(["ATIVO", "INATIVO"]),
+  path: z.string()
 })
 
 async function createCliente(req, res) {
