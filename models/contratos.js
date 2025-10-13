@@ -18,11 +18,7 @@ const Contratos = database.define("contratos", {
       key: "id",
     }
   },
-  contrato: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  nome: {
+  titulo: {
     type: Sequelize.STRING,
     allowNull: false,
   },

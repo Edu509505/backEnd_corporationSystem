@@ -36,7 +36,7 @@ router.get('/clientes/:id/contratos', controleClientes.getClienteContrato);
 
 router.get('/contratos', controleContrato.getContratos);
 router.get('/contrato/:id', controleContrato.getContratoId);
-router.post('/contrato', controleContrato.createContrato);
+router.post('/contrato', pastaTemp.array('files', 10), controleContrato.createContrato);
 
 router.get('/medicoes', controleMedicoes.getMedicoes);
 router.post('/medicoes', controleMedicoes.createMedicao);

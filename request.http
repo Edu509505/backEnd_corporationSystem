@@ -24,3 +24,16 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/cliente/1/propostasAprovadas
+
+###
+POST http://localhost:3000/contrato
+Content-Type: application/json
+
+{
+    "idCliente": 1,
+    "idProposta": 1,
+    "contrato": "EduGostoso",
+    "nome": "EduGostoso2.0",
+    "descricao": "EduGostoso3.0",
+    "local": "CasaDoKrlh"
+}

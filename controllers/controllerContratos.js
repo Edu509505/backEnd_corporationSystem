@@ -1,13 +1,11 @@
 import Contratos from "../models/contratos.js";
-import  z  from "zod";
+import z from "zod";
 
 async function createContrato(req, res) {
-    const  validacaoSchema = z.object({
+    const validacaoSchema = z.object({
         idCliente: z.coerce.number(),
         idProposta: z.coerce.number(),
-        contrato: z.string(),
-        nome: z.string(),
-        descricao: z.string(),
+        titulo: z.string(),
         local: z.string()
     });
 
@@ -23,29 +21,25 @@ async function createContrato(req, res) {
         const contrato = await Contratos.create({
             idCliente: contratoValidada.idCliente,
             idProposta: contratoValidada.idProposta,
-            contrato: contratoValidada.contrato,
-            nome: contratoValidada.nome,
-            descricao: contratoValidada.descricao,
+            titulo: contratoValidada.titulo,
             status: 'ATIVO',
-            local: contratoValidada.local    
+            local: contratoValidada.local
         });
 
-            res.status(200).json({
-                idCliente: contrato.idCliente,
-                idProposta: contrato.idProposta,
-                contrato: contrato.contrato,
-                nome: contrato.nome,
-                descricao: contrato.descricao,
-                status: contrato.status,
-                local: contrato.local
-            });
-        } catch (error) {
-            res.status(500).json({ message: "Erro ao criar contrato", error });
-        }
+        res.status(200).json({
+            idCliente: contrato.idCliente,
+            idProposta: contrato.idProposta,
+            titulo: contrato.titulo,
+            status: contrato.status,
+            local: contrato.local
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao criar contrato", error });
+    }
 }
 
 async function getContratos(req, res) {
-    const contratos = await Contratos.findAll({include: ['cliente_contrato', 'proposta']});
+    const contratos = await Contratos.findAll({ include: ['cliente_contrato', 'proposta'] });
 
     if (contratos) {
         res.json(contratos.map(contratos => contratos.toJSON()))
@@ -58,7 +52,7 @@ async function getContratoId(req, res) {
     const { id } = req.params;
 
     try {
-        const contratoId = await Contratos.findOne({ where: id})
+        const contratoId = await Contratos.findOne({ where: id })
 
         if (contratoId) {
             res.json(contratoId.toJSON())

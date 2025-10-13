@@ -5,17 +5,18 @@ import Proposta from './propostas.js';
 import Versionamento from './versionamento.js';
 import Anexo from './anexoVersionamento.js';
 import Quantitativa from './quantitativa.js';
-import DiarioDeObra  from './diarioDeObra.js';
-import ItensDoDia  from './itensDoDia.js';
+import DiarioDeObra from './diarioDeObra.js';
+import ItensDoDia from './itensDoDia.js';
+import AnexoContrato from './anexoContratos.js'
 
 
-Clientes.hasMany(Contratos, {foreignKey: "idCliente"});
-Contratos.belongsTo(Clientes, {foreignKey: "idCliente", as: "cliente_contrato"});
+Clientes.hasMany(Contratos, { foreignKey: "idCliente" });
+Contratos.belongsTo(Clientes, { foreignKey: "idCliente", as: "cliente_contrato" });
 //Clientes.hasMany(Proposta, {foreignKey: "idCliente"})
 
 // UM CLIENTE ESTÁ ATRELADO A VÁRIAS PROPOSTA - 1:N
-Clientes.hasMany(Proposta, {foreignKey: "idCliente"});
-Proposta.belongsTo(Clientes,{foreignKey:"idCliente", as: "cliente"});
+Clientes.hasMany(Proposta, { foreignKey: "idCliente" });
+Proposta.belongsTo(Clientes, { foreignKey: "idCliente", as: "cliente" });
 
 //UMA PROPOSTA TERÁ VÁRIOS VERSIONAMENTO - 1:N
 Proposta.hasMany(Versionamento, { foreignKey: "idProposta" });
@@ -23,26 +24,27 @@ Proposta.hasMany(Versionamento, { foreignKey: "idProposta" });
 Versionamento.belongsTo(Proposta, { foreignKey: "idProposta" });
 
 
-Anexo.belongsTo(Versionamento, {foreignKey: "idVersionamento"});
+Anexo.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
 //Versionamento.hasMany(Anexo, {foreignKey: ""})
 
 //N:1
 Medicoes.belongsTo(Contratos);
 
 //N:1
-Quantitativa.belongsTo(Versionamento, {foreignKey: "idVersionamento"});
-Versionamento.hasMany(Quantitativa, {foreignKey: "idVersionamento"});
+Quantitativa.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
+Versionamento.hasMany(Quantitativa, { foreignKey: "idVersionamento" });
 
 //1:1
 Proposta.hasOne(Contratos, { foreignKey: "idProposta", as: "contrato" });
 Contratos.belongsTo(Proposta, { foreignKey: "idProposta", as: "proposta" });
 
+AnexoContrato.belongsTo(Contratos, { foreignKey: "idContrato" })
 
 //N:1
-DiarioDeObra.belongsTo(Proposta, {foreignKey: "idProposta", as: "propostaDiario" });
+DiarioDeObra.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaDiario" });
 
 //N:1
-ItensDoDia.belongsTo(DiarioDeObra, {foreignKey: "idDiaDeObra", as: "diaDeObra"});
+ItensDoDia.belongsTo(DiarioDeObra, { foreignKey: "idDiaDeObra", as: "diaDeObra" });
 
 /*
 
