@@ -20,3 +20,7 @@ Content-Type: application/json
 {
     "statusProposta": "REPROVADA"
 }
+
+###
+
+GET http://localhost:3000/cliente/1/propostasAprovadas

@@ -10,14 +10,14 @@ import Versionamento from "../models/versionamento.js";
 import AnexoVersionamento from '../models/anexoVersionamento.js';
 
 const validacaoSchema = z.object({
-        idCliente: z.coerce.number(),
-        nomeDaProposta: z.string(),
-        descricao: z.string(),
-        valorProposta: z.coerce.number(),
-        statusProposta: z.enum(['EM_ANALISE', 'APROVADA', 'REPROVADA']).default('EM_ANALISE')
-    });
+    idCliente: z.coerce.number(),
+    nomeDaProposta: z.string(),
+    descricao: z.string(),
+    valorProposta: z.coerce.number(),
+    statusProposta: z.enum(['EM_ANALISE', 'APROVADA', 'REPROVADA']).default('EM_ANALISE')
+});
 
-    
+
 
 async function createProposta(req, res) {
     const resposta = await validacaoSchema.safeParseAsync(req.body);
@@ -160,6 +160,14 @@ async function getPropostas(req, res) {
     }
 }
 
+async function getPropostasAprovadas(req, res) {
+    const { id } = req.params
+    const getPropostasAprovadas = await Proposta.findAll({ where: { idCliente: id, statusProposta: 'APROVADA' } })
+
+    if (getPropostasAprovadas) {
+        res.json(getPropostasAprovadas.map(propostasAprovadas => propostasAprovadas.toJSON()))
+    }
+}
 
 
-export default { createProposta, getProposta, getPropostas}
+export default { createProposta, getProposta, getPropostas, getPropostasAprovadas }

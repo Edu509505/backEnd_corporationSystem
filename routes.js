@@ -44,7 +44,7 @@ router.post('/medicoes', controleMedicoes.createMedicao);
 router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createProposta);
 router.get('/proposta/:id', controlePropostas.getProposta);
 router.get('/propostas', controlePropostas.getPropostas);
-
+router.get('/cliente/:id/propostasAprovadas/', controlePropostas.getPropostasAprovadas)
 router.post(
     '/proposta/:idProposta/versao',
     pastaTemp.array('files', 10),
