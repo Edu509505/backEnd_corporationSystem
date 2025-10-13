@@ -162,8 +162,13 @@ async function updateVersionamento(req, res) {
     }
     versionamento.status = status 
 
-    await Proposta.update(
-        { statusProposta: status }, { where: { id: versionamento.idProposta } })
+   if (status === 'APROVADA') {
+        await Proposta.update(
+            { statusProposta: status },
+            { where: { id: versionamento.idProposta } }
+        );
+    }
+
 
     await versionamento.save()
     return res.status(200).json(versionamento.toJSON())

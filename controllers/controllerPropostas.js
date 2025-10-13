@@ -170,4 +170,30 @@ async function getPropostasAprovadas(req, res) {
 }
 
 
+async function updateProposta(req, res) {
+    const { id } = req.params;
+    const { nomeDaProposta, descricao, valorProposta, statusProposta } = req.body;
+
+    try {
+        const proposta = await Proposta.findByPk(id);
+
+        if (!proposta) {
+            return res.status(404).json({ message: 'Proposta não encontrada' });
+        }
+
+        proposta.nomeDaProposta = nomeDaProposta;
+        proposta.descricao = descricao;
+        proposta.valorProposta = valorProposta;
+        proposta.statusProposta = statusProposta;
+
+        await proposta.save();
+
+        res.status(200).json(proposta);
+    } catch (error) {
+        console.error('Erro ao atualizar proposta:', error);
+        res.status(500).json({ message: 'Não foi possível atualizar a proposta' });
+    }
+}
+
+
 export default { createProposta, getProposta, getPropostas, getPropostasAprovadas }
