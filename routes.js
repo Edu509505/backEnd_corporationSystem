@@ -66,9 +66,9 @@ router.post('/diarioDeObra', controleDiarioDeObra.createDiarioDeObra);
 router.get('/diarioDeObra/:id', controleDiarioDeObra.getDiarioDeObra);
 
 
-// router.post('/versionamento/:idProposta', controleVersionamento.createVersionamento);
+router.post('/versionamento/:idProposta', controleVersionamento.createVersionamento);
 
-//router.post('/anexoVersionamento', controleAnexoVersionamento.uploadAnexoVersionamento)
+// router.post('/anexoVersionamento', controleAnexoVersionamento.uploadAnexoVersionamento)
 
 //router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
 
