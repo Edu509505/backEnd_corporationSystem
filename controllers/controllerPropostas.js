@@ -28,7 +28,6 @@ async function createProposta(req, res) {
 
     const propostaValidada = resposta.data;
 
-
     try {
         const proposta = await Proposta.create({
             idCliente: propostaValidada.idCliente,

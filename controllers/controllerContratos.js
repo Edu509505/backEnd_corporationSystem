@@ -1,16 +1,32 @@
+import { readFile, readFileSync } from 'node:fs'
+import * as path from 'node:path';
+import { s3 } from '../utils/s3.js';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
 import Contratos from "../models/contratos.js";
 import z from "zod";
+import Clientes from '../models/clientes.js';
+import AnexoContratos from '../models/anexoContratos.js'
 
+const validacaoSchema = z.object({
+    idCliente: z.coerce.string(),
+    idProposta: z.coerce.string(),
+    titulo: z.string(),
+    anexo: z.array(z.file()).min(1)
+
+    //local: z.string()
+});
 async function createContrato(req, res) {
-    const validacaoSchema = z.object({
-        idCliente: z.coerce.number(),
-        idProposta: z.coerce.number(),
-        titulo: z.string(),
-        local: z.string()
-    });
 
-    const resposta = await validacaoSchema.safeParseAsync(req.body);
+    ///const anexo = req.files; // ou req.file, dependendo do middleware
+    const dadosRecebidos = {
+        ...req.body,
+        anexo: Array.from(req.body.anexo),
+    };
 
+
+
+    const resposta = await validacaoSchema.safeParseAsync(dadosRecebidos);
+    console.log("resposta: ", resposta)
     if (!resposta.success) {
         return res.status(400).json(resposta.error);
     }
@@ -19,19 +35,52 @@ async function createContrato(req, res) {
 
     try {
         const contrato = await Contratos.create({
-            idCliente: contratoValidada.idCliente,
-            idProposta: contratoValidada.idProposta,
+            idCliente: parseInt(contratoValidada.idCliente),
+            idProposta: parseInt(contratoValidada.idProposta),
             titulo: contratoValidada.titulo,
             status: 'ATIVO',
-            local: contratoValidada.local
+            // local: contratoValidada.local
         });
 
+        // Processar múltiplos arquivos
+        if (req.files && req.files.length > 0) {
+            // Iterar sobre cada arquivo enviado
+            for (let i = 0; i < req.files.length; i++) {
+                const file = req.files[i];
+
+                // Caminho do arquivo
+                const filePath = path.join(import.meta.dirname, '..', 'temp', file.filename);
+                console.log('filePath', filePath);
+
+                // Ler o arquivo
+                const fileContent = readFileSync(filePath);
+
+                // Extrair extensão do arquivo
+                const extensaoDoArquivo = file.originalname.split('.').reverse()[0];
+
+                // Upload para S3 - cada arquivo com nome único
+                const s3Key = `/${contrato.idCliente}/${contrato.id}.${extensaoDoArquivo}`;
+                const command = new PutObjectCommand({
+                    Bucket: 'anexo-contratos',
+                    Key: s3Key,
+                    Body: fileContent
+                });
+
+                await s3.send(command);
+
+                // Salvar referência no banco para cada arquivo
+                await AnexoContratos.create({
+                    idCliente: contrato.id,
+                    path: s3Key // salva o caminho direto do s3
+                });
+            }
+        } else return
         res.status(200).json({
-            idCliente: contrato.idCliente,
-            idProposta: contrato.idProposta,
+            idCliente: parseInt(contrato.idCliente),
+            idProposta: parseInt(contrato.idProposta),
             titulo: contrato.titulo,
             status: contrato.status,
-            local: contrato.local
+            //local: contrato.local
         });
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar contrato", error });
