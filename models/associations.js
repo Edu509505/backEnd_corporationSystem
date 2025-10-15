@@ -43,11 +43,23 @@ AnexoContrato.belongsTo(Contratos, { foreignKey: "idContrato" })
 Contratos.belongsTo(Clientes, { foreignKey: "idCliente", as: "clientesContratos" })
 
 
+//DiarioDeObra pertence a uma proposta
+//1:N
+Proposta.hasMany(DiarioDeObra, { foreignKey: "idProposta", });
 //N:1
 DiarioDeObra.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaDiario" });
 
+//DiarioDeObra tem muitos ItensDoDia 
+// 1:N
+DiarioDeObra.hasMany(ItensDoDia, { foreignKey: "idDiaDeObra", as: "itensDoDia" });
 //N:1
 ItensDoDia.belongsTo(DiarioDeObra, { foreignKey: "idDiaDeObra", as: "diaDeObra" });
+
+//DiarioDeObra pertence a um contrato
+//N:1
+DiarioDeObra.belongsTo(Contratos, { foreignKey: "idContrato" });
+//1:N
+Contratos.hasMany(DiarioDeObra, { foreignKey: "idContrato", as: "diariosDeObra" });
 
 /*
 

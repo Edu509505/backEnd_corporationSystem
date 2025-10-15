@@ -12,14 +12,18 @@ const DiarioDeObra = database.define('diarioDeObra', {
           key: "id",
         }
       },
+    idContrato: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "contratos",
+          key: "id",
+        }
+    }, 
     dataDia: {
         type: DataTypes.DATEONLY,
         allowNull: false
-    },
-    itensDia: {
-        type: Sequelize.STRING,
-        allowNull: false
     }
+  
 });
 
 export default  DiarioDeObra 

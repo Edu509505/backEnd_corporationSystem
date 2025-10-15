@@ -1,29 +1,38 @@
 import z from 'zod'
-import DiarioDeObra  from "../models/diarioDeObra.js";
+import DiarioDeObra from "../models/diarioDeObra.js";
+
+const validaDiarioDeObra = z
+    .object({
+        idProposta: z.coerce.number().optional(),
+        idContrato: z.coerce.number().optional(),
+        dataDia: z.coerce.date(),
+    })
+    .refine(
+        (data) =>
+            (data.idProposta && !data.idContrato) ||
+            (!data.idProposta && data.idContrato),
+    );
+
 
 
 async function createDiarioDeObra(req, res) {
-    const validaDiarioDeObra = z.object({
-        idProposta: z.coerce.number(),
-        dataDia: z.coerce.date(),
-        itensDia: z.string()
-    });
-
     const resposta = await validaDiarioDeObra.safeParseAsync(req.body);
-    
-    
+
+
     if (!resposta.success) {
         return res.status(400).json(resposta.error)
     }
-    
+
     const diarioValidado = resposta.data;
     console.log(diarioValidado.dataDia)
 
     const diarioDeObra = await DiarioDeObra.create({
-        idProposta: diarioValidado.idProposta,
+        idProposta: diarioValidado.idProposta ?? null,
+        idContrato: diarioValidado.idContrato ?? null,
         dataDia: diarioValidado.dataDia,
-        itensDia: diarioValidado.itensDia
-    })
+    });
+
+    console.log(diarioDeObra);
 
     res.status(200).json(diarioDeObra);
 
@@ -38,8 +47,8 @@ async function getDiarioDeObra(req, res) {
         }
     })
 
-    if(!diario){
-        res.status(404).json({ message: 'Não foi possivel encontrar'  })
+    if (!diario) {
+        res.status(404).json({ message: 'Não foi possivel encontrar' })
     }
 
     res.status(200).json(diario);

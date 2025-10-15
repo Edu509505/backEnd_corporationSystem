@@ -15,8 +15,12 @@ import database from "../db.js";
         type: Sequelize.STRING,
         allowNull: false
     },
-    item: {
+    itemQuantativa: {
         type: Sequelize.STRING,
+        allowNull: false
+    },
+    quandtidade: {
+        type: Sequelize.INTEGER,
         allowNull: false
     }
 });
