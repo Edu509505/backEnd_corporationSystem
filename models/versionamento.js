@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 
 import database from "../db.js";
+import Proposta from "./propostas.js";
 
 const Versionamento = database.define("versionamentos", {
     versao: {
@@ -10,7 +11,7 @@ const Versionamento = database.define("versionamentos", {
     idProposta: {
         type: Sequelize.INTEGER,
         references: {
-            model: "propostas",
+            model: Proposta,
             key: "id",
         },
         allowNull: false,

@@ -1,12 +1,13 @@
 import { Sequelize } from "sequelize";
 
 import database from "../db.js";
+import Clientes from "./clientes.js";
 
 const Proposta = database.define("propostas", {
   idCliente: {
     type: Sequelize.INTEGER,
     references: {
-      model: "clientes",
+      model: Clientes,
       key: "id",
     },
     allowNull: false,

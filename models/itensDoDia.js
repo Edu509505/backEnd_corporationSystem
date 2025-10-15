@@ -1,12 +1,13 @@
 import { Sequelize } from "sequelize";
 
 import database from "../db.js";
+import DiarioDeObra from "./diarioDeObra.js";
 
  const ItensDoDia = database.define('itensDoDia', {
     idDiarioDeObra: {
         type: Sequelize.INTEGER,
         references: {
-            model: "diarioDeObra",
+            model: DiarioDeObra,
             key: "id",
         },
         allowNull: false,

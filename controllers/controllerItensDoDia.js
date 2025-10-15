@@ -17,16 +17,15 @@ async function createItensDoDia(req, res) {
 
     const itensValidado = resposta.data;
 
-    const itensDoDia = await ItensDoDia.create({
-        idDiarioDeObra: itensValidado.idDiarioDeObra,
-        descricao: itensValidado.descricao,
-        itemQuantitativa: itensValidado.itemQuantitativa,
-        quantidade: itensValidado.quantidade,
-    });
+    console.log(itensValidado)
 
-    console.log(itensDoDia);
-
-    res.status(200).json(itensDoDia);
+    try {
+        const itensDoDia = await ItensDoDia.create(itensValidado);
+        res.status(200).json(itensDoDia);
+    } catch (erro) {
+        console.error("Erro ao criar item:", erro);
+        res.status(500).json({ mensagem: "Erro interno ao salvar item." });
+    }
 
 }
 
