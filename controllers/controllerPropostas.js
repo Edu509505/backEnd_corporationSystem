@@ -168,6 +168,7 @@ async function getPropostasAprovadas(req, res) {
     }
 }
 
+<<<<<<< Updated upstream
 async function getPropostaVersionamentoAprovado(req, res){
     const { id } = req.params
     const versionamentoAprovado = await Proposta.findByPk(id, {include: "propostaVersionamento", where: {status: "APROVADA"}})
@@ -178,6 +179,20 @@ async function getPropostaVersionamentoAprovado(req, res){
        res.status(200).json(versionamentoAprovado)
     }
 }
+=======
+async function getTodasPropostasAprovadas(req, res) {
+    const getPropostasAprovadas = await Proposta.findAll({ where: { statusProposta: 'APROVADA' } });
+
+        if(!getPropostasAprovadas){
+            return res.status(500)
+            .json({ message: "erro ao buscar propostas aprovadas" })
+        } 
+
+        res.status(200).json(getPropostasAprovadas)
+
+}
+
+>>>>>>> Stashed changes
 
 async function updateProposta(req, res) {
     const { id } = req.params;
@@ -205,4 +220,8 @@ async function updateProposta(req, res) {
 }
 
 
+<<<<<<< Updated upstream
 export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado }
+=======
+export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getTodasPropostasAprovadas }
+>>>>>>> Stashed changes

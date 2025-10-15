@@ -23,11 +23,22 @@ Proposta.hasMany(Versionamento, { foreignKey: "idProposta", as: "propostaVersion
 //Varios versionamento pertencem a uma proposta - N:1
 Versionamento.belongsTo(Proposta, { foreignKey: "idProposta" });
 
-
+//N:1
 Anexo.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
 
+
+//1:N
+Medicoes.hasMany(DiarioDeObra, { foreignKey: "idDiarioDeObra" });
 //N:1
-Medicoes.belongsTo(Contratos);
+DiarioDeObra.belongsTo(Medicoes, {foreignKey: "idDiarioDeObra", as: "diarioDeObraMedicao"});
+
+//1:N
+Proposta.hasMany(Medicoes, { foreignKey: "idProposta"});
+//N:1
+Medicoes.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaMedicao" });
+
+//N:1
+Medicoes.belongsTo(Contratos, { foreignKey: "idContrato", as: "contratoMedicao" });
 
 //N:1
 Quantitativa.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
