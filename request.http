@@ -71,3 +71,6 @@ Content-Type: application/json
     "itemQuantitativa": "teste",
     "quantidade": 2
 }
+
+###
+GET http://localhost:3000/proposta/1/versionamentoAprovado/

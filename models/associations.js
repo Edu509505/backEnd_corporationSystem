@@ -19,7 +19,7 @@ Clientes.hasMany(Proposta, { foreignKey: "idCliente" });
 Proposta.belongsTo(Clientes, { foreignKey: "idCliente", as: "cliente" });
 
 //UMA PROPOSTA TERÁ VÁRIOS VERSIONAMENTO - 1:N
-Proposta.hasMany(Versionamento, { foreignKey: "idProposta" });
+Proposta.hasMany(Versionamento, { foreignKey: "idProposta", as: "propostaVersionamento" });
 //Varios versionamento pertencem a uma proposta - N:1
 Versionamento.belongsTo(Proposta, { foreignKey: "idProposta" });
 

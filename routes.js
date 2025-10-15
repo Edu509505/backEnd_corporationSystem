@@ -8,18 +8,18 @@ const pastaTemp = multer({
     }
 });
 
-import controleClientes from "./controllers/controllerClientes.js";
-import controleContrato from "./controllers/controllerContratos.js";
-import controleMedicoes from "./controllers/controllerMedicoes.js";
-import controlePropostas from "./controllers/controllerPropostas.js";
+import controllerClientes from "./controllers/controllerClientes.js";
+import controllerContrato from "./controllers/controllerContratos.js";
+import controllerMedicoes from "./controllers/controllerMedicoes.js";
+import controllerPropostas from "./controllers/controllerPropostas.js";
 import controllerLogin from "./controllers/controllerLogin.js";
 import controllerUser from "./controllers/controllerUser.js";
-import controleVersionamento from "./controllers/controllerVersionamento.js";
-import controlerQuantitativa from "./controllers/controllerQuantitativa.js";
+import controllerVersionamento from "./controllers/controllerVersionamento.js";
+import controllerrQuantitativa from "./controllers/controllerQuantitativa.js";
 import AnexoVersionamento from "./models/anexoVersionamento.js";
-import controleDiarioDeObra from "./controllers/controllerDiarioDeObra.js";
+import controllerDiarioDeObra from "./controllers/controllerDiarioDeObra.js";
 import controllerItensDoDia from "./controllers/controllerItensDoDia.js";
-//import controleAnexoVersionamento from "./controllers/controleAnexoVersionamento.js";
+//import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
 const router = Router();
 
 router.post('/login', controllerLogin.login);
@@ -28,51 +28,52 @@ router.post('/usuario', controllerUser.createUsuario);
 router.get('/usuarios', controllerUser.getUsuario);
 router.put('/usuario/:id', controllerUser.updateUsuario);
 
-router.get('/clientes', controleClientes.getCliente);
-router.get('/cliente/:id', controleClientes.getClientId);
-router.post('/clientes', controleClientes.createCliente);
-router.put('/cliente/:id', controleClientes.updateCliente);
+router.get('/clientes', controllerClientes.getCliente);
+router.get('/cliente/:id', controllerClientes.getClientId);
+router.post('/clientes', controllerClientes.createCliente);
+router.put('/cliente/:id', controllerClientes.updateCliente);
 
-router.get('/clientes/:id/contratos', controleClientes.getClienteContrato);
+router.get('/clientes/:id/contratos', controllerClientes.getClienteContrato);
 
-router.get('/contratos', controleContrato.getContratos);
-router.get('/contrato/:id', controleContrato.getContratoId);
-router.post('/contrato', pastaTemp.array('anexo', 10), controleContrato.createContrato);
+router.get('/contratos', controllerContrato.getContratos);
+router.get('/contrato/:id', controllerContrato.getContratoId);
+router.post('/contrato', pastaTemp.array('anexo', 10), controllerContrato.createContrato);
 
-router.get('/medicoes', controleMedicoes.getMedicoes);
-router.post('/medicoes', controleMedicoes.createMedicao);
+router.get('/medicoes', controllerMedicoes.getMedicoes);
+router.post('/medicoes', controllerMedicoes.createMedicao);
 
-router.post('/proposta', pastaTemp.array('files', 10), controlePropostas.createProposta);
-router.get('/proposta/:id', controlePropostas.getProposta);
-router.get('/propostas', controlePropostas.getPropostas);
-router.get('/cliente/:id/propostasAprovadas/', controlePropostas.getPropostasAprovadas)
+router.post('/proposta', pastaTemp.array('files', 10), controllerPropostas.createProposta);
+router.get('/proposta/:id', controllerPropostas.getProposta);
+router.get('/propostas', controllerPropostas.getPropostas);
+router.get('/cliente/:id/propostasAprovadas/', controllerPropostas.getPropostasAprovadas)
 router.post(
     '/proposta/:idProposta/versao',
     pastaTemp.array('files', 10),
-    controleVersionamento.createVersionamento
+    controllerVersionamento.createVersionamento
 );
+router.get('/proposta/:id/versionamentoAprovado/', controllerPropostas.getPropostaVersionamentoAprovado)
 
-router.get('/versionamento/:id', controleVersionamento.getVersionamento);
-router.get('/versionamentos', controleVersionamento.getVersionamentos);
-router.get('/proposta/:idProposta/versionamentos', controleVersionamento.getPropostaVersionamentos);
-router.put('/versionamento/:id', controleVersionamento.updateVersionamento);
+router.get('/versionamento/:id', controllerVersionamento.getVersionamento);
+router.get('/versionamentos', controllerVersionamento.getVersionamentos);
+router.get('/proposta/:idProposta/versionamentos', controllerVersionamento.getPropostaVersionamentos);
+router.put('/versionamento/:id', controllerVersionamento.updateVersionamento);
 
-router.post('/quantitativa', controlerQuantitativa.createQuantitativa);
-router.get('/quantitativa/:idVersionamento', controlerQuantitativa.getQuantitativas);
-router.put('/quantitativa/:id', controlerQuantitativa.updateQuantitativa);
+router.post('/quantitativa', controllerrQuantitativa.createQuantitativa);
+router.get('/quantitativa/:idVersionamento', controllerrQuantitativa.getQuantitativas);
+router.put('/quantitativa/:id', controllerrQuantitativa.updateQuantitativa);
 
-router.get('/versionamento/:idVersionamento/anexos/urls', controleVersionamento.getImageVersionamento);
+router.get('/versionamento/:idVersionamento/anexos/urls', controllerVersionamento.getImageVersionamento);
 
-router.post('/diarioDeObra', controleDiarioDeObra.createDiarioDeObra);
-router.get('/diarioDeObra/:id', controleDiarioDeObra.getDiarioDeObra);
+router.post('/diarioDeObra', controllerDiarioDeObra.createDiarioDeObra);
+router.get('/diarioDeObra/:id', controllerDiarioDeObra.getDiarioDeObra);
 
 
 router.post('/itensDoDia', controllerItensDoDia.createItensDoDia)
 
 
-router.post('/versionamento/:idProposta', controleVersionamento.createVersionamento);
+router.post('/versionamento/:idProposta', controllerVersionamento.createVersionamento);
 
-// router.post('/anexoVersionamento', controleAnexoVersionamento.uploadAnexoVersionamento)
+// router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 
 //router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
 

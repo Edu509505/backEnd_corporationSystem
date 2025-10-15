@@ -168,6 +168,16 @@ async function getPropostasAprovadas(req, res) {
     }
 }
 
+async function getPropostaVersionamentoAprovado(req, res){
+    const { id } = req.params
+    const versionamentoAprovado = await Proposta.findByPk(id, {include: "propostaVersionamento", where: {status: "APROVADA"}})
+
+    console.log("versionamentoAprovado", versionamentoAprovado.toJSON())
+
+    if (versionamentoAprovado) {
+       res.status(200).json(versionamentoAprovado)
+    }
+}
 
 async function updateProposta(req, res) {
     const { id } = req.params;
@@ -195,4 +205,4 @@ async function updateProposta(req, res) {
 }
 
 
-export default { createProposta, getProposta, getPropostas, getPropostasAprovadas }
+export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado }
