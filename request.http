@@ -37,3 +37,6 @@ Content-Type: application/json
     "descricao": "EduGostoso3.0",
     "local": "CasaDoKrlh"
 }
+
+###
+GET http://localhost:3000/contratos

@@ -4,26 +4,33 @@ import { s3 } from '../utils/s3.js';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import Contratos from "../models/contratos.js";
 import z from "zod";
-import Clientes from '../models/clientes.js';
 import AnexoContratos from '../models/anexoContratos.js'
 
 const validacaoSchema = z.object({
     idCliente: z.coerce.string(),
     idProposta: z.coerce.string(),
     titulo: z.string(),
-    anexo: z.array(z.file()).min(1)
-
-    //local: z.string()
+    anexo: z.array(z.object({
+        fieldname: z.string(),
+        originalname: z.string(),
+        encoding: z.string(),
+        mimetype: z.string(),
+        destination: z.string(),
+        filename: z.string(),
+        path: z.string(),
+        size: z.number()
+    }))
 });
 async function createContrato(req, res) {
 
-    ///const anexo = req.files; // ou req.file, dependendo do middleware
+    const anexo = req.files;
+    console.log("req.files ", anexo)
     const dadosRecebidos = {
         ...req.body,
-        anexo: Array.from(req.body.anexo),
+        anexo: anexo
     };
 
-
+    console.log("dadosRecebidos ", dadosRecebidos)
 
     const resposta = await validacaoSchema.safeParseAsync(dadosRecebidos);
     console.log("resposta: ", resposta)
@@ -41,6 +48,8 @@ async function createContrato(req, res) {
             status: 'ATIVO',
             // local: contratoValidada.local
         });
+
+        console.log(contrato)
 
         // Processar múltiplos arquivos
         if (req.files && req.files.length > 0) {
@@ -70,11 +79,12 @@ async function createContrato(req, res) {
 
                 // Salvar referência no banco para cada arquivo
                 await AnexoContratos.create({
-                    idCliente: contrato.id,
+                    idContrato: contrato.id,
+
                     path: s3Key // salva o caminho direto do s3
                 });
             }
-        } else return
+        }
         res.status(200).json({
             idCliente: parseInt(contrato.idCliente),
             idProposta: parseInt(contrato.idProposta),
@@ -83,12 +93,15 @@ async function createContrato(req, res) {
             //local: contrato.local
         });
     } catch (error) {
+        console.log('error', error)
         res.status(500).json({ message: "Erro ao criar contrato", error });
     }
 }
 
 async function getContratos(req, res) {
-    const contratos = await Contratos.findAll({ include: ['cliente_contrato', 'proposta'] });
+    const contratos = await Contratos.findAll({ include: ['clientesContratos', 'proposta'] });
+
+    console.log(contratos)
 
     if (contratos) {
         res.json(contratos.map(contratos => contratos.toJSON()))

@@ -5,7 +5,7 @@ import database from "../db.js";
 
 const AnexoVersionamento = database.define("anexoContratos", {
     //Aqui ele pega o id da tabela 
-    idContato: {
+    idContrato: {
         type: Sequelize.INTEGER,
         references: {
             model: Contrato, //Tabela

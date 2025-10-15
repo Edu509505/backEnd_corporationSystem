@@ -25,20 +25,23 @@ Versionamento.belongsTo(Proposta, { foreignKey: "idProposta" });
 
 
 Anexo.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
-//Versionamento.hasMany(Anexo, {foreignKey: ""})
 
 //N:1
 Medicoes.belongsTo(Contratos);
 
 //N:1
 Quantitativa.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
-Versionamento.hasMany(Quantitativa, { foreignKey: "idVersionamento" });
+Versionamento.hasMany(Quantitativa, { foreignKey: "idVersionamento", as: "quantitativa"});
 
 //1:1
 Proposta.hasOne(Contratos, { foreignKey: "idProposta", as: "contrato" });
 Contratos.belongsTo(Proposta, { foreignKey: "idProposta", as: "proposta" });
 
 AnexoContrato.belongsTo(Contratos, { foreignKey: "idContrato" })
+
+//NESSA PARTE SERÁ FEITO REQUISIÇÕES COM VÁRIOS INCLUDES PARA APRESNETAR AS INFORMAÇÕES DOS CONTRATOS
+Contratos.belongsTo(Clientes, { foreignKey: "idCliente", as: "clientesContratos" })
+
 
 //N:1
 DiarioDeObra.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaDiario" });
