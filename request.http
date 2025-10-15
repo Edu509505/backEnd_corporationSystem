@@ -47,19 +47,16 @@ Content-Type: application/json
 
 {
     "idProposta": 1,
-    "idItensDia": 1,
-    "dataDia": "2024-10-01",
-
+    "dataDia": "2024-10-01"
 }
+###
 
 POST http://localhost:3000/diarioDeObra
 Content-Type: application/json
 
 {
-    "idProposta": 1,
-    "dataDia": "2024-10-01",
-    "itensDia": "Início da fundação e escavação"
-
+    "idContrato": 1,
+    "dataDia": "2024-10-01"
 }
 
 
@@ -71,6 +68,6 @@ Content-Type: application/json
 {
     "idDiarioDeObra": 1,
     "descricao": "teste",
-    "itensQuantitativa": "",
+    "itemQuantitativa": "teste",
     "quantidade": 2
 }

@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize";
 import database from "../db.js";
 
  const ItensDoDia = database.define('itensDoDia', {
-    idDiaDeObra: {
+    idDiarioDeObra: {
         type: Sequelize.INTEGER,
         references: {
             model: "diarioDeObra",
@@ -15,11 +15,11 @@ import database from "../db.js";
         type: Sequelize.STRING,
         allowNull: false
     },
-    itemQuantativa: {
+    itemQuantitativa: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    quandtidade: {
+    quantidade: {
         type: Sequelize.INTEGER,
         allowNull: false
     }

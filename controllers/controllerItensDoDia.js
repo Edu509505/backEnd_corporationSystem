@@ -2,10 +2,10 @@ import z from 'zod';
 import ItensDoDia from "../models/itensDoDia.js";
 
 const validaItensDoDia = z.object({
-    idDiaDeObra: z.coerce.number(),
+    idDiarioDeObra: z.coerce.number(),
     descricao: z.string().min(1),
-    itemQuantativa: z.string().min(1),
-    quandtidade: z.coerce.number().min(1),
+    itemQuantitativa: z.string().min(1),
+    quantidade: z.coerce.number().min(1),
 });
 
 async function createItensDoDia(req, res) {
@@ -18,10 +18,10 @@ async function createItensDoDia(req, res) {
     const itensValidado = resposta.data;
 
     const itensDoDia = await ItensDoDia.create({
-        idDiaDeObra: itensValidado.idDiaDeObra,
+        idDiarioDeObra: itensValidado.idDiarioDeObra,
         descricao: itensValidado.descricao,
-        itemQuantativa: itensValidado.itemQuantativa,
-        quandtidade: itensValidado.quandtidade,
+        itemQuantitativa: itensValidado.itemQuantitativa,
+        quantidade: itensValidado.quantidade,
     });
 
     console.log(itensDoDia);
