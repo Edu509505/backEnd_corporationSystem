@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import { s3 } from '../utils/s3.js';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import Contratos from "../models/contratos.js";
-import z from "zod";
+import z, { includes } from "zod";
 import AnexoContratos from '../models/anexoContratos.js'
 
 const validacaoSchema = z.object({
@@ -113,8 +113,12 @@ async function getContratos(req, res) {
 async function getContratoId(req, res) {
     const { id } = req.params;
 
+    console.log("id Params", id)
+
     try {
-        const contratoId = await Contratos.findOne({ where: id })
+        const contratoId = await Contratos.findByPk(id, { include: ['clientesContratos', 'proposta'] })
+
+        console.log("Contrato ID", contratoId)
 
         if (contratoId) {
             res.json(contratoId.toJSON())
@@ -123,7 +127,7 @@ async function getContratoId(req, res) {
         }
 
     } catch (error) {
-        res.status(500).json({ message: "Erro ao encotrar", error })
+        res.status(500).json({ message: "Erro ao encontrar", error })
     }
 }
 
