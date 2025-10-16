@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 
 const SECRET_KEY = '123456789012345'
 
-async function authorization(req, res, next) {
+async function authentication(req, res, next) {
     console.log('req.cookies', req.cookies);
     if (!req.cookies.authorization) {
         return res.status(401).send('Você não está autenticado! Faça login primeiro')
@@ -23,4 +23,4 @@ async function authorization(req, res, next) {
     }
 }
 
-export default authorization
+export default authentication

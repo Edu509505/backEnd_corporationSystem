@@ -14,7 +14,7 @@ async function getAnexoContrato(req, res){
     
         for (let i = 0; i < response.length; i++) {
             const command = new GetObjectCommand({
-                Bucket: 'anexo-contrato',
+                Bucket: 'anexo-contratos',
                 Key: response[i].path
             })
     

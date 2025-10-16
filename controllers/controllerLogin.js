@@ -15,7 +15,9 @@ async function login(req, res) {
         return res.status(404).send('Usuário não encontrado')
     }
 
-    if (user.password !== password) {
+     const senhaValida = await bcrypt.compare(password, user.password);
+
+    if (senhaValida) {
         return res.status(401).send('Senha incorreta')
     }
 
