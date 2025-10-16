@@ -1,7 +1,3 @@
-import { readFile, readFileSync } from 'node:fs'
-import * as path from 'node:path';
-import { s3 } from '../utils/s3.js';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
 import Anexo from "../models/anexoVersionamento.js";
 
 async function createAnexoVersionamento(req, res) {

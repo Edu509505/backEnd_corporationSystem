@@ -19,6 +19,7 @@ import controllerrQuantitativa from "./controllers/controllerQuantitativa.js";
 import AnexoVersionamento from "./models/anexoVersionamento.js";
 import controllerDiarioDeObra from "./controllers/controllerDiarioDeObra.js";
 import controllerItensDoDia from "./controllers/controllerItensDoDia.js";
+import controllerAnexoContrato from "./controllers/controllerAnexoContratos.js"
 //import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
 const router = Router();
 
@@ -38,6 +39,7 @@ router.get('/clientes/:id/contratos', controllerClientes.getClienteContrato);
 router.get('/contratos', controllerContrato.getContratos);
 router.get('/contrato/:id', controllerContrato.getContratoId);
 router.post('/contrato', pastaTemp.array('anexo', 10), controllerContrato.createContrato);
+router.get('/contrato/:id/anexoContrato/url', controllerAnexoContrato.getAnexoContrato)
 
 router.get('/medicoes', controllerMedicoes.getMedicoes);
 router.post('/medicoes', controllerMedicoes.createMedicao);
