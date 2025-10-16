@@ -8,6 +8,7 @@ import z from 'zod';
 import Proposta from "../models/propostas.js";
 import Versionamento from "../models/versionamento.js";
 import AnexoVersionamento from '../models/anexoVersionamento.js';
+import { id } from 'zod/locales';
 
 const validacaoSchema = z.object({
     idCliente: z.coerce.number(),
@@ -168,7 +169,6 @@ async function getPropostasAprovadas(req, res) {
     }
 }
 
-<<<<<<< Updated upstream
 async function getPropostaVersionamentoAprovado(req, res){
     const { id } = req.params
     const versionamentoAprovado = await Proposta.findByPk(id, {include: "propostaVersionamento", where: {status: "APROVADA"}})
@@ -179,20 +179,30 @@ async function getPropostaVersionamentoAprovado(req, res){
        res.status(200).json(versionamentoAprovado)
     }
 }
-=======
+
 async function getTodasPropostasAprovadas(req, res) {
-    const getPropostasAprovadas = await Proposta.findAll({ where: { statusProposta: 'APROVADA' } });
+    try {
+        const propostasAprovadas = await Proposta.findAll({
+            where: { statusProposta: 'APROVADA' }
+        });
 
-        if(!getPropostasAprovadas){
-            return res.status(500)
-            .json({ message: "erro ao buscar propostas aprovadas" })
-        } 
+        if (!propostasAprovadas || propostasAprovadas.length === 0) {
+            return res.status(404).json({ message: "Nenhuma proposta aprovada encontrada" });
+        }
 
-        res.status(200).json(getPropostasAprovadas)
+        const propostasFiltradas = propostasAprovadas.map(proposta => ({
+            id: proposta.id,
+            idCliente: proposta.idCliente,
+            nomeDaProposta: proposta.nomeDaProposta,
+            descricao: proposta.descricao
+        }));
+
+        res.status(200).json(propostasFiltradas);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao buscar propostas aprovadas", error: error.message });
+    }
 
 }
-
->>>>>>> Stashed changes
 
 async function updateProposta(req, res) {
     const { id } = req.params;
@@ -220,8 +230,4 @@ async function updateProposta(req, res) {
 }
 
 
-<<<<<<< Updated upstream
-export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado }
-=======
-export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getTodasPropostasAprovadas }
->>>>>>> Stashed changes
+export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado, getTodasPropostasAprovadas }
