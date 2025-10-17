@@ -73,4 +73,4 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/proposta/1/versionamentoAprovado/
+GET http://localhost:3000/proposta/3/verAprovado

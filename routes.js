@@ -55,7 +55,8 @@ router.post(
     pastaTemp.array('files', 10),
     controllerVersionamento.createVersionamento
 );
-router.get('/proposta/:id/versionamentoAprovado/', authentication, controllerPropostas.getPropostaVersionamentoAprovado);
+router.get('/proposta/:id/versionamentoAprovado', authentication, controllerPropostas.getPropostaVersionamentoAprovado);
+router.get('/proposta/:idProposta/verAprovado', controllerVersionamento.getPropostaVersionamentoAprovado)
 router.get('/propostasAprovadas', authentication, controllerPropostas.getTodasPropostasAprovadas);
 
 router.get('/versionamento/:id', authentication, controllerVersionamento.getVersionamento);

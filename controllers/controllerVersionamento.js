@@ -111,6 +111,28 @@ async function getPropostaVersionamentos(req, res) {
     )
 }
 
+async function getPropostaVersionamentoAprovado(req, res) {
+     const { idProposta } = req.params
+    const propostaVersionamentos = await Versionamento.findAll({
+        where: {
+            idProposta,
+            status: "APROVADA"
+        }
+    });
+
+    if (!propostaVersionamentos) {
+        res.status(500).
+            json({
+                message: 'Não foi possivel buscar pelos versionamentos desta proposta'
+            });
+    }
+
+    res.json(
+        propostaVersionamentos
+            .map(propostaVersionamento =>
+                propostaVersionamento.toJSON())
+    )
+}
 
 async function getImageVersionamento(req, res) {
     const { idVersionamento } = req.params
@@ -181,5 +203,6 @@ export default {
     getVersionamento,
     getImageVersionamento,
     getPropostaVersionamentos,
-    updateVersionamento
+    updateVersionamento,
+    getPropostaVersionamentoAprovado
 }
