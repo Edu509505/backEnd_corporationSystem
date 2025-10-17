@@ -20,61 +20,63 @@ import AnexoVersionamento from "./models/anexoVersionamento.js";
 import controllerDiarioDeObra from "./controllers/controllerDiarioDeObra.js";
 import controllerItensDoDia from "./controllers/controllerItensDoDia.js";
 import controllerAnexoContrato from "./controllers/controllerAnexoContratos.js"
+import authentication from "./middleware/middlewares.js";
 //import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
 const router = Router();
 
-router.post('/login', controllerLogin.login);
+router.post('/login', authentication, controllerLogin.login);
 
-router.post('/usuario', controllerUser.createUsuario);
-router.get('/usuarios', controllerUser.getUsuario);
-router.put('/usuario/:id', controllerUser.updateUsuario);
+router.post('/usuario', authentication, controllerUser.createUsuario);
+router.get('/usuarios', authentication, controllerUser.getUsuario);
+router.put('/usuario/:id', authentication, controllerUser.updateUsuario);
 
-router.get('/clientes', controllerClientes.getCliente);
-router.get('/cliente/:id', controllerClientes.getClientId);
-router.post('/clientes', controllerClientes.createCliente);
-router.put('/cliente/:id', controllerClientes.updateCliente);
+router.get('/clientes', authentication, controllerClientes.getCliente);
+router.get('/cliente/:id', authentication, controllerClientes.getClientId);
+router.post('/clientes', authentication, controllerClientes.createCliente);
+router.put('/cliente/:id', authentication, controllerClientes.updateCliente);
 
-router.get('/clientes/:id/contratos', controllerClientes.getClienteContrato);
+router.get('/clientes/:id/contratos', authentication, controllerClientes.getClienteContrato);
 
-router.get('/contratos', controllerContrato.getContratos);
-router.get('/contrato/:id', controllerContrato.getContratoId);
-router.post('/contrato', pastaTemp.array('anexo', 10), controllerContrato.createContrato);
-router.get('/contrato/:id/anexoContrato/url', controllerAnexoContrato.getAnexoContrato)
+router.get('/contratos', authentication, controllerContrato.getContratos);
+router.get('/contrato/:id', authentication, controllerContrato.getContratoId);
+router.post('/contrato', authentication, pastaTemp.array('anexo', 10), controllerContrato.createContrato);
+router.get('/contrato/:id/anexoContrato/url', authentication, controllerAnexoContrato.getAnexoContrato)
 
-router.get('/medicoes', controllerMedicoes.getMedicoes);
-router.post('/medicoes', controllerMedicoes.createMedicao);
+router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
+router.post('/medicoes', authentication, controllerMedicoes.createMedicao);
 
-router.post('/proposta', pastaTemp.array('files', 10), controllerPropostas.createProposta);
-router.get('/proposta/:id', controllerPropostas.getProposta);
-router.get('/propostas', controllerPropostas.getPropostas);
-router.get('/cliente/:id/propostasAprovadas/', controllerPropostas.getPropostasAprovadas)
+router.post('/proposta', authentication, pastaTemp.array('files', 10), controllerPropostas.createProposta);
+router.get('/proposta/:id', authentication, controllerPropostas.getProposta);
+router.get('/propostas',  authentication, controllerPropostas.getPropostas);
+router.get('/cliente/:id/propostasAprovadas/', authentication, controllerPropostas.getPropostasAprovadas)
 router.post(
     '/proposta/:idProposta/versao',
+    authentication,
     pastaTemp.array('files', 10),
     controllerVersionamento.createVersionamento
 );
-router.get('/proposta/:id/versionamentoAprovado/', controllerPropostas.getPropostaVersionamentoAprovado);
-router.get('/propostasAprovadas', controllerPropostas.getTodasPropostasAprovadas);
+router.get('/proposta/:id/versionamentoAprovado/', authentication, controllerPropostas.getPropostaVersionamentoAprovado);
+router.get('/propostasAprovadas', authentication, controllerPropostas.getTodasPropostasAprovadas);
 
-router.get('/versionamento/:id', controllerVersionamento.getVersionamento);
-router.get('/versionamentos', controllerVersionamento.getVersionamentos);
-router.get('/proposta/:idProposta/versionamentos', controllerVersionamento.getPropostaVersionamentos);
-router.put('/versionamento/:id', controllerVersionamento.updateVersionamento);
+router.get('/versionamento/:id', authentication, controllerVersionamento.getVersionamento);
+router.get('/versionamentos', authentication, controllerVersionamento.getVersionamentos);
+router.get('/proposta/:idProposta/versionamentos', authentication, controllerVersionamento.getPropostaVersionamentos);
+router.put('/versionamento/:id', authentication, controllerVersionamento.updateVersionamento);
 
-router.post('/quantitativa', controllerrQuantitativa.createQuantitativa);
-router.get('/quantitativa/:idVersionamento', controllerrQuantitativa.getQuantitativas);
-router.put('/quantitativa/:id', controllerrQuantitativa.updateQuantitativa);
+router.post('/quantitativa', authentication, controllerrQuantitativa.createQuantitativa);
+router.get('/quantitativa/:idVersionamento', authentication, controllerrQuantitativa.getQuantitativas);
+router.put('/quantitativa/:id', authentication, controllerrQuantitativa.updateQuantitativa);
 
-router.get('/versionamento/:idVersionamento/anexos/urls', controllerVersionamento.getImageVersionamento);
+router.get('/versionamento/:idVersionamento/anexos/urls', authentication, controllerVersionamento.getImageVersionamento);
 
-router.post('/diarioDeObra', controllerDiarioDeObra.createDiarioDeObra);
-router.get('/diarioDeObra/:id', controllerDiarioDeObra.getDiarioDeObra);
-
-
-router.post('/itensDoDia', controllerItensDoDia.createItensDoDia)
+router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiarioDeObra);
+router.get('/diarioDeObra/:id', authentication, controllerDiarioDeObra.getDiarioDeObra);
 
 
-router.post('/versionamento/:idProposta', controllerVersionamento.createVersionamento);
+router.post('/itensDoDia', authentication, controllerItensDoDia.createItensDoDia)
+
+
+router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 

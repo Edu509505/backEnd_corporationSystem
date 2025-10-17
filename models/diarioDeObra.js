@@ -14,13 +14,6 @@ const DiarioDeObra = database.define('diarioDeObra', {
           key: "id",
         }
       },
-    idContrato: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: Contratos,
-          key: "id",
-        }
-    }, 
     dataDia: {
         type: DataTypes.DATEONLY,
         allowNull: false

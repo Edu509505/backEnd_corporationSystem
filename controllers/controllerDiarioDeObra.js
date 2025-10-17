@@ -4,16 +4,8 @@ import DiarioDeObra from "../models/diarioDeObra.js";
 const validaDiarioDeObra = z
     .object({
         idProposta: z.coerce.number().optional(),
-        idContrato: z.coerce.number().optional(),
         dataDia: z.coerce.date(),
     })
-    .refine(
-        (data) =>
-            (data.idProposta && !data.idContrato) ||
-            (!data.idProposta && data.idContrato),
-    );
-
-
 
 async function createDiarioDeObra(req, res) {
     const resposta = await validaDiarioDeObra.safeParseAsync(req.body);
@@ -27,8 +19,7 @@ async function createDiarioDeObra(req, res) {
     console.log(diarioValidado.dataDia)
 
     const diarioDeObra = await DiarioDeObra.create({
-        idProposta: diarioValidado.idProposta ?? null,
-        idContrato: diarioValidado.idContrato ?? null,
+        idProposta: diarioValidado.idProposta,
         dataDia: diarioValidado.dataDia,
     });
 
