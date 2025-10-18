@@ -1,5 +1,6 @@
-import z from 'zod'
+import z, { includes } from 'zod'
 import DiarioDeObra from "../models/diarioDeObra.js";
+import ItensDoDia from '../models/itensDoDia.js';
 
 const validaDiarioDeObra = z
     .object({
@@ -22,6 +23,27 @@ async function createDiarioDeObra(req, res) {
         idProposta: diarioValidado.idProposta,
         dataDia: diarioValidado.dataDia,
     });
+
+    
+        const { itensDoDia } = req.body;
+
+        const novosItensDoDia = await Promise.all(
+            itensDoDia.map(async (item) => {
+                const {
+                    idDiarioDeObra,
+                    descricao,
+                    itemQuantitativa, // aqui é "valor", não "valorUnitario"
+                    quantidade,
+                } = item;
+
+                return await ItensDoDia.create({
+                    idDiarioDeObra,
+                    descricao,
+                    itemQuantitativa,
+                    quantidade,
+                });
+            })
+        );
 
     console.log(diarioDeObra);
 

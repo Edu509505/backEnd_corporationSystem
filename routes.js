@@ -18,7 +18,6 @@ import controllerVersionamento from "./controllers/controllerVersionamento.js";
 import controllerrQuantitativa from "./controllers/controllerQuantitativa.js";
 import AnexoVersionamento from "./models/anexoVersionamento.js";
 import controllerDiarioDeObra from "./controllers/controllerDiarioDeObra.js";
-import controllerItensDoDia from "./controllers/controllerItensDoDia.js";
 import controllerAnexoContrato from "./controllers/controllerAnexoContratos.js"
 import authentication from "./middleware/middlewares.js";
 //import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
@@ -72,10 +71,6 @@ router.get('/versionamento/:idVersionamento/anexos/urls', authentication, contro
 
 router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiarioDeObra);
 router.get('/diarioDeObra/:id', authentication, controllerDiarioDeObra.getDiarioDeObra);
-
-
-router.post('/itensDoDia', authentication, controllerItensDoDia.createItensDoDia)
-
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 
