@@ -70,7 +70,10 @@ router.put('/quantitativa/:id', authentication, controllerrQuantitativa.updateQu
 router.get('/versionamento/:idVersionamento/anexos/urls', authentication, controllerVersionamento.getImageVersionamento);
 
 router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiarioDeObra);
-router.get('/diarioDeObra/:id', authentication, controllerDiarioDeObra.getDiarioDeObraComItens);
+router.get('/diario-de-obra/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPorProposta);
+router.get('/diario-de-obra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
+
+
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 

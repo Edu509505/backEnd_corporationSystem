@@ -3,71 +3,101 @@ import DiarioDeObra from "../models/diarioDeObra.js";
 import ItensDoDia from '../models/itensDoDia.js';
 
 const validaDiarioDeObra = z
-    .object({
-        idProposta: z.coerce.number().optional(),
-        dataDia: z.coerce.date(),
-    })
+  .object({
+    idProposta: z.coerce.number().optional(),
+    dataDia: z.coerce.date(),
+  })
 
 async function createDiarioDeObra(req, res) {
-    const resposta = await validaDiarioDeObra.safeParseAsync(req.body);
+  const resposta = await validaDiarioDeObra.safeParseAsync(req.body);
 
 
-    if (!resposta.success) {
-        return res.status(400).json(resposta.error)
-    }
+  if (!resposta.success) {
+    return res.status(400).json(resposta.error)
+  }
 
-    const diarioValidado = resposta.data;
-    console.log(diarioValidado.dataDia)
+  const diarioValidado = resposta.data;
+  console.log(diarioValidado.dataDia)
 
-    const diarioDeObra = await DiarioDeObra.create({
-        idProposta: diarioValidado.idProposta,
-        dataDia: diarioValidado.dataDia,
-    });
-
-
-    const { itensDoDia } = req.body;
-
-    const novosItensDoDia = await Promise.all(
-        itensDoDia.map(async (item) => {
-            const {
-                idQuantitativa,
-                descricao,
-                quantidade,
-            } = item;
-
-            return await ItensDoDia.create({
-                idDiarioDeObra: diarioDeObra.id, // associa ao diário criado
-                idQuantitativa,
-                descricao,
-                quantidade,
-            });
-        })
-    );
+  const diarioDeObra = await DiarioDeObra.create({
+    idProposta: diarioValidado.idProposta,
+    dataDia: diarioValidado.dataDia,
+  });
 
 
-    console.log(diarioDeObra);
+  const { itensDoDia } = req.body;
 
-    res.status(200).json(diarioDeObra);
+  const novosItensDoDia = await Promise.all(
+    itensDoDia.map(async (item) => {
+      const {
+        idQuantitativa,
+        descricao,
+        quantidade,
+      } = item;
+
+      return await ItensDoDia.create({
+        idDiarioDeObra: diarioDeObra.id, // associa ao diário criado
+        idQuantitativa,
+        descricao,
+        quantidade,
+      });
+    })
+  );
+
+
+  console.log(diarioDeObra);
+
+  res.status(200).json(diarioDeObra);
 
 }
 
-const { DiarioDeObra, ItensDoDia } = require('../models');
+async function getDiarioDeObraPorProposta(req, res) {
+  const { idProposta } = req.params;
 
-async function getDiarioDeObraComItens(req, res) {
   try {
-    const { id } = req.params; // id do diário de obra
-    const diario = await DiarioDeObra.findByPk(id, {
-      include: "itensDoDia"
+    const diarios = await DiarioDeObra.findAll({
+      where: { idProposta },
+      include: [
+        {
+          model: ItensDoDia,
+          as: 'itensDoDia',
+          include: 'quantitativa'  // nome do alias usado no relacionamento
+        },
+      ],
     });
 
-    if (!diario) {
-      return res.status(404).json({ error: 'Diário de obra não encontrado' });
+    if (diarios.length === 0) {
+      return res.status(404).json({ mensagem: 'Nenhum diário encontrado para esta proposta.' });
     }
 
-    res.json(diario);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(200).json(diarios);
+  } catch (error) {
+    console.error('Erro ao buscar diário de obra:', error);
+    res.status(500).json({ mensagem: 'Erro interno do servidor.' });
   }
 }
 
-export default { createDiarioDeObra, getDiarioDeObraComItens }
+async function getTodosOsDiariosDeObra(req, res) {
+  try {
+    const diarios = await DiarioDeObra.findAll({
+      include: [
+        {
+          model: ItensDoDia,
+          as: 'itensDoDia',
+          include: 'quantitativa'  
+        },
+      ],
+      order: [['dataDia', 'DESC']], // opcional: ordena por data
+    });
+
+    res.status(200).json(diarios);
+  } catch (error) {
+    console.error('Erro ao buscar diários de obra:', error);
+    res.status(500).json({ mensagem: 'Erro interno do servidor.' });
+  }
+}
+
+
+
+
+export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra }

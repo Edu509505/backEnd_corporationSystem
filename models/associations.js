@@ -72,8 +72,8 @@ DiarioDeObra.belongsTo(Contratos, { foreignKey: "idContrato" });
 //1:N
 Contratos.hasMany(DiarioDeObra, { foreignKey: "idContrato", as: "diarioDeObraContrato" });
 
-ItensDoDia.belongsTo(Quantitativa, { foreignKey: "idQuantitativa"});
-Quantitativa.hasMany(ItensDoDia, { foreignKey: "idQuantitativa", as: "itensDoDiaQuantitativa"});
+ItensDoDia.belongsTo(Quantitativa, { foreignKey: "idQuantitativa", as:"quantitativa"});
+Quantitativa.hasMany(ItensDoDia, { foreignKey: "idQuantitativa"});
 
 
 /*
