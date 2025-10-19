@@ -24,26 +24,26 @@ async function createDiarioDeObra(req, res) {
         dataDia: diarioValidado.dataDia,
     });
 
-    
-        const { itensDoDia } = req.body;
 
-        const novosItensDoDia = await Promise.all(
-            itensDoDia.map(async (item) => {
-                const {
-                    idDiarioDeObra,
-                    descricao,
-                    itemQuantitativa, // aqui é "valor", não "valorUnitario"
-                    quantidade,
-                } = item;
+    const { itensDoDia } = req.body;
 
-                return await ItensDoDia.create({
-                    idDiarioDeObra,
-                    descricao,
-                    itemQuantitativa,
-                    quantidade,
-                });
-            })
-        );
+    const novosItensDoDia = await Promise.all(
+        itensDoDia.map(async (item) => {
+            const {
+                idQuantitativa,
+                descricao,
+                quantidade,
+            } = item;
+
+            return await ItensDoDia.create({
+                idDiarioDeObra: diarioDeObra.id, // associa ao diário criado
+                idQuantitativa,
+                descricao,
+                quantidade,
+            });
+        })
+    );
+
 
     console.log(diarioDeObra);
 
@@ -51,21 +51,23 @@ async function createDiarioDeObra(req, res) {
 
 }
 
-async function getDiarioDeObra(req, res) {
-    const { idProposta, nomeDaProposta } = req.params
-    const diario = await DiarioDeObra.findAll({
-        where: {
-            idProposta: idProposta,
-            nomeDaProposta: nomeDaProposta
-        }
-    })
+const { DiarioDeObra, ItensDoDia } = require('../models');
+
+async function getDiarioDeObraComItens(req, res) {
+  try {
+    const { id } = req.params; // id do diário de obra
+    const diario = await DiarioDeObra.findByPk(id, {
+      include: "itensDoDia"
+    });
 
     if (!diario) {
-        res.status(404).json({ message: 'Não foi possivel encontrar' })
+      return res.status(404).json({ error: 'Diário de obra não encontrado' });
     }
 
-    res.status(200).json(diario);
+    res.json(diario);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 }
 
-
-export default { createDiarioDeObra, getDiarioDeObra }
+export default { createDiarioDeObra, getDiarioDeObraComItens }

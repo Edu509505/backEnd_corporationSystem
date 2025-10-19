@@ -25,10 +25,6 @@ import Quantitativa from "./quantitativa.js";
         type: Sequelize.STRING,
         allowNull: false
     },
-    itemQuantitativa: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
     quantidade: {
         type: Sequelize.INTEGER,
         allowNull: false
