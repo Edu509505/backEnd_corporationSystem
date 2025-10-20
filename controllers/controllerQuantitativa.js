@@ -86,5 +86,16 @@ async function updateQuantitativa(req, res) {
     }
 }
 
+async function getIdQuantitativa(req, res){
+    const { id } = req.params
 
-export default { createQuantitativa, getQuantitativas, updateQuantitativa };
+    const quantitativa = await Quantitativa.findByPk(id)
+
+    if(!quantitativa) return res.status(404).json({ error: "Quantitativa não encontrada" });
+
+    res.status(200).json(quantitativa)
+
+}
+
+
+export default { createQuantitativa, getQuantitativas, updateQuantitativa, getIdQuantitativa };

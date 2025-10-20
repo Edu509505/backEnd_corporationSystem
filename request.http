@@ -74,3 +74,10 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/proposta/3/verAprovado
+
+###
+
+GET http://localhost:3000/todosOsItensDoDia
+
+###
+GET http://localhost:3000/diarioDeObraParaGraficos

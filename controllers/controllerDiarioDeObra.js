@@ -1,6 +1,7 @@
 import z, { includes } from 'zod'
 import DiarioDeObra from "../models/diarioDeObra.js";
 import ItensDoDia from '../models/itensDoDia.js';
+import Quantitativa from '../models/quantitativa.js';
 
 const validaDiarioDeObra = z
   .object({
@@ -97,7 +98,17 @@ async function getTodosOsDiariosDeObra(req, res) {
   }
 }
 
+async function getDiarioDeObraParaGrafico(req, res){
+  //const {} = req.params
+  const diarioDeObra = await DiarioDeObra.findAll({
+    include: "itensDoDia"
+  })
 
+  
 
+  if(!diarioDeObra) return res.status(404).json({ error: "Nada encontrada"});
 
-export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra }
+  res.status(200).json(diarioDeObra)
+}
+
+export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra, getDiarioDeObraParaGrafico }
