@@ -98,21 +98,21 @@ async function getTodosOsDiariosDeObra(req, res) {
   }
 }
 
-async function getDiarioDeObraParaGrafico(req, res){
-  //const {} = req.params
-  const diarioDeObra = await DiarioDeObra.sequelize.query('SELECT do.idProposta, do.dataDia, i.sum(quantidade), q.unidadeDeMedida, q.descricao FROM itensDia AS i JOIN diarioDeObra AS do ON i.idDiarioDeObra = do.id JOIN quantitativa AS q on i.idQuantitativa = q.id WHERE q.descricao = "calçamento" GROUP BY q.unidadeDeMedida, do.idProposta, do.dataDia, q.descricao')
+// async function getDiarioDeObraParaGrafico(req, res){
+//   //const {} = req.params
+//   const diarioDeObra = await DiarioDeObra.sequelize.query('SELECT do.idProposta, do.dataDia, i.sum(quantidade), q.unidadeDeMedida, q.descricao FROM itensDia AS i JOIN diarioDeObra AS do ON i.idDiarioDeObra = do.id JOIN quantitativa AS q on i.idQuantitativa = q.id WHERE q.descricao = "calçamento" GROUP BY q.unidadeDeMedida, do.idProposta, do.dataDia, q.descricao')
   
-  console.log("DIARIO DE OBRA", diarioDeObra)
+//   console.log("DIARIO DE OBRA", diarioDeObra)
 
-  // .findAll({
-  //   include: "itensDoDia"
-  // })
+//   // .findAll({
+//   //   include: "itensDoDia"
+//   // })
 
   
 
-  if(!diarioDeObra) return res.status(404).json({ error: "Nada encontrada"});
+//   if(!diarioDeObra) return res.status(404).json({ error: "Nada encontrada"});
 
-  res.status(200).json(diarioDeObra)
-}
+//   res.status(200).json(diarioDeObra)
+// }
 
-export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra, getDiarioDeObraParaGrafico }
+export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra }

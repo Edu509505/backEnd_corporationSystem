@@ -42,8 +42,7 @@ router.get('/contrato/:id', authentication, controllerContrato.getContratoId);
 router.post('/contrato', authentication, pastaTemp.array('anexo', 10), controllerContrato.createContrato);
 router.get('/contrato/:id/anexoContrato/url', authentication, controllerAnexoContrato.getAnexoContrato)
 
-router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
-router.post('/medicoes', authentication, controllerMedicoes.createMedicao);
+
 
 router.post('/proposta', authentication, pastaTemp.array('files', 10), controllerPropostas.createProposta);
 router.get('/proposta/:id', authentication, controllerPropostas.getProposta);
@@ -73,9 +72,9 @@ router.get('/versionamento/:idVersionamento/anexos/urls', authentication, contro
 router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiarioDeObra);
 router.get('/diario-de-obra/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPorProposta);
 router.get('/diario-de-obra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
-router.get('/diarioDeObraParaGraficos', controllerDiarioDeObra.getDiarioDeObraParaGrafico)
 
-
+router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
+router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 
