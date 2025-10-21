@@ -81,3 +81,6 @@ GET http://localhost:3000/todosOsItensDoDia
 
 ###
 GET http://localhost:3000/diarioDeObraParaGraficos
+
+###
+GET http://localhost:3000/versionamentos

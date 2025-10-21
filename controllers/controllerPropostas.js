@@ -185,8 +185,8 @@ async function getTodasPropostasAprovadas(req, res) {
         const propostasAprovadas = await Proposta.findAll({
             where: { statusProposta: 'APROVADA' }
         });
-
-        if (!propostasAprovadas || propostasAprovadas.length === 0) {
+        // || propostasAprovadas.length === 0
+        if (!propostasAprovadas) {
             return res.status(404).json({ message: "Nenhuma proposta aprovada encontrada" });
         }
 

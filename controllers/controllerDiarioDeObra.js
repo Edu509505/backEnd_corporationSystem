@@ -100,9 +100,13 @@ async function getTodosOsDiariosDeObra(req, res) {
 
 async function getDiarioDeObraParaGrafico(req, res){
   //const {} = req.params
-  const diarioDeObra = await DiarioDeObra.findAll({
-    include: "itensDoDia"
-  })
+  const diarioDeObra = await DiarioDeObra.sequelize.query('SELECT do.idProposta, do.dataDia, i.sum(quantidade), q.unidadeDeMedida, q.descricao FROM itensDia AS i JOIN diarioDeObra AS do ON i.idDiarioDeObra = do.id JOIN quantitativa AS q on i.idQuantitativa = q.id WHERE q.descricao = "calçamento" GROUP BY q.unidadeDeMedida, do.idProposta, do.dataDia, q.descricao')
+  
+  console.log("DIARIO DE OBRA", diarioDeObra)
+
+  // .findAll({
+  //   include: "itensDoDia"
+  // })
 
   
 

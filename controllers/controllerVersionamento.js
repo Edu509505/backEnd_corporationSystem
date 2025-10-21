@@ -70,6 +70,7 @@ async function getVersionamento(req, res) {
     const { id } = req.params
 
     const versionamento = await Versionamento.findByPk(id);
+    
 
     if (versionamento) {
         res.status(200).json(versionamento.toJSON);
