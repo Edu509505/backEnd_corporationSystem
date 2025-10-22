@@ -24,7 +24,7 @@ const Medicoes = database.define("medicoes", {
     allowNull: false
   },
   data: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     allowNull: false
   },
   periodo: {

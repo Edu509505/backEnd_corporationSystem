@@ -74,7 +74,7 @@ router.get('/diario-de-obra/proposta/:idProposta', controllerDiarioDeObra.getDia
 router.get('/diario-de-obra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
 
 router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
-router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
+// router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 

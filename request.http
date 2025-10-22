@@ -84,3 +84,16 @@ GET http://localhost:3000/diarioDeObraParaGraficos
 
 ###
 GET http://localhost:3000/versionamentos
+
+###
+POST http://localhost:3000/criarMedicao
+Content-Type: application/json
+
+{
+    "idCliente": 1,
+    "obra": 1,
+    "local": "Santos",
+    "data": "2025-10-21",
+    "periodo": "22-10 - 22-11",
+    "valorTotal": 50000
+}
