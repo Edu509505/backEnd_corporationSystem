@@ -4,7 +4,7 @@ import { cnpj } from "cpf-cnpj-validator";
 import z from "zod"
 
 const criarClienteSchema = z.object({
-  cliente: z
+  name: z
     .string()
     .min(3, "Escreva um nome válido")
     .nonempty("Campo Obrigatório"),

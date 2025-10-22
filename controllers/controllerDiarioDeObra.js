@@ -2,6 +2,8 @@ import z, { includes } from 'zod'
 import DiarioDeObra from "../models/diarioDeObra.js";
 import ItensDoDia from '../models/itensDoDia.js';
 import Quantitativa from '../models/quantitativa.js';
+import Proposta from '../models/propostas.js';
+import Clientes from '../models/clientes.js';
 
 const validaDiarioDeObra = z
   .object({
@@ -58,14 +60,25 @@ async function getDiarioDeObraPorProposta(req, res) {
   try {
     const diarios = await DiarioDeObra.findAll({
       where: { idProposta },
-      include: [
+      iinclude: [
+        {
+          model: Proposta,
+          as: 'propostaDiario',
+          include: {
+            model: Clientes,
+            as: 'cliente'
+          }
+        },
         {
           model: ItensDoDia,
           as: 'itensDoDia',
-          include: 'quantitativa'  // nome do alias usado no relacionamento
-        },
+          include: {
+            model: Quantitativa,
+            as: 'quantitativa'
+          }
+        }
       ],
-    });
+    }); 
 
     if (diarios.length === 0) {
       return res.status(404).json({ mensagem: 'Nenhum diário encontrado para esta proposta.' });
@@ -83,12 +96,22 @@ async function getTodosOsDiariosDeObra(req, res) {
     const diarios = await DiarioDeObra.findAll({
       include: [
         {
-          model: ItensDoDia,
-          as: 'itensDoDia',
-          include: 'quantitativa'  
+          model: Proposta,
+          as: 'propostaDiario',
+          include: {
+            model: Clientes,
+            as: 'cliente'
+          }
         },
+        // {
+        //   model: ItensDoDia,
+        //   as: 'itensDoDia',
+        //   include: {
+        //     model: Quantitativa,
+        //     as: 'quantitativa'
+        //   }
+        // }
       ],
-      order: [['dataDia', 'DESC']], // opcional: ordena por data
     });
 
     res.status(200).json(diarios);

@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize";
 import database from "../db.js";
 
 const Clientes = database.define("clientes", {
-  cliente: {
+  name: {
     type: Sequelize.STRING,
     allowNull: false,
   },

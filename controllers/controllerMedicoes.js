@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import Medicoes from "../models/medicoes.js";
 import z from "zod";
 
@@ -26,3 +27,7 @@ async function createMedicao(req, res) {
 }
 
 export default { createMedicao }
+=======
+// import Medicoes from "../models/medicoes.js";
+// import z from "zod";
+>>>>>>> Stashed changes

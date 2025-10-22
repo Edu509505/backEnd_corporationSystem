@@ -27,10 +27,10 @@ Versionamento.belongsTo(Proposta, { foreignKey: "idProposta" });
 Anexo.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
 
 
-//1:N
-Medicoes.hasMany(DiarioDeObra, { foreignKey: "idDiarioDeObra" });
-//N:1
-DiarioDeObra.belongsTo(Medicoes, {foreignKey: "idDiarioDeObra", as: "diarioDeObraMedicao"});
+// //1:N
+Medicoes.hasMany(DiarioDeObra, { foreignKey: "idMedicao" });
+// //N:1
+DiarioDeObra.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "diarioDeObraMedicao"});
 
 //1:N
 Proposta.hasMany(Medicoes, { foreignKey: "idProposta"});
@@ -66,11 +66,6 @@ DiarioDeObra.hasMany(ItensDoDia, { foreignKey: "idDiarioDeObra", as: "itensDoDia
 //N:1
 ItensDoDia.belongsTo(DiarioDeObra, { foreignKey: "idDiarioDeObra", as: "diarioDeObraItensDia" });
 
-//DiarioDeObra pertence a um contrato
-//N:1
-DiarioDeObra.belongsTo(Contratos, { foreignKey: "idContrato" });
-//1:N
-Contratos.hasMany(DiarioDeObra, { foreignKey: "idContrato", as: "diarioDeObraContrato" });
 
 ItensDoDia.belongsTo(Quantitativa, { foreignKey: "idQuantitativa", as:"quantitativa"});
 Quantitativa.hasMany(ItensDoDia, { foreignKey: "idQuantitativa"});

@@ -10,7 +10,7 @@ const pastaTemp = multer({
 
 import controllerClientes from "./controllers/controllerClientes.js";
 import controllerContrato from "./controllers/controllerContratos.js";
-import controllerMedicoes from "./controllers/controllerMedicoes.js";
+// import controllerMedicoes from "./controllers/controllerMedicoes.js";
 import controllerPropostas from "./controllers/controllerPropostas.js";
 import controllerLogin from "./controllers/controllerLogin.js";
 import controllerUser from "./controllers/controllerUser.js";
@@ -71,9 +71,13 @@ router.get('/versionamento/:idVersionamento/anexos/urls', authentication, contro
 
 router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiarioDeObra);
 router.get('/diario-de-obra/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPorProposta);
-router.get('/diario-de-obra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
+router.get('/diarioDeObra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
 
+<<<<<<< Updated upstream
 router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
+=======
+// router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
+>>>>>>> Stashed changes
 // router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
