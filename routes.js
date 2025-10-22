@@ -73,11 +73,7 @@ router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiario
 router.get('/diario-de-obra/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPorProposta);
 router.get('/diarioDeObra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
 
-<<<<<<< Updated upstream
 router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
-=======
-// router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
->>>>>>> Stashed changes
 // router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
