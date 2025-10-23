@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-import database from "../db.js";
+import database from "../db/database.js";
 
 const Clientes = database.define("clientes", {
   name: {

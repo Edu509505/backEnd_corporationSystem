@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-import database from "../db.js";
+import database from "../db/database.js";
 import Clientes from "./clientes.js";
 import Proposta from "./propostas.js";
 
