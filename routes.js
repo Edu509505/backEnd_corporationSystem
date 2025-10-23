@@ -16,7 +16,7 @@ import controllerLogin from "./controllers/controllerLogin.js";
 import controllerUser from "./controllers/controllerUser.js";
 import controllerVersionamento from "./controllers/controllerVersionamento.js";
 import controllerrQuantitativa from "./controllers/controllerQuantitativa.js";
-import AnexoVersionamento from "./models/anexoVersionamento.js";
+//import AnexoVersionamento from "./models/anexoVersionamento.js";
 import controllerDiarioDeObra from "./controllers/controllerDiarioDeObra.js";
 import controllerAnexoContrato from "./controllers/controllerAnexoContratos.js"
 import controllerItensDia from "./controllers/controllerItensDoDia.js"
@@ -73,7 +73,7 @@ router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiario
 router.get('/diario-de-obra/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPorProposta);
 router.get('/diarioDeObra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
 
-router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
+//router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
 // router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
