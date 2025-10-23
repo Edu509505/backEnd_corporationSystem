@@ -12,7 +12,7 @@ const Medicoes = database.define("medicoes", {
       key: "id"
     }
   },
-  obra: {
+  idProposta: {
     type: Sequelize.INTEGER,
     references: {
       model: Proposta,

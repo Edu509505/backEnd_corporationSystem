@@ -3,7 +3,7 @@ import z from "zod";
 
 const medicoesSechema = z.object({
     idCliente: z.coerce.number(1),
-    obra: z.coerce.number(1),
+    idProposta: z.coerce.number(1),
     local: z.string(3),
     data: z.coerce.date(1),
     periodo: z.string(1),
