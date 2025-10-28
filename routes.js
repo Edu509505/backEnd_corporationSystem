@@ -46,7 +46,7 @@ router.get('/contrato/:id/anexoContrato/url', authentication, controllerAnexoCon
 
 router.post('/proposta', authentication, pastaTemp.array('files', 10), controllerPropostas.createProposta);
 router.get('/proposta/:id', authentication, controllerPropostas.getProposta);
-router.get('/propostas',  authentication, controllerPropostas.getPropostas);
+router.get('/propostas', authentication, controllerPropostas.getPropostas);
 router.get('/cliente/:id/propostasAprovadas/', authentication, controllerPropostas.getPropostasAprovadas)
 router.post(
     '/proposta/:idProposta/versao',
@@ -72,6 +72,7 @@ router.get('/versionamento/:idVersionamento/anexos/urls', authentication, contro
 router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiarioDeObra);
 router.get('/diario-de-obra/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPorProposta);
 router.get('/diarioDeObra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
+router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal', controllerDiarioDeObra.getDiarioDeObraPeriodo)
 
 //router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
 // router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);

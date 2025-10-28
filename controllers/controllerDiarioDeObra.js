@@ -4,6 +4,7 @@ import ItensDoDia from '../models/itensDoDia.js';
 import Quantitativa from '../models/quantitativa.js';
 import Proposta from '../models/propostas.js';
 import Clientes from '../models/clientes.js';
+import { Op } from 'sequelize';
 
 const validaDiarioDeObra = z
   .object({
@@ -78,7 +79,7 @@ async function getDiarioDeObraPorProposta(req, res) {
           }
         }
       ],
-    }); 
+    });
 
     if (diarios.length === 0) {
       return res.status(404).json({ mensagem: 'Nenhum diário encontrado para esta proposta.' });
@@ -121,21 +122,40 @@ async function getTodosOsDiariosDeObra(req, res) {
   }
 }
 
+async function getDiarioDeObraPeriodo(req, res) {
+  try {
+    const datas = req.params
+    console.log("datas da Requisição", datas)
+    const trazerPeriodo = await DiarioDeObra.findAll({
+      where: {
+        dataDia: {
+          [Op.between]: [datas.dataInicial, datas.dataFinal]
+        }
+      }
+    })
+
+    res.status(200).json(trazerPeriodo)
+
+  } catch {
+    res.status(500).json({ message: "Erro Interno" })
+  }
+}
+
 // async function getDiarioDeObraParaGrafico(req, res){
 //   //const {} = req.params
 //   const diarioDeObra = await DiarioDeObra.sequelize.query('SELECT do.idProposta, do.dataDia, i.sum(quantidade), q.unidadeDeMedida, q.descricao FROM itensDia AS i JOIN diarioDeObra AS do ON i.idDiarioDeObra = do.id JOIN quantitativa AS q on i.idQuantitativa = q.id WHERE q.descricao = "calçamento" GROUP BY q.unidadeDeMedida, do.idProposta, do.dataDia, q.descricao')
-  
+
 //   console.log("DIARIO DE OBRA", diarioDeObra)
 
 //   // .findAll({
 //   //   include: "itensDoDia"
 //   // })
 
-  
+
 
 //   if(!diarioDeObra) return res.status(404).json({ error: "Nada encontrada"});
 
 //   res.status(200).json(diarioDeObra)
 // }
 
-export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra }
+export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra, getDiarioDeObraPeriodo }

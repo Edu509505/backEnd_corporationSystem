@@ -97,3 +97,7 @@ Content-Type: application/json
     "periodo": "22-10 - 22-11",
     "valorTotal": 50000
 }
+
+###
+
+GET http://localhost:3000/diarioDeObraPeriodo/2025-10-15/2025-11-15
