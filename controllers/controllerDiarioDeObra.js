@@ -61,7 +61,7 @@ async function getDiarioDeObraPorProposta(req, res) {
   try {
     const diarios = await DiarioDeObra.findAll({
       where: { idProposta },
-      iinclude: [
+      include: [
         {
           model: Proposta,
           as: 'propostaDiario',
