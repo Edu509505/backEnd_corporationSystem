@@ -101,3 +101,9 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/diarioDeObraPeriodo/2025-10-01/2025-11-15/proposta/1
+
+###
+GET http://localhost:3000/proposta/1/verAprovado
+
+###
+GET http://localhost:3000/quantitativa/1

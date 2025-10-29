@@ -128,14 +128,15 @@ async function getDiarioDeObraPeriodo(req, res) {
     console.log("datas da Requisição", datas.idProposta)
     const trazerPeriodo = await DiarioDeObra.findAll(
       {
-      where: {
-        idProposta: datas.idProposta,
-        dataDia: {
-          [Op.between]: [datas.dataInicial, datas.dataFinal]
+        where: {
+          idProposta: datas.idProposta,
+          dataDia: {
+            [Op.between]: [datas.dataInicial, datas.dataFinal]
+          },
+          idMedicao: null,
         },
-        idMedicao: null,
-      }
-    })
+        include: "itensDoDia"
+      })
 
     res.status(200).json(trazerPeriodo)
 
