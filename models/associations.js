@@ -8,6 +8,7 @@ import Quantitativa from './quantitativa.js';
 import DiarioDeObra from './diarioDeObra.js';
 import ItensDoDia from './itensDoDia.js';
 import AnexoContrato from './anexoContratos.js'
+import { Faturamento } from './faturamento.js';
 
 
 Clientes.hasMany(Contratos, { foreignKey: "idCliente" });
@@ -66,11 +67,13 @@ DiarioDeObra.hasMany(ItensDoDia, { foreignKey: "idDiarioDeObra", as: "itensDoDia
 //N:1
 ItensDoDia.belongsTo(DiarioDeObra, { foreignKey: "idDiarioDeObra", as: "diarioDeObraItensDia" });
 
-
+//N:1
 ItensDoDia.belongsTo(Quantitativa, { foreignKey: "idQuantitativa", as:"quantitativa"});
+// 1:N
 Quantitativa.hasMany(ItensDoDia, { foreignKey: "idQuantitativa"});
 
-
+//N:1
+Faturamento.belongsTo(Medicoes, { foreignKey: "idMedicao", as:"medicao" });
 /*
 
 - 1:1 (um para um) → .hasOne() e .belongsTo()
