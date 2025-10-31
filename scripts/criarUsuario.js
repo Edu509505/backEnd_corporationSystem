@@ -2,12 +2,12 @@ import bcrypt from "bcrypt";
 import Usuarios  from "../models/usuarios.js";
 
 async function criarUsuario() {
-  const senha = "senha123";
+  const senha = "@_SenhaMaisDificilDesseMundo123_@";
   const senhaCriptografada = await bcrypt.hash(senha, 10);
 
   const novoUsuario = await Usuarios.create({
-    username: "João da Silva",
-    email: "joao@email.com",
+    username: "Eduardo Nascimento",
+    email: "tio.edu@email.com",
     password: senhaCriptografada,
     role: "plebe", // ou "adm"
   });

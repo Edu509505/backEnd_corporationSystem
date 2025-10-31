@@ -15,7 +15,10 @@ const app = express()
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+  origin: "http://localhost:5173", // ou o domínio do seu frontend
+  credentials: true,              // ← ESSENCIAL para cookies
+}));
 app.use(router)
 
 app.listen(3000, () => {
