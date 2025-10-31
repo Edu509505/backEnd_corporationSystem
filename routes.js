@@ -21,6 +21,7 @@ import controllerDiarioDeObra from "./controllers/controllerDiarioDeObra.js";
 import controllerAnexoContrato from "./controllers/controllerAnexoContratos.js"
 import controllerItensDia from "./controllers/controllerItensDoDia.js"
 import authentication from "./middleware/middlewares.js";
+import controllerMedicao from "./controllers/controllerMedicoes.js"
 //import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
 const router = Router();
 
@@ -80,6 +81,8 @@ router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal/proposta/:idProposta', 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 
 router.get('/todosOsItensDoDia', authentication, controllerItensDia.tudoDoitensDoDia)
+
+router.post('/criarMedicao', authentication, controllerMedicao.createMedicao)
 
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 

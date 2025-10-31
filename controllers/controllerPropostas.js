@@ -8,7 +8,6 @@ import z from 'zod';
 import Proposta from "../models/propostas.js";
 import Versionamento from "../models/versionamento.js";
 import AnexoVersionamento from '../models/anexoVersionamento.js';
-import { id } from 'zod/locales';
 
 const validacaoSchema = z.object({
     idCliente: z.coerce.number(),
@@ -169,14 +168,14 @@ async function getPropostasAprovadas(req, res) {
     }
 }
 
-async function getPropostaVersionamentoAprovado(req, res){
+async function getPropostaVersionamentoAprovado(req, res) {
     const { id } = req.params
-    const versionamentoAprovado = await Proposta.findByPk(id, {include: "propostaVersionamento", where: {status: "APROVADA"}})
+    const versionamentoAprovado = await Proposta.findByPk(id, { include: "propostaVersionamento", where: { status: "APROVADA" } })
 
     console.log("versionamentoAprovado", versionamentoAprovado.toJSON())
 
     if (versionamentoAprovado) {
-       res.status(200).json(versionamentoAprovado)
+        res.status(200).json(versionamentoAprovado)
     }
 }
 

@@ -7,7 +7,7 @@ import Clientes from "./clientes.js";
 const Medicoes = database.define("medicoes", {
   idCliente: {
     type: Sequelize.INTEGER,
-    references:{
+    references: {
       model: Clientes,
       key: "id"
     }
@@ -19,21 +19,21 @@ const Medicoes = database.define("medicoes", {
       key: "id"
     }
   },
-  local: {
+  observacao: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  periodoInicial: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  data: {
-    type: Sequelize.DATEONLY,
-    allowNull: false
-  },
-  periodo: {
+  periodoFinal: {
     type: Sequelize.STRING,
     allowNull: false
   },
   valorTotal: {
     type: Sequelize.NUMBER,
-    allowNull: false
+    allowNull: true
   }
 });
 
