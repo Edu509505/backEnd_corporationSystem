@@ -24,7 +24,7 @@ import authentication from "./middleware/middlewares.js";
 //import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
 const router = Router();
 
-router.post('/login', authentication, controllerLogin.login);
+router.post('/login', controllerLogin.login);
 
 router.post('/usuario', authentication, controllerUser.createUsuario);
 router.get('/usuarios', authentication, controllerUser.getUsuario);

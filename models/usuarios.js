@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize";
 import database from '../db/database.js';
 
 const Usuarios = database.define("usuarios", {
-    username:{
+    username: {
         type: Sequelize.STRING,
         allowNull: false
     },
@@ -11,14 +11,19 @@ const Usuarios = database.define("usuarios", {
         type: Sequelize.STRING,
         allowNull: false
     },
-    password:{
+    password: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    path:{
+    path: {
         type: Sequelize.STRING
+    },
+    role: {
+        type: Sequelize.ENUM("plebe", "adm"),
+        allowNull: false,
+        defaultValue: "plebe",
     }
-})
+});
 
 // Coloquei uma virgula a mais
 export default Usuarios

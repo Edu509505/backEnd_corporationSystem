@@ -1,5 +1,6 @@
 import Usuarios from "../models/usuarios.js"
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
 const SECRET_KEY = '123456789012345'
 
@@ -17,7 +18,7 @@ async function login(req, res) {
 
      const senhaValida = await bcrypt.compare(password, user.password);
 
-    if (senhaValida) {
+    if (!senhaValida) {
         return res.status(401).send('Senha incorreta')
     }
 
