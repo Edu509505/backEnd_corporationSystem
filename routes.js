@@ -25,7 +25,25 @@ import controllerMedicao from "./controllers/controllerMedicoes.js"
 //import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
 const router = Router();
 
-router.post('/login', authentication, controllerLogin.login);
+router.get("/me", authentication, (req, res) => {
+  if (!req.user) {
+    return res.status(404).send("Usuário não encontrado");
+  }
+  const { id, username, email, role } = req.user;
+  res.json({ id, name: username, email, role });
+});
+
+router  .post("/logout", (req, res) => {
+  res.clearCookie("authorization", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: false, // true em produção com HTTPS
+  });
+  res.sendStatus(200);
+});
+
+
+router.post('/login', controllerLogin.login);
 
 router.post('/usuario', authentication, controllerUser.createUsuario);
 router.get('/usuarios', authentication, controllerUser.getUsuario);
