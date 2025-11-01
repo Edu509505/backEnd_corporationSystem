@@ -83,7 +83,7 @@ router.get('/proposta/:idProposta/versionamentos', authentication, controllerVer
 router.put('/versionamento/:id', authentication, controllerVersionamento.updateVersionamento);
 
 router.post('/quantitativa', authentication, controllerrQuantitativa.createQuantitativa);
-router.get('/quantitativa/:idVersionamento', authentication, controllerrQuantitativa.getQuantitativas);
+router.get('/quantitativa/:idProposta', authentication, controllerrQuantitativa.getQuantitativas);
 router.put('/quantitativa/:id', authentication, controllerrQuantitativa.updateQuantitativa);
 
 router.get('/versionamento/:idVersionamento/anexos/urls', authentication, controllerVersionamento.getImageVersionamento);

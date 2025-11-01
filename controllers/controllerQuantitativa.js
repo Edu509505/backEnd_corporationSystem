@@ -1,4 +1,6 @@
+import Proposta from '../models/propostas.js';
 import Quantitativa from '../models/quantitativa.js';
+import Versionamento from '../models/versionamento.js';
 
 async function createQuantitativa(req, res) {
     try {
@@ -34,13 +36,22 @@ async function createQuantitativa(req, res) {
 
 async function getQuantitativas(req, res) {
     try {
-        const { idVersionamento } = req.params;
+        const { idProposta } = req.params;
+        console.log ('idProposta to aqui', idProposta)
+
+        //query que pega a proposta o versionamento aprovado da proposta que foi mandada
+
+        const versionamentoAprovado = await Versionamento.findOne({
+            where: {
+                idProposta, 
+                status: 'APROVADA'
+            }
+        })
+
 
         const quantitativas = await Quantitativa.findAll({
-            where: { idVersionamento }
+            where: { idVersionamento: versionamentoAprovado.id }
         });
-
-        console.log(idVersionamento);
 
         if (!quantitativas || quantitativas.length === 0) {
             return res.status(404).json({ error: "Nenhuma quantitativa encontrada" });
