@@ -13,14 +13,16 @@ async function login(req, res) {
     const user = await Usuarios.findOne({ where: { email } })
 
     if (!user) {
-        return res.status(404).send('Usuário não encontrado')
+        return res.status(404).json({ error: 'Usuário não encontrado' });
     }
+
 
     const senhaValida = await bcrypt.compare(password, user.password);
 
     if (!senhaValida) {
-        return res.status(401).send('Senha incorreta')
+        return res.status(401).json({ error: 'Senha incorreta' });
     }
+
 
     const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1d" });
 
