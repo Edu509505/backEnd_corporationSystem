@@ -37,22 +37,22 @@ async function createQuantitativa(req, res) {
 async function getQuantitativas(req, res) {
     try {
         const { idProposta } = req.params;
-        console.log ('idProposta to aqui', idProposta)
+        console.log('idProposta to aqui', idProposta)
 
         //query que pega a proposta o versionamento aprovado da proposta que foi mandada
 
         const versionamentoAprovado = await Versionamento.findOne({
             where: {
-                idProposta, 
+                idProposta,
                 status: 'APROVADA'
             }
         })
 
-
+        console.log(versionamentoAprovado)
         const quantitativas = await Quantitativa.findAll({
             where: { idVersionamento: versionamentoAprovado.id }
         });
-
+        console.log(quantitativas)
         if (!quantitativas || quantitativas.length === 0) {
             return res.status(404).json({ error: "Nenhuma quantitativa encontrada" });
         }
@@ -97,12 +97,12 @@ async function updateQuantitativa(req, res) {
     }
 }
 
-async function getIdQuantitativa(req, res){
+async function getIdQuantitativa(req, res) {
     const { id } = req.params
 
     const quantitativa = await Quantitativa.findByPk(id)
 
-    if(!quantitativa) return res.status(404).json({ error: "Quantitativa não encontrada" });
+    if (!quantitativa) return res.status(404).json({ error: "Quantitativa não encontrada" });
 
     res.status(200).json(quantitativa)
 
