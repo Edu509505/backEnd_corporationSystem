@@ -4,6 +4,8 @@ import Versionamento from "../models/versionamento.js";
 import Quantitativa from "../models/quantitativa.js";
 import z from "zod";
 import { Op } from 'sequelize';
+import { measureMemory } from "node:vm";
+import { TransitionDefaultMinimumObjectSize } from "@aws-sdk/client-s3";
 
 const itensMedicaoSchema = z.object({
     idCliente: z.string().min(1, "Selecione ao menos um cliente"),
@@ -123,9 +125,20 @@ async function createMedicao(req, res) {
         res.status(500).json({ message: 'Não foi possível criar' })
     }
 
-
-
-
 }
 
-export default { createMedicao }
+async function getMedicoes(req, res){
+    try{
+        const todasAsMedicoes = await Medicoes.findAll({include: ['propostaMedicao', 'clienteMedicao']})
+        if(!todasAsMedicoes){
+            res.status(404).json({ message: "Não foi possível encontrar" })
+        } 
+
+        res.status(200).json(todasAsMedicoes)
+
+    }catch{ 
+        res.status(500).json({ message: "Erro no Servidor" })
+    }
+}
+
+export default { createMedicao, getMedicoes }

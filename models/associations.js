@@ -34,7 +34,7 @@ Medicoes.hasMany(DiarioDeObra, { foreignKey: "idMedicao" });
 DiarioDeObra.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "diarioDeObraMedicao"});
 
 //1:N
-Proposta.hasMany(Medicoes, { foreignKey: "idProposta"});
+Proposta.hasMany(Medicoes, { foreignKey: "idProposta", as: "clienteMedicao"});
 //N:1
 Medicoes.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaMedicao" });
 
@@ -74,6 +74,7 @@ Quantitativa.hasMany(ItensDoDia, { foreignKey: "idQuantitativa"});
 
 //N:1
 Faturamento.belongsTo(Medicoes, { foreignKey: "idMedicao", as:"medicao" });
+
 /*
 
 - 1:1 (um para um) → .hasOne() e .belongsTo()

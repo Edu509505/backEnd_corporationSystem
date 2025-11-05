@@ -101,6 +101,7 @@ router.post('/versionamento/:idProposta', authentication, controllerVersionament
 router.get('/todosOsItensDoDia', authentication, controllerItensDia.tudoDoitensDoDia)
 
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao)
+router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes)
 
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 
