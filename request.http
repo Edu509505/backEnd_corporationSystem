@@ -117,3 +117,6 @@ Content-Type: application/json
   "email": "joao@email.com",
   "password": "senha123"
 }
+
+###
+GET http://localhost:3000/dashboard/2025-10-05/2025-11-05
