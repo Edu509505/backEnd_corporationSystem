@@ -9,23 +9,24 @@ const Quantitativa = database.define("quantitativa", {
         references: {
             model: Versionamento,
             key: "id",
-        }
+        },
+        allowNull: false
     },
     descricao: {
         type: Sequelize.STRING,
-
+        allowNull: false
     },
     quantidade: {
-        type: Sequelize.STRING,
-
+        type: Sequelize.INTEGER,
+        allowNull: false
     },
     valorUnitario: {
-        type: Sequelize.STRING,
-
+        type: Sequelize.INTEGER,
+        allowNull: false
     },
     unidadeDeMedida: {
-        type: Sequelize.STRING,
-
+        type: Sequelize.ENUM("M²","Hora", "Diaria"),
+        allowNull: false
     }
 });
 

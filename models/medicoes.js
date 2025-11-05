@@ -32,7 +32,7 @@ const Medicoes = database.define("medicoes", {
     allowNull: false
   },
   valorTotal: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     allowNull: true
   }
 });

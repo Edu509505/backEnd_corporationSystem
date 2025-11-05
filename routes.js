@@ -98,7 +98,6 @@ router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal/proposta/:idProposta', 
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 
-router.get('/todosOsItensDoDia', authentication, controllerItensDia.tudoDoitensDoDia)
 
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao)
 router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes)
