@@ -23,6 +23,7 @@ import controllerItensDia from "./controllers/controllerItensDoDia.js"
 import authentication from "./middleware/middlewares.js";
 import controllerMedicao from "./controllers/controllerMedicoes.js"
 //import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
+import controllerDashBoard from './controllers/controllerDashboard.js'
 const router = Router();
 
 router.get("/me", authentication, (req, res) => {
@@ -92,11 +93,18 @@ router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiario
 router.get('/diario-de-obra/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPorProposta);
 router.get('/diarioDeObra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
 router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPeriodo)
+router.get('/dashboard/:dataInicial/:dataFinal', controllerDashBoard.dashboard);
+
 
 //router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
 // router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
+
+router.get('/todosOsItensDoDia', authentication, controllerItensDia.tudoDoitensDoDia);
+
+router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
+
 
 
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao)
