@@ -25,9 +25,10 @@ async function createDiarioDeObra(req, res) {
 
   const diarioDeObra = await DiarioDeObra.create({
     idProposta: diarioValidado.idProposta,
-    dataDia: diarioValidado.dataDia,
+    dataDia: diarioValidado.dataDia.toISOString().slice(0, 10)
   });
 
+  console.log("Data formatada:", diarioValidado.dataDia.toISOString().slice(0, 10));
 
   const { itensDoDia } = req.body;
 

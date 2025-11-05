@@ -18,7 +18,7 @@ async function dashboard(req, res) {
   }
 
   try {
-    const [data] = await sequelize.query(
+    const data = await sequelize.query(
       `
       SELECT 
         d.dataDia,
