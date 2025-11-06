@@ -128,16 +128,16 @@ async function createMedicao(req, res) {
 
 }
 
-async function getMedicoes(req, res){
-    try{
-        const todasAsMedicoes = await Medicoes.findAll({include: ['propostaMedicao', 'clienteMedicao']})
-        if(!todasAsMedicoes){
+async function getMedicoes(req, res) {
+    try {
+        const todasAsMedicoes = await Medicoes.findAll({ include: ['propostaMedicao'] })
+        if (!todasAsMedicoes) {
             res.status(404).json({ message: "Não foi possível encontrar" })
-        } 
+        }
 
         res.status(200).json(todasAsMedicoes)
 
-    }catch{ 
+    } catch {
         res.status(500).json({ message: "Erro no Servidor" })
     }
 }

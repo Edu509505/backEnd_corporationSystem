@@ -14,7 +14,15 @@ export const Faturamento = database.define("faturamento", {
     },
     valor: {
         type: Sequelize.INTEGER,
-        allowNull: false   
+        allowNull: false
+    },
+    vencimento: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    pagamento: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
 });
 
