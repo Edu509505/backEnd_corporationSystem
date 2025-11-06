@@ -31,6 +31,10 @@ const Medicoes = database.define("medicoes", {
     type: Sequelize.STRING,
     allowNull: false
   },
+  faturado :{
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   valorTotal: {
     type: Sequelize.INTEGER,
     allowNull: true

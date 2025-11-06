@@ -12,7 +12,7 @@ const itensMedicaoSchema = z.object({
     idProposta: z.string().min(1, "Selecione ao menos uma proposta"),
     observacao: z.string(),
     periodoInicial: z.string(),
-    periodoFinal: z.string(),
+    periodoFinal: z.string()
 })
 
 async function createMedicao(req, res) {
@@ -99,7 +99,8 @@ async function createMedicao(req, res) {
             observacao: verificacao.observacao,
             periodoInicial: verificacao.periodoInicial,
             periodoFinal: verificacao.periodoFinal,
-            valorTotal: resultadosSomados() * 100
+            valorTotal: resultadosSomados() * 100,
+            faturado: "Não Faturado"
         })
 
 
