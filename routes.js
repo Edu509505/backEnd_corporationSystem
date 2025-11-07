@@ -90,8 +90,9 @@ router.put('/quantitativa/:id', authentication, controllerrQuantitativa.updateQu
 router.get('/versionamento/:idVersionamento/anexos/urls', authentication, controllerVersionamento.getImageVersionamento);
 
 router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiarioDeObra);
-router.get('/diario-de-obra/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPorProposta);
-router.get('/diarioDeObra', controllerDiarioDeObra.getTodosOsDiariosDeObra);
+router.get('/diario-de-obra/proposta/:idProposta', authentication, controllerDiarioDeObra.getDiarioDeObraPorProposta);
+router.get('/diarioDeObra', authentication, controllerDiarioDeObra.getTodosOsDiariosDeObra);
+router.get('/diarioDeObra/:dataInicial/:dataFinal/proposta/:idProposta/medicao/:idMedicao', authentication, controllerDiarioDeObra.getDiarioDeObraComMedicaoPeriodo)
 router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPeriodo)
 router.get('/dashboard/:dataInicial/:dataFinal', controllerDashBoard.dashboard);
 
@@ -109,7 +110,7 @@ router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
 
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao)
 router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes)
-
+router.get('/getMedicao/:id', authentication, controllerMedicao.getMedicao)
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 
 //router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);

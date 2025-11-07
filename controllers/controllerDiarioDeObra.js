@@ -146,21 +146,28 @@ async function getDiarioDeObraPeriodo(req, res) {
   }
 }
 
-// async function getDiarioDeObraParaGrafico(req, res){
-//   //const {} = req.params
-//   const diarioDeObra = await DiarioDeObra.sequelize.query('SELECT do.idProposta, do.dataDia, i.sum(quantidade), q.unidadeDeMedida, q.descricao FROM itensDia AS i JOIN diarioDeObra AS do ON i.idDiarioDeObra = do.id JOIN quantitativa AS q on i.idQuantitativa = q.id WHERE q.descricao = "calçamento" GROUP BY q.unidadeDeMedida, do.idProposta, do.dataDia, q.descricao')
+async function getDiarioDeObraComMedicaoPeriodo(req, res) {
+  try {
+    const { idMedicao } = req.params
+    const datas = req.params
+    console.log("datas da Requisição", datas.idProposta)
+    const trazerPeriodo = await DiarioDeObra.findAll(
+      {
+        where: {
+          idProposta: datas.idProposta,
+          dataDia: {
+            [Op.between]: [datas.dataInicial, datas.dataFinal]
+          },
+          idMedicao: idMedicao,
+        },
+        include: "itensDoDia"
+      })
 
-//   console.log("DIARIO DE OBRA", diarioDeObra)
+    res.status(200).json(trazerPeriodo)
 
-//   // .findAll({
-//   //   include: "itensDoDia"
-//   // })
+  } catch {
+    res.status(500).json({ message: "Erro Interno" })
+  }
+}
 
-
-
-//   if(!diarioDeObra) return res.status(404).json({ error: "Nada encontrada"});
-
-//   res.status(200).json(diarioDeObra)
-// }
-
-export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra, getDiarioDeObraPeriodo }
+export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra, getDiarioDeObraPeriodo, getDiarioDeObraComMedicaoPeriodo }

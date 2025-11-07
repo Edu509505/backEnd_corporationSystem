@@ -9,6 +9,7 @@ import DiarioDeObra from './diarioDeObra.js';
 import ItensDoDia from './itensDoDia.js';
 import AnexoContrato from './anexoContratos.js'
 import { Faturamento } from './faturamento.js';
+import { MEDIUMINT } from 'sequelize';
 
 
 Clientes.hasMany(Contratos, { foreignKey: "idCliente" });
@@ -35,11 +36,11 @@ DiarioDeObra.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "diarioDeObraMed
 
 //1:N
 Proposta.hasMany(Medicoes, { foreignKey: "idProposta", as: "clienteMedicao"});
-//N:1
-Medicoes.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaMedicao" });
 
 //N:1
+Medicoes.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaMedicao" });
 Medicoes.belongsTo(Contratos, { foreignKey: "idContrato", as: "contratoMedicao" });
+Medicoes.belongsTo(Clientes, { foreignKey: "idCliente", as: "clienteMedicao" })
 
 //N:1
 Quantitativa.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
