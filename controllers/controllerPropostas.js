@@ -1,8 +1,10 @@
-import { readFile, readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import * as path from 'node:path';
 import { s3 } from '../utils/s3.js';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import z from 'zod';
+import dayjs from 'dayjs';
+import { Op } from 'sequelize';
 //import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 import Proposta from "../models/propostas.js";
@@ -229,4 +231,49 @@ async function updateProposta(req, res) {
 }
 
 
-export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado, getTodasPropostasAprovadas }
+async function getComparacaoPropostas(req, res) {
+  try {
+    // Datas de início e fim do mês atual
+    const inicioMesAtual = dayjs().startOf('month').toDate();
+    const fimMesAtual = dayjs().endOf('month').toDate();
+
+    // Datas de início e fim do mês anterior
+    const inicioMesAnterior = dayjs().subtract(1, 'month').startOf('month').toDate();
+    const fimMesAnterior = dayjs().subtract(1, 'month').endOf('month').toDate();
+
+    // Contar propostas do mês atual
+    const totalMesAtual = await Proposta.count({
+      where: {
+        createdAt: {
+          [Op.between]: [inicioMesAtual, fimMesAtual]
+        }
+      }
+    });
+
+    // Contar propostas do mês anterior
+    const totalMesAnterior = await Proposta.count({
+      where: {
+        createdAt: {
+          [Op.between]: [inicioMesAnterior, fimMesAnterior]
+        }
+      }
+    });
+
+    // Retornar os dados como JSON
+    return res.status(200).json({
+      mesAtual: totalMesAtual,
+      mesAnterior: totalMesAnterior,
+      diferenca: totalMesAtual - totalMesAnterior,
+      variacaoPercentual: totalMesAnterior === 0 
+        ? null 
+        : (((totalMesAtual - totalMesAnterior) / totalMesAnterior) * 100).toFixed(2)
+    });
+
+  } catch (error) {
+    console.error('Erro ao buscar comparação de propostas:', error);
+    return res.status(500).json({ erro: 'Erro interno do servidor' });
+  }
+}
+
+
+export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado, getTodasPropostasAprovadas, getComparacaoPropostas }
