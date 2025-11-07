@@ -205,6 +205,23 @@ async function getTodasPropostasAprovadas(req, res) {
 
 }
 
+async function getPropostasEmAnalise(req, res) {
+  try {
+    const propostasEmAnalise = await Proposta.findAll({
+      where: { statusProposta: 'EM_ANALISE' }
+    });
+
+    if (propostasEmAnalise.length === 0) {
+      return res.status(404).json({ message: "Nenhuma proposta em análise encontrada" });
+    }
+
+    return res.status(200).json(propostasEmAnalise);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao buscar propostas em análise", error: error.message });
+  }
+}
+
+
 async function updateProposta(req, res) {
     const { id } = req.params;
     const { nomeDaProposta, descricao, valorProposta, statusProposta } = req.body;

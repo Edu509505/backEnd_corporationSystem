@@ -105,8 +105,12 @@ router.post('/versionamento/:idProposta', authentication, controllerVersionament
 router.get('/todosOsItensDoDia', authentication, controllerItensDia.tudoDoitensDoDia);
 
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
-router.get('/getMedicao/:id', authentication, controllerMedicao.getMedicao)
 
+
+
+router.post('/criarMedicao', authentication, controllerMedicao.createMedicao)
+router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes)
+router.get('/getMedicao/:id', authentication, controllerMedicao.getMedicao)
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
 router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes);
 
