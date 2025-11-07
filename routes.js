@@ -105,20 +105,13 @@ router.post('/versionamento/:idProposta', authentication, controllerVersionament
 router.get('/todosOsItensDoDia', authentication, controllerItensDia.tudoDoitensDoDia);
 
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
-
-
-
-<<<<<<< Updated upstream
-router.post('/criarMedicao', authentication, controllerMedicao.createMedicao)
-router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes)
 router.get('/getMedicao/:id', authentication, controllerMedicao.getMedicao)
-=======
+
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
 router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes);
 
 router.get('/comparacao-propostas', controllerPropostas.getComparacaoPropostas);
 
->>>>>>> Stashed changes
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 
 //router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
