@@ -106,8 +106,6 @@ router.get('/todosOsItensDoDia', authentication, controllerItensDia.tudoDoitensD
 
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
 
-
-
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao)
 router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes)
 router.get('/getMedicao/:id', authentication, controllerMedicao.getMedicao)
@@ -115,6 +113,8 @@ router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
 router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes);
 
 router.get('/comparacao-propostas', controllerPropostas.getComparacaoPropostas);
+
+
 
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 
