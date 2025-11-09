@@ -10,21 +10,19 @@ const pastaTemp = multer({
 
 import controllerClientes from "./controllers/controllerClientes.js";
 import controllerContrato from "./controllers/controllerContratos.js";
-// import controllerMedicoes from "./controllers/controllerMedicoes.js";
 import controllerPropostas from "./controllers/controllerPropostas.js";
 import controllerLogin from "./controllers/controllerLogin.js";
 import controllerUser from "./controllers/controllerUser.js";
 import controllerVersionamento from "./controllers/controllerVersionamento.js";
 import controllerrQuantitativa from "./controllers/controllerQuantitativa.js";
-//import AnexoVersionamento from "./models/anexoVersionamento.js";
 import controllerDiarioDeObra from "./controllers/controllerDiarioDeObra.js";
 import controllerAnexoContrato from "./controllers/controllerAnexoContratos.js"
 import controllerItensDia from "./controllers/controllerItensDoDia.js"
 import authentication from "./middleware/middlewares.js";
 import controllerMedicao from "./controllers/controllerMedicoes.js"
-//import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
 import controllerDashBoard from './controllers/controllerDashboard.js'
 import controllerFaturamento from './controllers/controllerFaturamento.js'
+import controllerAnexoFaturamento from "./controllers/controllerAnexoFaturamento.js";
 const router = Router();
 
 router.get("/me", authentication, (req, res) => {
@@ -68,6 +66,7 @@ router.get('/contrato/:id/anexoContrato/url', authentication, controllerAnexoCon
 router.post('/proposta', authentication, pastaTemp.array('files', 10), controllerPropostas.createProposta);
 router.get('/proposta/:id', authentication, controllerPropostas.getProposta);
 router.get('/propostas', authentication, controllerPropostas.getPropostas);
+router.get('/getTodasAsPropostasAprovedas', authentication, controllerPropostas.getTodasAsPropostasAprovadas)
 router.get('/cliente/:id/propostasAprovadas/', authentication, controllerPropostas.getPropostasAprovadas)
 router.post(
   '/proposta/:idProposta/versao',
@@ -97,10 +96,6 @@ router.get('/diarioDeObra/:dataInicial/:dataFinal/proposta/:idProposta/medicao/:
 router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPeriodo)
 router.get('/dashboard/:dataInicial/:dataFinal', controllerDashBoard.dashboard);
 
-
-//router.post('/criarMedicao', authentication, controllerMedicoes.createMedicao);
-// router.get('/medicoes', authentication, controllerMedicoes.getMedicoes);
-
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 
 router.get('/todosOsItensDoDia', authentication, controllerItensDia.tudoDoitensDoDia);
@@ -117,9 +112,8 @@ router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes);
 router.get('/comparacao-propostas', controllerPropostas.getComparacaoPropostas);
 
 router.post('/createFaturamento', authentication, pastaTemp.single('anexo'), controllerFaturamento.createFaturamento)
-
-// router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
-
-//router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
+router.get('/getTodosOsFaturamentos', authentication, controllerFaturamento.getFaturamento)
+router.get('/getFaturamentoId/:id', authentication, controllerFaturamento.getFaturamentoId)
+router.get('/faturamento/:id/anexoFaturamento/url', authentication, controllerAnexoFaturamento.getAnexoFaturamento)
 
 export default router

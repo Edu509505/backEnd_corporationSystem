@@ -170,6 +170,14 @@ async function getPropostasAprovadas(req, res) {
     }
 }
 
+async function getTodasAsPropostasAprovadas(req, res) {
+    const getPropostasAprovadas = await Proposta.findAll({ where: { statusProposta: 'APROVADA' } })
+
+    if (getPropostasAprovadas) {
+        res.json(getPropostasAprovadas.map(propostasAprovadas => propostasAprovadas.toJSON()))
+    }
+}
+
 async function getPropostaVersionamentoAprovado(req, res) {
     const { id } = req.params
     const versionamentoAprovado = await Proposta.findByPk(id, { include: "propostaVersionamento", where: { status: "APROVADA" } })
@@ -206,19 +214,19 @@ async function getTodasPropostasAprovadas(req, res) {
 }
 
 async function getPropostasEmAnalise(req, res) {
-  try {
-    const propostasEmAnalise = await Proposta.findAll({
-      where: { statusProposta: 'EM_ANALISE' }
-    });
+    try {
+        const propostasEmAnalise = await Proposta.findAll({
+            where: { statusProposta: 'EM_ANALISE' }
+        });
 
-    if (propostasEmAnalise.length === 0) {
-      return res.status(404).json({ message: "Nenhuma proposta em análise encontrada" });
+        if (propostasEmAnalise.length === 0) {
+            return res.status(404).json({ message: "Nenhuma proposta em análise encontrada" });
+        }
+
+        return res.status(200).json(propostasEmAnalise);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao buscar propostas em análise", error: error.message });
     }
-
-    return res.status(200).json(propostasEmAnalise);
-  } catch (error) {
-    res.status(500).json({ message: "Erro ao buscar propostas em análise", error: error.message });
-  }
 }
 
 
@@ -249,48 +257,48 @@ async function updateProposta(req, res) {
 
 
 async function getComparacaoPropostas(req, res) {
-  try {
-    // Datas de início e fim do mês atual
-    const inicioMesAtual = dayjs().startOf('month').toDate();
-    const fimMesAtual = dayjs().endOf('month').toDate();
+    try {
+        // Datas de início e fim do mês atual
+        const inicioMesAtual = dayjs().startOf('month').toDate();
+        const fimMesAtual = dayjs().endOf('month').toDate();
 
-    // Datas de início e fim do mês anterior
-    const inicioMesAnterior = dayjs().subtract(1, 'month').startOf('month').toDate();
-    const fimMesAnterior = dayjs().subtract(1, 'month').endOf('month').toDate();
+        // Datas de início e fim do mês anterior
+        const inicioMesAnterior = dayjs().subtract(1, 'month').startOf('month').toDate();
+        const fimMesAnterior = dayjs().subtract(1, 'month').endOf('month').toDate();
 
-    // Contar propostas do mês atual
-    const totalMesAtual = await Proposta.count({
-      where: {
-        createdAt: {
-          [Op.between]: [inicioMesAtual, fimMesAtual]
-        }
-      }
-    });
+        // Contar propostas do mês atual
+        const totalMesAtual = await Proposta.count({
+            where: {
+                createdAt: {
+                    [Op.between]: [inicioMesAtual, fimMesAtual]
+                }
+            }
+        });
 
-    // Contar propostas do mês anterior
-    const totalMesAnterior = await Proposta.count({
-      where: {
-        createdAt: {
-          [Op.between]: [inicioMesAnterior, fimMesAnterior]
-        }
-      }
-    });
+        // Contar propostas do mês anterior
+        const totalMesAnterior = await Proposta.count({
+            where: {
+                createdAt: {
+                    [Op.between]: [inicioMesAnterior, fimMesAnterior]
+                }
+            }
+        });
 
-    // Retornar os dados como JSON
-    return res.status(200).json({
-      mesAtual: totalMesAtual,
-      mesAnterior: totalMesAnterior,
-      diferenca: totalMesAtual - totalMesAnterior,
-      variacaoPercentual: totalMesAnterior === 0 
-        ? null 
-        : (((totalMesAtual - totalMesAnterior) / totalMesAnterior) * 100).toFixed(2)
-    });
+        // Retornar os dados como JSON
+        return res.status(200).json({
+            mesAtual: totalMesAtual,
+            mesAnterior: totalMesAnterior,
+            diferenca: totalMesAtual - totalMesAnterior,
+            variacaoPercentual: totalMesAnterior === 0
+                ? null
+                : (((totalMesAtual - totalMesAnterior) / totalMesAnterior) * 100).toFixed(2)
+        });
 
-  } catch (error) {
-    console.error('Erro ao buscar comparação de propostas:', error);
-    return res.status(500).json({ erro: 'Erro interno do servidor' });
-  }
+    } catch (error) {
+        console.error('Erro ao buscar comparação de propostas:', error);
+        return res.status(500).json({ erro: 'Erro interno do servidor' });
+    }
 }
 
 
-export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado, getTodasPropostasAprovadas, getComparacaoPropostas }
+export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado, getTodasPropostasAprovadas, getComparacaoPropostas, getTodasAsPropostasAprovadas }

@@ -1,5 +1,6 @@
 import Faturamento from "../models/faturamento.js";
 import AnexoFaturamento from '../models/anexosFaturamento.js';
+import Medicao from '../models/medicoes.js'
 import { readFile, readFileSync } from 'node:fs'
 import * as path from 'node:path';
 import { s3 } from '../utils/s3.js';
@@ -83,15 +84,24 @@ async function createFaturamento(req, res) {
 
         // Salvar referência no banco para cada arquivo
         await AnexoFaturamento.create({
-            idMedicao: faturamento.id,
+            idFaturamento: faturamento.id,
             path: s3Key // salva o caminho direto do s3
         });
 
+        const [rowsUpdate] = await Medicao.update(
+            { faturado: 'Faturado' },
+            { where: { id: verificacaoValidada.idMedicao } }
+        )
+
+        console.log(rowsUpdate)
+        if (rowsUpdate === 0) {
+            return res.status(400).json({ message: 'Não foi possível atualizar' })
+        }
         res.status(200).json({
             idCliente: parseInt(faturamento.idCliente),
             idProposta: parseInt(faturamento.idProposta),
             idMedicao: parseInt(faturamento.idMedicao),
-            valor: faturamento.valo,
+            valor: faturamento.valor,
             vencimento: faturamento.vencimento,
             tipo: faturamento.tipo
         })
@@ -102,4 +112,32 @@ async function createFaturamento(req, res) {
     }
 }
 
-export default { createFaturamento }
+async function getFaturamento(req, res) {
+    try {
+        const todosOsFaturamentos = await Faturamento.findAll({ include: ['clienteFaturamento', 'medicaoFaturamento', 'propostaFaturamento'] })
+        if (!todosOsFaturamentos) {
+            res.status(400).json({ message: "Não foi possível encontrar" })
+        }
+
+        res.status(200).json(todosOsFaturamentos)
+    } catch {
+        res.status(500).json({ message: "Erro Interno" })
+    }
+}
+
+async function getFaturamentoId(req, res) {
+    try {
+        const { id } = req.params;
+        const todosOsFaturamentos = await Faturamento.findByPk(id, { include: ['clienteFaturamento', 'medicaoFaturamento', 'propostaFaturamento'] })
+        if (!todosOsFaturamentos) {
+            res.status(404).json({ message: "Não foi possível encontrar" })
+        }
+
+        res.status(200).json(todosOsFaturamentos)
+
+    } catch {
+        res.status(500).json({ message: "Erro no Servidor" })
+    }
+}
+
+export default { createFaturamento, getFaturamento, getFaturamentoId }

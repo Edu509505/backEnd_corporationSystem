@@ -164,7 +164,7 @@ async function getMedicaoProposta(req, res) {
 
     try {
         const { idProposta } = req.params;
-        const todasAsMedicoes = await Medicoes.findAll({ where: { idProposta: idProposta } })
+        const todasAsMedicoes = await Medicoes.findAll({ where: { idProposta: idProposta, faturado: "Não Faturado" } })
         if (!todasAsMedicoes) {
             res.status(404).json({ message: "Não foi possível encontrar" })
         }
