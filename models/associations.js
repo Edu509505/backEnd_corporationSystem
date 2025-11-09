@@ -8,7 +8,8 @@ import Quantitativa from './quantitativa.js';
 import DiarioDeObra from './diarioDeObra.js';
 import ItensDoDia from './itensDoDia.js';
 import AnexoContrato from './anexoContratos.js'
-import { Faturamento } from './faturamento.js';
+import Faturamento from './faturamento.js';
+import AnexoFaturamento from './anexosFaturamento.js'
 import { MEDIUMINT } from 'sequelize';
 
 
@@ -32,10 +33,10 @@ Anexo.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
 // //1:N
 Medicoes.hasMany(DiarioDeObra, { foreignKey: "idMedicao" });
 // //N:1
-DiarioDeObra.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "diarioDeObraMedicao"});
+DiarioDeObra.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "diarioDeObraMedicao" });
 
 //1:N
-Proposta.hasMany(Medicoes, { foreignKey: "idProposta", as: "clienteMedicao"});
+Proposta.hasMany(Medicoes, { foreignKey: "idProposta", as: "clienteMedicao" });
 
 //N:1
 Medicoes.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaMedicao" });
@@ -44,7 +45,7 @@ Medicoes.belongsTo(Clientes, { foreignKey: "idCliente", as: "clienteMedicao" })
 
 //N:1
 Quantitativa.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
-Versionamento.hasMany(Quantitativa, { foreignKey: "idVersionamento", as: "quantitativa"});
+Versionamento.hasMany(Quantitativa, { foreignKey: "idVersionamento", as: "quantitativa" });
 
 //1:1
 Proposta.hasOne(Contratos, { foreignKey: "idProposta", as: "contrato" });
@@ -69,13 +70,15 @@ DiarioDeObra.hasMany(ItensDoDia, { foreignKey: "idDiarioDeObra", as: "itensDoDia
 ItensDoDia.belongsTo(DiarioDeObra, { foreignKey: "idDiarioDeObra", as: "diarioDeObraItensDia" });
 
 //N:1
-ItensDoDia.belongsTo(Quantitativa, { foreignKey: "idQuantitativa", as:"quantitativa"});
+ItensDoDia.belongsTo(Quantitativa, { foreignKey: "idQuantitativa", as: "quantitativa" });
 // 1:N
-Quantitativa.hasMany(ItensDoDia, { foreignKey: "idQuantitativa"});
+Quantitativa.hasMany(ItensDoDia, { foreignKey: "idQuantitativa" });
 
 //N:1
-Faturamento.belongsTo(Medicoes, { foreignKey: "idMedicao", as:"medicao" });
-
+Faturamento.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "medicaoFaturamento" });
+Faturamento.belongsTo(Clientes, { foreignKey: "idCliente", as: "clienteFaturamento" });
+Faturamento.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaFaturamento" })
+Faturamento.belongsTo(AnexoFaturamento, { foreignKey: "idFaturamento", as: "faturamento" })
 /*
 
 - 1:1 (um para um) → .hasOne() e .belongsTo()

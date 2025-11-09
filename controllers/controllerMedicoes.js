@@ -148,7 +148,7 @@ async function getMedicao(req, res) {
 
     try {
         const { id } = req.params;
-        const todasAsMedicoes = await Medicoes.findByPk(id,{ include: ['propostaMedicao', 'clienteMedicao'] })
+        const todasAsMedicoes = await Medicoes.findByPk(id, { include: ['propostaMedicao', 'clienteMedicao'] })
         if (!todasAsMedicoes) {
             res.status(404).json({ message: "Não foi possível encontrar" })
         }
@@ -160,4 +160,19 @@ async function getMedicao(req, res) {
     }
 }
 
-export default { createMedicao, getMedicoes, getMedicao }
+async function getMedicaoProposta(req, res) {
+
+    try {
+        const { idProposta } = req.params;
+        const todasAsMedicoes = await Medicoes.findAll({ where: { idProposta: idProposta } })
+        if (!todasAsMedicoes) {
+            res.status(404).json({ message: "Não foi possível encontrar" })
+        }
+        res.status(200).json(todasAsMedicoes)
+
+    } catch {
+        res.status(500).json({ message: "Erro no Servidor" })
+    }
+}
+
+export default { createMedicao, getMedicoes, getMedicao, getMedicaoProposta }

@@ -2,8 +2,10 @@ import { Sequelize } from "sequelize";
 
 import database from "../db/database.js";
 import Medicoes from "./medicoes.js";
+import Clientes from "./clientes.js";
+import Proposta from "./propostas.js";
 
-const Faturamento = database.define("faturamento", {
+const Faturamento = database.define("faturamentos", {
     idMedicao: {
         type: Sequelize.INTEGER,
         references: {
@@ -11,6 +13,26 @@ const Faturamento = database.define("faturamento", {
             key: "id",
         },
         allowNull: false,
+    },
+    idCliente: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: Clientes,
+            key: "id",
+        },
+        allowNull: false,
+    },
+    idProposta: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: Proposta,
+            key: "id",
+        },
+        allowNull: false,
+    },
+    tipo: {
+        type: Sequelize.STRING,
+        allowNull: false
     },
     valor: {
         type: Sequelize.INTEGER,
@@ -22,7 +44,7 @@ const Faturamento = database.define("faturamento", {
     },
     pagamento: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     }
 });
 

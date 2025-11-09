@@ -2,10 +2,10 @@ import { Router } from "express";
 import multer from 'multer';
 
 const pastaTemp = multer({
-    dest: 'temp/', limits: {
-        fileSize: 50 * 1024 * 1024, // 50MB
-        files: 10 // máximo 10 arquivos
-    }
+  dest: 'temp/', limits: {
+    fileSize: 50 * 1024 * 1024, // 50MB
+    files: 10 // máximo 10 arquivos
+  }
 });
 
 import controllerClientes from "./controllers/controllerClientes.js";
@@ -24,6 +24,7 @@ import authentication from "./middleware/middlewares.js";
 import controllerMedicao from "./controllers/controllerMedicoes.js"
 //import controllerAnexoVersionamento from "./controllers/controllerAnexoVersionamento.js";
 import controllerDashBoard from './controllers/controllerDashboard.js'
+import controllerFaturamento from './controllers/controllerFaturamento.js'
 const router = Router();
 
 router.get("/me", authentication, (req, res) => {
@@ -34,7 +35,7 @@ router.get("/me", authentication, (req, res) => {
   res.json({ id, name: username, email, role });
 });
 
-router  .post("/logout", (req, res) => {
+router.post("/logout", (req, res) => {
   res.clearCookie("authorization", {
     httpOnly: true,
     sameSite: "strict",
@@ -69,10 +70,10 @@ router.get('/proposta/:id', authentication, controllerPropostas.getProposta);
 router.get('/propostas', authentication, controllerPropostas.getPropostas);
 router.get('/cliente/:id/propostasAprovadas/', authentication, controllerPropostas.getPropostasAprovadas)
 router.post(
-    '/proposta/:idProposta/versao',
-    authentication,
-    pastaTemp.array('files', 10),
-    controllerVersionamento.createVersionamento
+  '/proposta/:idProposta/versao',
+  authentication,
+  pastaTemp.array('files', 10),
+  controllerVersionamento.createVersionamento
 );
 router.get('/proposta/:id/versionamentoAprovado', authentication, controllerPropostas.getPropostaVersionamentoAprovado);
 router.get('/proposta/:idProposta/verAprovado', controllerVersionamento.getPropostaVersionamentoAprovado)
@@ -109,12 +110,13 @@ router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao)
 router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes)
 router.get('/getMedicao/:id', authentication, controllerMedicao.getMedicao)
+router.get('/getMedicoes/propostas/:idProposta', authentication, controllerMedicao.getMedicaoProposta)
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
 router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes);
 
 router.get('/comparacao-propostas', controllerPropostas.getComparacaoPropostas);
 
-
+router.post('/createFaturamento', authentication, pastaTemp.single('anexo'), controllerFaturamento.createFaturamento)
 
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 
