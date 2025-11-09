@@ -285,14 +285,14 @@ async function getComparacaoPropostas(req, res) {
         });
 
         // Retornar os dados como JSON
-        return res.status(200).json({
+        return res.status(200).json([{
             mesAtual: totalMesAtual,
             mesAnterior: totalMesAnterior,
             diferenca: totalMesAtual - totalMesAnterior,
             variacaoPercentual: totalMesAnterior === 0
                 ? null
                 : (((totalMesAtual - totalMesAnterior) / totalMesAnterior) * 100).toFixed(2)
-        });
+        }]);
 
     } catch (error) {
         console.error('Erro ao buscar comparação de propostas:', error);
@@ -301,4 +301,4 @@ async function getComparacaoPropostas(req, res) {
 }
 
 
-export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado, getTodasPropostasAprovadas, getComparacaoPropostas, getTodasAsPropostasAprovadas }
+export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado, getTodasPropostasAprovadas, getComparacaoPropostas, getPropostasEmAnalise, getTodasAsPropostasAprovadas }

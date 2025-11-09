@@ -109,11 +109,19 @@ router.get('/getMedicoes/propostas/:idProposta', authentication, controllerMedic
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
 router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes);
 
-router.get('/comparacao-propostas', controllerPropostas.getComparacaoPropostas);
+router.get('/comparacao-propostas', authentication, controllerPropostas.getComparacaoPropostas);
+router.get('/propostasEmAnalise', authentication, controllerPropostas.getPropostasEmAnalise);
 
 router.post('/createFaturamento', authentication, pastaTemp.single('anexo'), controllerFaturamento.createFaturamento)
 router.get('/getTodosOsFaturamentos', authentication, controllerFaturamento.getFaturamento)
 router.get('/getFaturamentoId/:id', authentication, controllerFaturamento.getFaturamentoId)
 router.get('/faturamento/:id/anexoFaturamento/url', authentication, controllerAnexoFaturamento.getAnexoFaturamento)
+
+router.post('/createFaturamento', authentication, pastaTemp.single('anexo'), controllerFaturamento.createFaturamento);
+
+router.get('/cardFaturamento', controllerFaturamento.getFaturamento);
+// router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
+
+//router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
 
 export default router
