@@ -7,6 +7,8 @@ import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 //import { url } from 'node:inspector';
 import z from 'zod';
+import dayjs from "dayjs";
+import { Op } from "sequelize";
 
 const faturamentoSchema = z.object({
     idCliente: z.string().min(1, "Selecione ao menos um cliente"),
@@ -102,4 +104,50 @@ async function createFaturamento(req, res) {
     }
 }
 
-export default { createFaturamento }
+
+
+async function getFaturamento(req, res) {
+  try {
+    const inicioMesAtual = dayjs().startOf('month').toDate();
+    const fimMesAtual = dayjs().endOf('month').toDate();
+
+    const inicioMesAnterior = dayjs().subtract(1, 'month').startOf('month').toDate();
+    const fimMesAnterior = dayjs().subtract(1, 'month').endOf('month').toDate();
+
+    const faturamentosAtual = await Faturamento.findAll({
+      where: {
+        vencimento: {
+          [Op.between]: [inicioMesAtual, fimMesAtual]
+        }
+      }
+    });
+
+    const faturamentosAnterior = await Faturamento.findAll({
+      where: {
+        vencimento: {
+          [Op.between]: [inicioMesAnterior, fimMesAnterior]
+        }
+      }
+    });
+
+    const totalAtual = faturamentosAtual.reduce((acc, item) => acc + (Number(item.valor) || 0), 0) / 100;
+    const totalAnterior = faturamentosAnterior.reduce((acc, item) => acc + (Number(item.valor) || 0), 0) / 100;
+
+    const variacaoPercentual = totalAnterior === 0
+      ? null
+      : ((totalAtual - totalAnterior) / totalAnterior) * 100;
+
+    res.status(200).json({
+      faturamentoMesAtual: totalAtual,
+      variacaoPercentual: variacaoPercentual !== null ? variacaoPercentual.toFixed(2) : 'N/A'
+    });
+  } catch (error) {
+    console.error('Erro ao calcular faturamento:', error);
+    res.status(500).json({
+      message: 'Erro ao calcular faturamento',
+      error: error.message || String(error)
+    });
+  }
+}
+
+export default { createFaturamento, getFaturamento }
