@@ -186,4 +186,4 @@ async function getFaturamentoCard(req, res) {
   }
 }
 
-export default { createFaturamento, getFaturamento, getFaturamentoId, get }
+export default { createFaturamento, getFaturamento, getFaturamentoId, getFaturamentoCard }
