@@ -79,8 +79,8 @@ Faturamento.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "medicaoFaturamen
 Faturamento.belongsTo(Clientes, { foreignKey: "idCliente", as: "clienteFaturamento" });
 Faturamento.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaFaturamento" })
 Faturamento.belongsTo(AnexoFaturamento, { foreignKey: "idFaturamento", as: "anexoFaturamento" })
-/*
 
+/*
 - 1:1 (um para um) → .hasOne() e .belongsTo()
 👉 Um registro está ligado a um único do outro lado (ex: um usuário tem uma carteira).
 - 1:N (um para muitos) → .hasMany() e .belongsTo()
@@ -89,5 +89,4 @@ Faturamento.belongsTo(AnexoFaturamento, { foreignKey: "idFaturamento", as: "anex
 👉 Vários registros pertencem a um só (ex: vários pedidos pertencem a um usuário). Geralmente já vem embutido no “outro lado” do 1:N.
 - N:N (muitos para muitos) → .belongsToMany() com through
 👉 Cada lado pode se relacionar com vários do outro, e precisa de uma tabela intermediária (ex: alunos e turmas).
-
 */
