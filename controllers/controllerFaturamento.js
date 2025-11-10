@@ -144,11 +144,13 @@ async function getFaturamentoId(req, res) {
 
 async function getFaturamentoCard(req, res) {
   try {
-    const inicioMesAtual = dayjs().startOf('month').toDate();
-    const fimMesAtual = dayjs().endOf('month').toDate();
+    const formatoData = 'YYYY-MM-DD';
 
-    const inicioMesAnterior = dayjs().subtract(1, 'month').startOf('month').toDate();
-    const fimMesAnterior = dayjs().subtract(1, 'month').endOf('month').toDate();
+    const inicioMesAtual = dayjs().startOf('month').format(formatoData);
+    const fimMesAtual = dayjs().endOf('month').format(formatoData);
+
+    const inicioMesAnterior = dayjs().subtract(1, 'month').startOf('month').format(formatoData);
+    const fimMesAnterior = dayjs().subtract(1, 'month').endOf('month').format(formatoData);
 
     const faturamentosAtual = await Faturamento.findAll({
       where: {
@@ -185,5 +187,4 @@ async function getFaturamentoCard(req, res) {
     });
   }
 }
-
 export default { createFaturamento, getFaturamento, getFaturamentoId, getFaturamentoCard }
