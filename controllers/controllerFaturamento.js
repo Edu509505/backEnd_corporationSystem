@@ -61,7 +61,8 @@ async function createFaturamento(req, res) {
       valor: verificacaoValidada.valor * 100,
       vencimento: verificacaoValidada.vencimento,
       tipo: verificacaoValidada.tipo,
-      numeroDaNota: verificacaoValidada.numeroDaNota
+      numeroDaNota: verificacaoValidada.numeroDaNota,
+      pagamento: "ABERTO"
     })
 
     const file = req.file;
