@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import Usuarios  from "../models/usuarios.js";
 
 async function criarUsuario() {
-  const senha = "@_SenhaMaisDificilDesseMundo123_@";
+  const senha = "123123";
   const senhaCriptografada = await bcrypt.hash(senha, 10);
 
   const novoUsuario = await Usuarios.create({
