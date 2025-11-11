@@ -26,7 +26,7 @@ async function dashboard(req, res) {
       FROM 
         diarioDeObra d
       JOIN 
-        ItensDoDia i ON i.idDiarioDeObra = d.id
+        itensDoDia i ON i.idDiarioDeObra = d.id
       WHERE 
         d.dataDia BETWEEN :dataInicial AND :dataFinal
       GROUP BY 
