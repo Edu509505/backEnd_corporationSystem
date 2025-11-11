@@ -18,6 +18,7 @@ const faturamentoSchema = z.object({
   valor: z.string().min(1, "Deina um valor"),
   vencimento: z.string().min(1, "Defina a data para o vencimento"),
   tipo: z.string().min(1, "Selecione o tipo"),
+  numeroDaNota: z.string().min(1, "Precisa conter uma numeração"),
   anexo: z.object({
     fieldname: z.string(),
     originalname: z.string(),
@@ -51,7 +52,7 @@ async function createFaturamento(req, res) {
   try {
     console.log("REQ.BODY", req.body)
 
-
+    console.log("VERIFICAÇÃO VALIDADA ",verificacaoValidada)
 
     const faturamento = await Faturamento.create({
       idCliente: verificacaoValidada.idCliente,
@@ -59,7 +60,8 @@ async function createFaturamento(req, res) {
       idMedicao: verificacaoValidada.idMedicao,
       valor: verificacaoValidada.valor * 100,
       vencimento: verificacaoValidada.vencimento,
-      tipo: verificacaoValidada.tipo
+      tipo: verificacaoValidada.tipo,
+      numeroDaNota: verificacaoValidada.numeroDaNota
     })
 
     const file = req.file;
@@ -103,6 +105,7 @@ async function createFaturamento(req, res) {
       idCliente: parseInt(faturamento.idCliente),
       idProposta: parseInt(faturamento.idProposta),
       idMedicao: parseInt(faturamento.idMedicao),
+      numeroDaNota: faturamento.numeroDaNota,
       valor: faturamento.valor,
       vencimento: faturamento.vencimento,
       tipo: faturamento.tipo

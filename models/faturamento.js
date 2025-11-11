@@ -30,6 +30,10 @@ const Faturamento = database.define("faturamentos", {
         },
         allowNull: false,
     },
+    numeroDaNota: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     tipo: {
         type: Sequelize.STRING,
         allowNull: false
