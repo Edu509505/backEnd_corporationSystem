@@ -75,7 +75,7 @@ router.post(
   controllerVersionamento.createVersionamento
 );
 router.get('/proposta/:id/versionamentoAprovado', authentication, controllerPropostas.getPropostaVersionamentoAprovado);
-router.get('/proposta/:idProposta/verAprovado', controllerVersionamento.getPropostaVersionamentoAprovado)
+router.get('/proposta/:idProposta/verAprovado', authentication, controllerVersionamento.getPropostaVersionamentoAprovado)
 router.get('/propostasAprovadas', authentication, controllerPropostas.getTodasPropostasAprovadas);
 
 router.get('/versionamento/:id', authentication, controllerVersionamento.getVersionamento);
@@ -93,8 +93,8 @@ router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiario
 router.get('/diario-de-obra/proposta/:idProposta', authentication, controllerDiarioDeObra.getDiarioDeObraPorProposta);
 router.get('/diarioDeObra', authentication, controllerDiarioDeObra.getTodosOsDiariosDeObra);
 router.get('/diarioDeObra/:dataInicial/:dataFinal/proposta/:idProposta/medicao/:idMedicao', authentication, controllerDiarioDeObra.getDiarioDeObraComMedicaoPeriodo)
-router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal/proposta/:idProposta', controllerDiarioDeObra.getDiarioDeObraPeriodo)
-router.get('/dashboard/:dataInicial/:dataFinal', controllerDashBoard.dashboard);
+router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal/proposta/:idProposta', authentication, controllerDiarioDeObra.getDiarioDeObraPeriodo)
+router.get('/dashboard/:dataInicial/:dataFinal', authentication, controllerDashBoard.dashboard);
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 
@@ -119,7 +119,7 @@ router.get('/faturamento/:id/anexoFaturamento/url', authentication, controllerAn
 router.put('/updateStatusNotaFiscal/notaFiscal/:id', authentication, controllerFaturamento.updateFaturamento)
 router.post('/createFaturamento', authentication, pastaTemp.single('anexo'), controllerFaturamento.createFaturamento);
 
-router.get('/cardFaturamento', controllerFaturamento.getFaturamentoCard);
+router.get('/cardFaturamento', authentication, controllerFaturamento.getFaturamentoCard);
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 
 //router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);
