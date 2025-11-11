@@ -142,65 +142,88 @@ async function getFaturamentoId(req, res) {
   }
 }
 
-async function updataFaturamento(req, res) {
+const validacaoSchemaUpdateFaturamento = z.object({
+  pagamento: z.enum(["PAGA", "CANCELADA"]),
+});
+
+async function updateFaturamento(req, res) {
   try {
-    const { id } = req.params;
-    const todosOsFaturamentos = await Faturamento.update
-    (id, { where: {pagamento: "PAGO"} })
-    if (!todosOsFaturamentos) {
-      res.status(404).json({ message: "Não foi possível encontrar" })
+    const verificar = await validacaoSchemaUpdateFaturamento.safeParseAsync(req.body);
+
+    if (!verificar.success) {
+      return res.status(400).json(verificar.error);
     }
 
-    res.status(200).json(todosOsFaturamentos)
+    const { id } = req.params;
+    const todosOsFaturamentos = await Faturamento.update(
+      verificar.data,
+      { where: { id } }
+    );
 
-  } catch {
-    res.status(500).json({ message: "Erro no Servidor" })
+    if (!todosOsFaturamentos || todosOsFaturamentos[0] === 0) {
+      return res.status(404).json({ message: "Não foi possível encontrar" });
+    }
+
+    return res.status(200).json({ message: "Faturamento atualizado com sucesso" });
+
+  } catch (error) {
+    console.error("Erro no updateFaturamento:", error);
+    return res.status(500).json({ message: "Erro no Servidor" });
   }
 }
+
 
 async function getFaturamentoCard(req, res) {
   try {
-    const formatoData = 'YYYY-MM-DD';
+    const agora = new Date();
+    const mesAtual = agora.getMonth(); // 0–11
+    const anoAtual = agora.getFullYear();
 
-    const inicioMesAtual = dayjs().startOf('month').format(formatoData);
-    const fimMesAtual = dayjs().endOf('month').format(formatoData);
+    const mesAnterior = mesAtual === 0 ? 11 : mesAtual - 1;
+    const anoAnterior = mesAtual === 0 ? anoAtual - 1 : anoAtual;
 
-    const inicioMesAnterior = dayjs().subtract(1, 'month').startOf('month').format(formatoData);
-    const fimMesAnterior = dayjs().subtract(1, 'month').endOf('month').format(formatoData);
-
-    const faturamentosAtual = await Faturamento.findAll({
+    // Faturamentos pagos
+    const faturamentosPagos = await Faturamento.findAll({
       where: {
-        vencimento: {
-          [Op.between]: [inicioMesAtual, fimMesAtual]
-        }
-      }
+        pagamento: "PAGA",
+      },
     });
 
-    const faturamentosAnterior = await Faturamento.findAll({
-      where: {
-        vencimento: {
-          [Op.between]: [inicioMesAnterior, fimMesAnterior]
-        }
-      }
-    });
+    const totalAtual = faturamentosPagos
+      .filter(f => {
+        const data = new Date(f.createdAt);
+        return data.getMonth() === mesAtual && data.getFullYear() === anoAtual;
+      })
+      .reduce((acc, f) => acc + f.valor, 0);
+    console.log("Faturamentos pagos:", faturamentosPagos.map(f => ({
+      pagamento: f.pagamento,
+      createdAt: f.createdAt,
+      valor: f.valor
+    })));
 
-    const totalAtual = faturamentosAtual.reduce((acc, item) => acc + (Number(item.valor) || 0), 0) / 100;
-    const totalAnterior = faturamentosAnterior.reduce((acc, item) => acc + (Number(item.valor) || 0), 0) / 100;
 
-    const variacaoPercentual = totalAnterior === 0
+    const totalAnterior = faturamentosPagos
+      .filter(f => {
+        const data = new Date(f.createdAt);
+        return data.getMonth() === mesAnterior && data.getFullYear() === anoAnterior;
+      })
+      .reduce((acc, f) => acc + f.valor, 0);
+
+    const variacao = totalAnterior === 0
       ? null
       : ((totalAtual - totalAnterior) / totalAnterior) * 100;
 
-    res.status(200).json({
-      faturamentoMesAtual: totalAtual,
-      variacaoPercentual: variacaoPercentual !== null ? variacaoPercentual.toFixed(2) : 'N/A'
+    return res.json({
+      mesAtual: `${mesAtual + 1}/${anoAtual}`,
+      totalAtual,
+      mesAnterior: `${mesAnterior + 1}/${anoAnterior}`,
+      totalAnterior,
+      variacaoPercentual: variacao !== null ? variacao.toFixed(2) + "%" : "N/A",
     });
   } catch (error) {
-    console.error('Erro ao calcular faturamento:', error);
-    res.status(500).json({
-      message: 'Erro ao calcular faturamento',
-      error: error.message || String(error)
-    });
+    console.error(error);
+    return res.status(500).json({ error: "Erro ao calcular faturamento mensal." });
   }
+
 }
-export default { createFaturamento, getFaturamento, getFaturamentoId, getFaturamentoCard }
+export default { createFaturamento, getFaturamento, getFaturamentoId, getFaturamentoCard, updateFaturamento }

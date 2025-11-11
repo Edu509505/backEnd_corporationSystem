@@ -116,7 +116,7 @@ router.post('/createFaturamento', authentication, pastaTemp.single('anexo'), con
 router.get('/getTodosOsFaturamentos', authentication, controllerFaturamento.getFaturamento)
 router.get('/getFaturamentoId/:id', authentication, controllerFaturamento.getFaturamentoId)
 router.get('/faturamento/:id/anexoFaturamento/url', authentication, controllerAnexoFaturamento.getAnexoFaturamento)
-
+router.put('/updateStatusNotaFiscal/notaFiscal/:id', authentication, controllerFaturamento.updateFaturamento)
 router.post('/createFaturamento', authentication, pastaTemp.single('anexo'), controllerFaturamento.createFaturamento);
 
 router.get('/cardFaturamento', controllerFaturamento.getFaturamentoCard);
