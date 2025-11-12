@@ -77,8 +77,8 @@ Quantitativa.hasMany(ItensDoDia, { foreignKey: "idQuantitativa" });
 //N:1
 Faturamento.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "medicaoFaturamento" });
 Faturamento.belongsTo(Clientes, { foreignKey: "idCliente", as: "clienteFaturamento" });
-Faturamento.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaFaturamento" })
-Faturamento.belongsTo(AnexoFaturamento, { foreignKey: "id", as: "anexoFaturamento" })
+Faturamento.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaFaturamento" });
+AnexoFaturamento.belongsTo(Faturamento, { foreignKey: "idFaturamento", as: "anexoFaturamento" });
 
 /*
 - 1:1 (um para um) → .hasOne() e .belongsTo()
