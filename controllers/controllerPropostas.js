@@ -215,13 +215,11 @@ async function getTodasPropostasAprovadas(req, res) {
 
 async function getPropostasEmAnalise(req, res) {
     try {
-        const propostasEmAnalise = await Proposta.findAll({
+        const propostasEmAnalise = await Proposta.count({
             where: { statusProposta: 'EM_ANALISE' }
         });
 
-        if (propostasEmAnalise.length === 0) {
-            return res.status(404).json({ message: "Nenhuma proposta em análise encontrada" });
-        }
+        console.log('propostasEmAnalise', propostasEmAnalise)
 
         return res.status(200).json(propostasEmAnalise);
     } catch (error) {
