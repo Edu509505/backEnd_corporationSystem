@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize";
 import database from '../db/database.js';
 import Versionamento from "./versionamento.js";
 
-const Quantitativa = database.define("quantitativa", {
+const Quantitativa = database.define("quantitativas", {
     idVersionamento: {
         type: Sequelize.INTEGER,
         references: {

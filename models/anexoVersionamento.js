@@ -3,7 +3,7 @@ import Versionamento from "./versionamento.js";
 
 import database from "../db/database.js";
 
-const AnexoVersionamento = database.define("anexoVersionamento", {
+const AnexoVersionamento = database.define("anexoVersionamentos", {
     //Aqui ele pega o id da tabela 
     idVersionamento: {
         type: Sequelize.INTEGER,

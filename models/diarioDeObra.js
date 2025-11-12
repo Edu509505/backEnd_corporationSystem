@@ -6,7 +6,7 @@ import Medicoes from "./medicoes.js";
 
 
 
-const DiarioDeObra = database.define('diarioDeObra', {
+const DiarioDeObra = database.define('diarioDeObras', {
   idProposta: {
     type: Sequelize.INTEGER,
     references: {

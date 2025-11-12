@@ -4,7 +4,7 @@ import database from "../db/database.js";
 import DiarioDeObra from "./diarioDeObra.js";
 import Quantitativa from "./quantitativa.js";
 
- const ItensDoDia = database.define('itensDoDia', {
+ const ItensDoDia = database.define('itensDosDias', {
     idDiarioDeObra: {
         type: Sequelize.INTEGER,
         references: {

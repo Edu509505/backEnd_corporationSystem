@@ -3,7 +3,7 @@ import Faturamento from "./faturamento.js";
 
 import database from "../db/database.js";
 
-const AnexoFaturamento = database.define("anexoFaturamento", {
+const AnexoFaturamento = database.define("anexoFaturamentos", {
     //Aqui ele pega o id da tabela 
     idFaturamento: {
         type: Sequelize.INTEGER,
