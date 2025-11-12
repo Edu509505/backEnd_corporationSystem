@@ -24,7 +24,7 @@ async function dashboard(req, res) {
         d.dataDia,
         SUM(i.quantidade) AS total_m2
       FROM 
-        diarioDeObras d
+        diarioDeObra d
       JOIN 
         itensDoDia i ON i.idDiarioDeObra = d.id
       WHERE 
