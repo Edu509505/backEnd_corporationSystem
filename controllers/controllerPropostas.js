@@ -6,7 +6,6 @@ import z from 'zod';
 import dayjs from 'dayjs';
 import { Op } from 'sequelize';
 //import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-
 import Proposta from "../models/propostas.js";
 import Versionamento from "../models/versionamento.js";
 import AnexoVersionamento from '../models/anexoVersionamento.js';
@@ -19,16 +18,18 @@ const validacaoSchema = z.object({
     statusProposta: z.enum(['EM_ANALISE', 'APROVADA', 'REPROVADA']).default('EM_ANALISE')
 });
 
-
-
 async function createProposta(req, res) {
     const resposta = await validacaoSchema.safeParseAsync(req.body);
+
+    console.log(resposta)
 
     if (!resposta.success) {
         return res.status(400).json(resposta.error)
     }
 
     const propostaValidada = resposta.data;
+
+    console.log(resposta.data)
 
     try {
         const proposta = await Proposta.create({

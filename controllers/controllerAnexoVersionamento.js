@@ -29,5 +29,4 @@ async function getAnexoVersionamento(req, res){
 }
 
 
-
 export default { createAnexoVersionamento, getAnexoVersionamento }

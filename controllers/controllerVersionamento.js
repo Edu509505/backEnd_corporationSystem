@@ -163,7 +163,7 @@ async function getImageVersionamento(req, res) {
 
         console.log('Estou aqui ', signedUrl)
     }
-    return res.status(200).json({ url: urlAnexos })
+    return res.status(200).json({ url: urlAnexos, path: anexos.map(anexo => anexo.path) })
 
 }
 
