@@ -12,7 +12,8 @@ export default {
 		password: process.env.DB_PASSWORD_PROD,
 		database: process.env.DB_NAME_PROD,
 		host: process.env.DB_HOST_PROD,
-		dialect: process.env.DB_DIALECT_PROD
+		dialect: process.env.DB_DIALECT_PROD,
+		logging: false
 	}
 
 }
