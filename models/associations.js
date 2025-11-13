@@ -10,7 +10,6 @@ import ItensDoDia from './itensDoDia.js';
 import AnexoContrato from './anexoContratos.js'
 import Faturamento from './faturamento.js';
 import AnexoFaturamento from './anexosFaturamento.js'
-import { MEDIUMINT } from 'sequelize';
 
 
 Clientes.hasMany(Contratos, { foreignKey: "idCliente" });

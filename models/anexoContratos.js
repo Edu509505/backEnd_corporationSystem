@@ -3,7 +3,7 @@ import Contrato from "./contratos.js";
 
 import database from "../db/database.js";
 
-const AnexoVersionamento = database.define("anexoContratos", {
+const AnexoContratos = database.define("anexoContratos", {
     //Aqui ele pega o id da tabela 
     idContrato: {
         type: Sequelize.INTEGER,
@@ -19,4 +19,4 @@ const AnexoVersionamento = database.define("anexoContratos", {
     }
 });
 
-export default AnexoVersionamento;
+export default AnexoContratos;
