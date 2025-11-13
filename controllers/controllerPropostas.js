@@ -21,8 +21,6 @@ const validacaoSchema = z.object({
 async function createProposta(req, res) {
     const resposta = await validacaoSchema.safeParseAsync(req.body);
 
-    console.log(resposta)
-
     if (!resposta.success) {
         return res.status(400).json(resposta.error)
     }
@@ -51,6 +49,8 @@ async function createProposta(req, res) {
             // Iterar sobre cada arquivo enviado
             for (let i = 0; i < req.files.length; i++) {
                 const file = req.files[i];
+                
+                console.log("arquivosRecebidos", file)
 
                 // Caminho do arquivo
                 const filePath = path.join(import.meta.dirname, '..', 'temp', file.filename);
@@ -63,7 +63,7 @@ async function createProposta(req, res) {
                 const extensaoDoArquivo = file.originalname.split('.').reverse()[0];
 
                 // Upload para S3 - cada arquivo com nome único
-                const s3Key = `/${versionamento.idProposta}/${versionamento.id}.${extensaoDoArquivo}`;
+                const s3Key = `/${versionamento.idProposta}/${versionamento.id}/${i}.${extensaoDoArquivo}`;
                 const command = new PutObjectCommand({
                     Bucket: 'anexo-versionamento',
                     Key: s3Key,
