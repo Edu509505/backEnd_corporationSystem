@@ -87,7 +87,7 @@ router.get('/diario-de-obra/proposta/:idProposta', authentication, controllerDia
 router.get('/diarioDeObra', authentication, controllerDiarioDeObra.getTodosOsDiariosDeObra);
 router.get('/diarioDeObra/:dataInicial/:dataFinal/proposta/:idProposta/medicao/:idMedicao', authentication, controllerDiarioDeObra.getDiarioDeObraComMedicaoPeriodo)
 router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal/proposta/:idProposta', authentication, controllerDiarioDeObra.getDiarioDeObraPeriodo)
-router.get('/dashboard/:dataInicial/:dataFinal', authentication, controllerDashBoard.dashboard);
+router.get('/dashboard/:dataInicial/:dataFinal', authentication, controllerDashBoard.dashboarM2);
 
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 
@@ -113,6 +113,7 @@ router.put('/updateStatusNotaFiscal/notaFiscal/:id', authentication, controllerF
 router.post('/createFaturamento', authentication, pastaTemp.single('anexo'), controllerFaturamento.createFaturamento);
 
 router.get('/cardFaturamento', authentication, controllerFaturamento.getFaturamentoCard);
+router.get('/dashboardFaturamento/:dataMes', controllerDashBoard.dashboardFaturamentoPorMes);
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 
 //router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);

@@ -222,7 +222,9 @@ async function getPropostasEmAnalise(req, res) {
 
         console.log('propostasEmAnalise', propostasEmAnalise)
 
-        return res.status(200).json(propostasEmAnalise);
+        return res.status(200).json({
+            quantity: propostasEmAnalise
+        });
     } catch (error) {
         res.status(500).json({ message: "Erro ao buscar propostas em análise", error: error.message });
     }

@@ -129,3 +129,7 @@ GET http://localhost:3000/localhost:3000/propostasEmAnalise
 
 ###
 GET http://localhost:3000/cardFaturamento
+
+###
+GET http://localhost:3000/dashboardFaturamento/2025-6
+Accept: application/json
