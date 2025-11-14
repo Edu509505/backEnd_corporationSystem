@@ -100,7 +100,6 @@ router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes)
 router.get('/getMedicao/:id', authentication, controllerMedicao.getMedicao)
 router.get('/getMedicoes/propostas/:idProposta', authentication, controllerMedicao.getMedicaoProposta)
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
-router.get('/getMedicoes', authentication, controllerMedicao.getMedicoes);
 
 router.get('/comparacao-propostas', authentication, controllerPropostas.getComparacaoPropostas);
 router.get('/propostasEmAnalise', authentication, controllerPropostas.getPropostasEmAnalise);
