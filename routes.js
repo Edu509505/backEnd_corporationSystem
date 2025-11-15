@@ -84,7 +84,7 @@ router.get('/versionamento/:idVersionamento/anexos/urls', authentication, contro
 
 router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiarioDeObra);
 router.get('/diario-de-obra/proposta/:idProposta', authentication, controllerDiarioDeObra.getDiarioDeObraPorProposta);
-router.get('/diarioDeObra', authentication, controllerDiarioDeObra.getTodosOsDiariosDeObra);
+router.get('/diarioDeObras', authentication, controllerDiarioDeObra.getTodosOsDiariosDeObra);
 router.get('/diarioDeObra/:dataInicial/:dataFinal/proposta/:idProposta/medicao/:idMedicao', authentication, controllerDiarioDeObra.getDiarioDeObraComMedicaoPeriodo)
 router.get('/diarioDeObraPeriodo/:dataInicial/:dataFinal/proposta/:idProposta', authentication, controllerDiarioDeObra.getDiarioDeObraPeriodo)
 router.get('/dashboard/:dataInicial/:dataFinal', authentication, controllerDashBoard.dashboarM2);
