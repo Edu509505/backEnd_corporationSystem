@@ -33,7 +33,7 @@ Anexo.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
 Medicoes.hasMany(DiarioDeObra, { foreignKey: "idMedicao" });
 // //N:1
 DiarioDeObra.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "diarioDeObraMedicao" });
-DiarioDeObra.belongsTo(Clientes, { foreignKey: "idCliente", as: "diarioDeObraCliente" });
+// DiarioDeObra.belongsTo(Clientes, { foreignKey: "idCliente", as: "diarioDeObraCliente" });
 
 //1:N
 Proposta.hasMany(Medicoes, { foreignKey: "idProposta", as: "clienteMedicao" });
