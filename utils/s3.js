@@ -6,7 +6,7 @@ doteEnv.config()
 
 const keyId = process.env.AWS_ACCESS_KEY_ID;
 const secretKey = process.env.AWS_SECRET_ACCESS_KEY;
-const minioLink = process.env.MINIO_LINK
+const minioLink = process.env.MINIO_LINK;
 
 export const s3 = new S3Client({
     region: "Horizon",
