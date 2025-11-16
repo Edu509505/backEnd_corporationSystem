@@ -33,6 +33,7 @@ Anexo.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
 Medicoes.hasMany(DiarioDeObra, { foreignKey: "idMedicao" });
 // //N:1
 DiarioDeObra.belongsTo(Medicoes, { foreignKey: "idMedicao", as: "diarioDeObraMedicao" });
+DiarioDeObra.belongsTo(Clientes, { foreignKey: "idCliente", as: "diarioDeObraCliente" });
 
 //1:N
 Proposta.hasMany(Medicoes, { foreignKey: "idProposta", as: "clienteMedicao" });
@@ -65,11 +66,12 @@ DiarioDeObra.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaDiario
 //DiarioDeObra tem muitos ItensDoDia 
 // 1:N
 DiarioDeObra.hasMany(ItensDoDia, { foreignKey: "idDiarioDeObra", as: "itensDoDia" });
+
 //N:1
 ItensDoDia.belongsTo(DiarioDeObra, { foreignKey: "idDiarioDeObra", as: "diarioDeObraItensDia" });
 
 //N:1
-ItensDoDia.belongsTo(Quantitativa, { foreignKey: "idQuantitativa", as: "quantitativa" });
+ItensDoDia.belongsTo(Quantitativa, { foreignKey: "idQuantitativa", as: "quantitativaItensDia" });
 // 1:N
 Quantitativa.hasMany(ItensDoDia, { foreignKey: "idQuantitativa" });
 

@@ -66,7 +66,7 @@ router.get('/proposta/:id', authentication, controllerPropostas.getProposta);
 router.get('/propostas', authentication, controllerPropostas.getPropostas);
 router.get('/getTodasAsPropostasAprovedas', authentication, controllerPropostas.getTodasAsPropostasAprovadas)
 router.get('/cliente/:id/propostasAprovadas/', authentication, controllerPropostas.getPropostasAprovadas)
-router.post('/proposta/:idProposta/versao',authentication, pastaTemp.array('files', 10),controllerVersionamento.createVersionamento);
+router.post('/proposta/:idProposta/versao', authentication, pastaTemp.array('files', 10), controllerVersionamento.createVersionamento);
 router.get('/proposta/:id/versionamentoAprovado', authentication, controllerPropostas.getPropostaVersionamentoAprovado);
 router.get('/proposta/:idProposta/verAprovado', authentication, controllerVersionamento.getPropostaVersionamentoAprovado)
 router.get('/propostasAprovadas', authentication, controllerPropostas.getTodasPropostasAprovadas);
@@ -83,6 +83,7 @@ router.put('/quantitativa/:id', authentication, controllerrQuantitativa.updateQu
 router.get('/versionamento/:idVersionamento/anexos/urls', authentication, controllerVersionamento.getImageVersionamento);
 
 router.post('/diarioDeObra', authentication, controllerDiarioDeObra.createDiarioDeObra);
+router.get('/getDiarioDeObraId/:id', authentication, controllerDiarioDeObra.getDiarioDeObraId)
 router.get('/diario-de-obra/proposta/:idProposta', authentication, controllerDiarioDeObra.getDiarioDeObraPorProposta);
 router.get('/diarioDeObras', authentication, controllerDiarioDeObra.getTodosOsDiariosDeObra);
 router.get('/diarioDeObra/:dataInicial/:dataFinal/proposta/:idProposta/medicao/:idMedicao', authentication, controllerDiarioDeObra.getDiarioDeObraComMedicaoPeriodo)
@@ -92,6 +93,7 @@ router.get('/dashboard/:dataInicial/:dataFinal', authentication, controllerDashB
 router.post('/versionamento/:idProposta', authentication, controllerVersionamento.createVersionamento);
 
 router.get('/todosOsItensDoDia', authentication, controllerItensDia.tudoDoitensDoDia);
+router.get('/itensDia/DiarioDeObra/:idDiarioDeObra', authentication, controllerItensDia.itensDoDiaDiario)
 
 router.post('/criarMedicao', authentication, controllerMedicao.createMedicao);
 

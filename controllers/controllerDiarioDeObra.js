@@ -56,6 +56,25 @@ async function createDiarioDeObra(req, res) {
 
 }
 
+async function getDiarioDeObraId(req, res) {
+  const { idProposta } = req.params;
+
+  try {
+    const diarios = await DiarioDeObra.findAll({
+      where: { idProposta }
+    });
+
+    if (!diarios) {
+      return res.status(404).json({ mensagem: 'Não foi possível encontrar' });
+    }
+
+    res.status(200).json(diarios);
+  } catch (error) {
+    console.error('Erro ao buscar diário de obra:', error);
+    res.status(500).json({ mensagem: 'Erro interno do servidor.' });
+  }
+}
+
 async function getDiarioDeObraPorProposta(req, res) {
   const { idProposta } = req.params;
 
@@ -170,4 +189,4 @@ async function getDiarioDeObraComMedicaoPeriodo(req, res) {
   }
 }
 
-export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra, getDiarioDeObraPeriodo, getDiarioDeObraComMedicaoPeriodo }
+export default { createDiarioDeObra, getDiarioDeObraPorProposta, getTodosOsDiariosDeObra, getDiarioDeObraPeriodo, getDiarioDeObraComMedicaoPeriodo, getDiarioDeObraId }
