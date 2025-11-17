@@ -114,7 +114,7 @@ async function createFaturamento(req, res) {
 
   } catch (error) {
     console.log('error', error)
-    res.status(500).json({ message: "Erro ao criar contrato", error });
+    res.status(500).json({ message: "Erro ao criar nota fiscal", error });
   }
 }
 
