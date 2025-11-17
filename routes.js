@@ -114,7 +114,7 @@ router.put('/updateStatusNotaFiscal/notaFiscal/:id', authentication, controllerF
 router.post('/createFaturamento', authentication, pastaTemp.single('anexo'), controllerFaturamento.createFaturamento);
 
 router.get('/cardFaturamento', authentication, controllerFaturamento.getFaturamentoCard);
-router.get('/dashboardFaturamento/:dataMes', controllerDashBoard.dashboardFaturamentoPorMes);
+router.get('/dashboardFaturamento', controllerDashBoard.dashboardFaturamentoTodosMeses);
 // router.post('/anexoVersionamento', controllerAnexoVersionamento.uploadAnexoVersionamento)
 
 //router.post('/image/upload/formdata', pastaTemp.single('file'), imageController.uploadImageFormData);

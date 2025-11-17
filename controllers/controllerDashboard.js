@@ -49,16 +49,7 @@ async function dashboarM2(req, res) {
 }
 
 
-async function dashboardFaturamentoPorMes(req, res) {
-  const { dataMes } = req.params;
-
-  if (!dataMes || !dayjs(dataMes, 'YYYY-MM', true).isValid()) {
-    return res.status(400).json({ error: 'Parâmetro dataMes é obrigatório e deve estar no formato YYYY-MM.' });
-  }
-
-  const inicioDoMes = dayjs(dataMes, 'YYYY-MM').startOf('month').format('YYYY-MM-DD');
-  const fimDoMes = dayjs(dataMes, 'YYYY-MM').endOf('month').format('YYYY-MM-DD');
-
+async function dashboardFaturamentoTodosMeses(req, res) {
   try {
     const resultado = await sequelize.query(
       `
@@ -67,24 +58,20 @@ async function dashboardFaturamentoPorMes(req, res) {
         SUM(valor) AS totalPago
       FROM Faturamentos
       WHERE pagamento = 'PAGA'
-        AND createdAt BETWEEN :inicio AND :fim
-      GROUP BY referencia;
+      GROUP BY referencia
+      ORDER BY referencia ASC;
       `,
       {
-        replacements: { inicio: inicioDoMes, fim: fimDoMes },
         type: sequelize.QueryTypes.SELECT,
       }
     );
 
-    const referencia = resultado[0]?.referencia || dataMes;
-    const totalPago = resultado[0]?.totalPago || 0;
+    const dadosFormatados = resultado.map((item) => ({
+      mesReferencia: dayjs(item.referencia, 'YYYY-MM').format('MMM/YYYY'), // Ex: Nov/2025
+      totalPago: item.totalPago || 0,
+    }));
 
-    const nomeMesAbreviado = dayjs(referencia, 'YYYY-MM').format('MMM/YYYY'); // Ex: Nov/2025
-
-    return res.status(200).json({
-      mesReferencia: nomeMesAbreviado,
-      totalPago,
-    });
+    return res.status(200).json(dadosFormatados);
   } catch (error) {
     console.error('Erro ao buscar faturamento por mês:', error.message, error.stack);
     res.status(500).json({ error: 'Erro interno ao buscar faturamento por mês.' });
@@ -92,5 +79,4 @@ async function dashboardFaturamentoPorMes(req, res) {
 }
 
 
-
-export default { dashboarM2, dashboardFaturamentoPorMes };
+export default { dashboarM2, dashboardFaturamentoTodosMeses };
