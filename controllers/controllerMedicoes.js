@@ -101,7 +101,7 @@ async function createMedicao(req, res) {
             periodoInicial: verificacao.periodoInicial,
             periodoFinal: verificacao.periodoFinal,
             valorTotal: resultadosSomados() * 100,
-            faturado: "Não Faturado"
+            faturado: "NAO_FATURADO"
         })
 
 
@@ -164,7 +164,7 @@ async function getMedicaoProposta(req, res) {
 
     try {
         const { idProposta } = req.params;
-        const todasAsMedicoes = await Medicoes.findAll({ where: { idProposta: idProposta, faturado: "Não Faturado" } })
+        const todasAsMedicoes = await Medicoes.findAll({ where: { idProposta: idProposta, faturado: "NAO_FATURADO" } })
         if (!todasAsMedicoes) {
             res.status(404).json({ message: "Não foi possível encontrar" })
         }

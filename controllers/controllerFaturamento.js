@@ -94,7 +94,7 @@ async function createFaturamento(req, res) {
     });
 
     const [rowsUpdate] = await Medicao.update(
-      { faturado: 'Faturado' },
+      { faturado: 'FATURADO' },
       { where: { id: verificacaoValidada.idMedicao } }
     )
 

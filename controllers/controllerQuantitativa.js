@@ -43,12 +43,12 @@ async function getQuantitativas(req, res) {
 
         const versionamentoAprovado = await Versionamento.findOne({
             where: {
-                idProposta,
+                idProposta: idProposta,
                 status: 'APROVADA'
             }
         })
-
-        console.log(versionamentoAprovado)
+        console.log("id Proposta", idProposta)
+        console.log("versionamento Aprovado ", versionamentoAprovado)
         const quantitativas = await Quantitativa.findAll({
             where: { idVersionamento: versionamentoAprovado.id }
         });
