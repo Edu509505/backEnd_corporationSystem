@@ -4,8 +4,6 @@ import database from "../db/database.js";
 import Proposta from "./propostas.js";
 import Medicoes from "./medicoes.js";
 
-
-
 const DiarioDeObra = database.define('diarioDeObras', {
   idProposta: {
     type: Sequelize.INTEGER,
