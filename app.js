@@ -21,6 +21,6 @@ app.use(cors({
 }));
 app.use(router)
 
-app.listen(3000, () => {
-    console.log('O servidor está escutando a porta 3000')
+app.listen(process.env.APP_PORT, () => {
+    console.log(`O servidor está escutando a porta ${process.env.APP_PORT}`)
 })
