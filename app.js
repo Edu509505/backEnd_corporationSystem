@@ -18,6 +18,6 @@ app.use(cors({
 }));
 app.use(router)
 
-app.listen(process.env.DB_PORT_PROD, () => {
-    console.log(`O servidor está escutando a porta ${process.env.DB_PORT_PROD}`)
+app.listen(process.env.APP_PORT, () => {
+    console.log(`O servidor está escutando a porta ${process.env.APP_PORT}`)
 })
