@@ -10,7 +10,10 @@ database.sync()
 
 const app = express()
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONT_END_URL, // ou o domínio do seu frontend
+  credentials: true,              // ← ESSENCIAL para cookies
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(router)
