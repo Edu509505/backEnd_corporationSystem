@@ -1,8 +1,5 @@
-
 import express from 'express'
 import cors from 'cors'
-
-
 import database from './db/database.js'
 import router from './routes.js'
 import './models/clientes.js'

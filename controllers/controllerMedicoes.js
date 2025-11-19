@@ -92,11 +92,13 @@ async function createMedicao(req, res) {
 
         console.log("RESULTADOS SOMADOS_______", resultadosSomados() * 100)
 
+        console.log(verificacao)
 
         //AQUI ELE CRIA DE FATO A MEDIÇÃO
         const medicao = await Medicoes.create({
             idCliente: verificacao.idCliente,
             idProposta: verificacao.idProposta,
+            idContrato: null,
             observacao: verificacao.observacao,
             periodoInicial: verificacao.periodoInicial,
             periodoFinal: verificacao.periodoFinal,
@@ -123,9 +125,11 @@ async function createMedicao(req, res) {
             return res.status(400).json({ message: 'Não foi possível atualizar' })
         }
         else { if (medicao) res.status(200).json(verificacao) }
-    } catch {
-        res.status(500).json({ message: 'Não foi possível criar' })
-    }
+    } catch (error) {
+  console.error("Erro ao criar medição:", error.message);
+  console.error("Stack:", error.stack);
+}
+
 
 }
 

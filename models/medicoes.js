@@ -3,6 +3,7 @@ import { Sequelize } from "sequelize";
 import database from "../db/database.js";
 import Proposta from "./propostas.js";
 import Clientes from "./clientes.js";
+import Contratos from "./contratos.js"
 
 const Medicoes = database.define("medicoes", {
   idCliente: {
@@ -19,6 +20,14 @@ const Medicoes = database.define("medicoes", {
       key: "id"
     }
   },
+  idContrato: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: Contratos,
+      key: "id"
+    }
+  },
   observacao: {
     type: Sequelize.STRING,
     allowNull: true
@@ -31,13 +40,13 @@ const Medicoes = database.define("medicoes", {
     type: Sequelize.STRING,
     allowNull: false
   },
-  faturado :{
+  faturado: {
     type: Sequelize.STRING,
     allowNull: false
   },
   valorTotal: {
-    type: Sequelize.INTEGER,
-    allowNull: true
+    type: Sequelize.BIGINT,
+    allowNull: false
   }
 });
 

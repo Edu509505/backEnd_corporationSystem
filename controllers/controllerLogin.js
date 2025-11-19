@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt'
 
 const SECRET_KEY = '123456789012345'
 
+console.log('logando')
+
 async function login(req, res) {
     console.log('req.body', req.body);
     const { email, password } = req.body
@@ -20,7 +22,7 @@ async function login(req, res) {
     const senhaValida = await bcrypt.compare(password, user.password);
 
     if (!senhaValida) {
-        return res.status(401).json({ error: 'Senha incorreta' });
+        return res.status(401).json({ error: 'Usuário ou senha incorreta' });
     }
 
 

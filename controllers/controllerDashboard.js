@@ -54,8 +54,8 @@ async function dashboardFaturamentoTodosMeses(req, res) {
     const resultado = await sequelize.query(
       `
       SELECT
-        strftime('%Y-%m', createdAt) AS referencia,
-        SUM(valor) AS totalPago
+        DATE_FORMAT(createdAt, '%Y-%m') AS referencia,
+        SUM(COALESCE(valor, 0)) AS totalPago
       FROM Faturamentos
       WHERE pagamento = 'PAGA'
       GROUP BY referencia
@@ -67,16 +67,18 @@ async function dashboardFaturamentoTodosMeses(req, res) {
     );
 
     const dadosFormatados = resultado.map((item) => ({
-      mesReferencia: dayjs(item.referencia, 'YYYY-MM').format('MMM/YYYY'), // Ex: Nov/2025
-      totalPago: item.totalPago || 0,
+      mesReferencia: dayjs(item.referencia).format('MMM/YYYY'), // Ex: Nov/2025
+      totalPago: item.totalPago,
     }));
 
     return res.status(200).json(dadosFormatados);
   } catch (error) {
     console.error('Erro ao buscar faturamento por mês:', error.message, error.stack);
-    res.status(500).json({ error: 'Erro interno ao buscar faturamento por mês.' });
+    return res.status(500).json({ error: 'Erro interno ao buscar faturamento por mês.' });
   }
 }
+
+
 
 
 export default { dashboarM2, dashboardFaturamentoTodosMeses };
