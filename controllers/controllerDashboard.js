@@ -56,7 +56,7 @@ async function dashboardFaturamentoTodosMeses(req, res) {
       SELECT
         DATE_FORMAT(createdAt, '%Y-%m') AS referencia,
         SUM(COALESCE(valor, 0)) AS totalPago
-      FROM Faturamentos
+      FROM faturamentos
       WHERE pagamento = 'PAGA'
       GROUP BY referencia
       ORDER BY referencia ASC;
