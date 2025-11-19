@@ -10,9 +10,10 @@ database.sync()
 
 const app = express()
 
+app.use(cors());
+app.options('*', cors())
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
 app.use(router)
 
 app.listen(process.env.APP_PORT, () => {
