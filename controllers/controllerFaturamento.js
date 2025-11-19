@@ -9,7 +9,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 //import { url } from 'node:inspector';
 import z from 'zod';
 import dayjs from "dayjs";
-import { Op } from "sequelize";
+import { Op, where } from "sequelize";
 
 const faturamentoSchema = z.object({
   idCliente: z.string().min(1, "Selecione ao menos um cliente"),
@@ -58,7 +58,7 @@ async function createFaturamento(req, res) {
       idCliente: verificacaoValidada.idCliente,
       idProposta: verificacaoValidada.idProposta,
       idMedicao: verificacaoValidada.idMedicao,
-      valor: verificacaoValidada.valor * 100,
+      valor: verificacaoValidada.valor,
       vencimento: verificacaoValidada.vencimento,
       tipo: verificacaoValidada.tipo,
       numeroDaNota: verificacaoValidada.numeroDaNota,
@@ -230,4 +230,23 @@ async function getFaturamentoCard(req, res) {
   }
 
 }
-export default { createFaturamento, getFaturamento, getFaturamentoId, getFaturamentoCard, updateFaturamento }
+
+
+async function cardFaturamentoEmAberto(req, res) {
+    try{
+      const faturamentoEmAberto = await Faturamento.count({
+        where: {
+            pagamento: "ABERTO"
+        }
+      });
+
+      res.status(200).json({
+        quantity: faturamentoEmAberto
+      });
+    } catch (error){
+      console.error(500).json({ message: error});
+    }
+}
+
+
+export default { createFaturamento, getFaturamento, getFaturamentoId, getFaturamentoCard, updateFaturamento, cardFaturamentoEmAberto }
