@@ -42,6 +42,8 @@ Proposta.hasMany(Medicoes, { foreignKey: "idProposta", as: "clienteMedicao" });
 Medicoes.belongsTo(Proposta, { foreignKey: "idProposta", as: "propostaMedicao" });
 Medicoes.belongsTo(Contratos, { foreignKey: "idContrato", as: "contratoMedicao" });
 Medicoes.belongsTo(Clientes, { foreignKey: "idCliente", as: "clienteMedicao" })
+//1:N
+Medicoes.hasMany(Faturamento, { foreignKey: "idMedicao", as: "medicoesFaturamento" })
 
 //N:1
 Quantitativa.belongsTo(Versionamento, { foreignKey: "idVersionamento" });
