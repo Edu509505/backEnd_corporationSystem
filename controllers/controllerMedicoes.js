@@ -116,6 +116,7 @@ async function createMedicao(req, res) {
                         [Op.between]: [verificacao.periodoInicial, verificacao.periodoFinal]
                     },
                     idMedicao: null,
+                    include: "medicoesFaturamento"
                 },
             }
         )
