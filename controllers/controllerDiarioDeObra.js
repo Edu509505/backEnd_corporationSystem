@@ -169,7 +169,7 @@ async function getDiarioDeObraComMedicaoPeriodo(req, res) {
   try {
     const { idMedicao } = req.params
     const datas = req.params
-    console.log("datas da Requisição", datas.idProposta)
+
     const trazerPeriodo = await DiarioDeObra.findAll(
       {
         where: {
@@ -179,9 +179,19 @@ async function getDiarioDeObraComMedicaoPeriodo(req, res) {
           },
           idMedicao: idMedicao,
         },
-        include: "itensDoDia"
-      })
+        include: [
+          {
+            model: ItensDoDia,
+            as: "itensDoDia"
+          }
+        ]
+      });
 
+
+
+
+    console.log(trazerPeriodo)
+    if (trazerPeriodo.length == null) return res.status(500).json({ message: "Não foi possível encontrar" })
     res.status(200).json(trazerPeriodo)
 
   } catch {

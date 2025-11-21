@@ -123,12 +123,19 @@ async function createMedicao(req, res) {
 
         console.log(rowsUpdate)
         if (rowsUpdate === 0) {
-            return res.status(400).json({ message: 'Não foi possível atualizar' })
+            return res.status(400).json({ message: 'Não foi possível atualizar' });
         }
-        else { if (medicao) res.status(200).json(verificacao) }
+
+        if (medicao) {
+            return res.status(200).json(verificacao);
+        }
+
+        // fallback se nada for retornado
+        return res.status(500).json({ message: 'Erro inesperado ao criar medição' });
+    
     } catch (error) {
-  console.error("Erro ao criar medição:", error.message);
-  console.error("Stack:", error.stack);
+    console.error("Erro ao criar medição:", error.message);
+    console.error("Stack:", error.stack);
 }
 
 
