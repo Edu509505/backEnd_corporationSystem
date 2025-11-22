@@ -52,7 +52,7 @@ async function createFaturamento(req, res) {
   try {
     console.log("REQ.BODY", req.body)
 
-    console.log("VERIFICAÇÃO VALIDADA ",verificacaoValidada)
+    console.log("VERIFICAÇÃO VALIDADA ", verificacaoValidada)
 
     const faturamento = await Faturamento.create({
       idCliente: verificacaoValidada.idCliente,
@@ -195,27 +195,32 @@ async function getFaturamentoCard(req, res) {
 
     const totalAtual = faturamentosPagos
       .filter(f => {
-        const data = new Date(f.createdAt);
+        const data = new Date(f.updatedAt);
         return data.getMonth() === mesAtual && data.getFullYear() === anoAtual;
       })
       .reduce((acc, f) => acc + f.valor, 0);
     console.log("Faturamentos pagos:", faturamentosPagos.map(f => ({
       pagamento: f.pagamento,
-      createdAt: f.createdAt,
+      updatedAt: f.updatedAt,
       valor: f.valor
     })));
 
+    console.log('TOTAL ATUAL ', totalAtual)
 
     const totalAnterior = faturamentosPagos
       .filter(f => {
-        const data = new Date(f.createdAt);
+        const data = new Date(f.updatedAt);
         return data.getMonth() === mesAnterior && data.getFullYear() === anoAnterior;
       })
       .reduce((acc, f) => acc + f.valor, 0);
 
+    console.log('TOTAL ANTERIOR ', totalAnterior)
+
     const variacao = totalAnterior === 0
       ? null
       : ((totalAtual - totalAnterior) / totalAnterior) * 100;
+
+    console.log('VARIAÇÃO ', variacao)
 
     return res.json({
       mesAtual: `${mesAtual + 1}/${anoAtual}`,
@@ -233,19 +238,18 @@ async function getFaturamentoCard(req, res) {
 
 
 async function cardFaturamentoEmAberto(req, res) {
-    try{
-      const faturamentoEmAberto = await Faturamento.count({
-        where: {
-            pagamento: "ABERTO"
-        }
-      });
-
-      res.status(200).json({
-        quantity: faturamentoEmAberto
-      });
-    } catch (error){
-      console.error(500).json({ message: error});
-    }
+  try {
+    const faturamentoEmAberto = await Faturamento.count({
+      where: {
+        pagamento: "ABERTO"
+      }
+    });
+    res.status(200).json({
+      quantity: faturamentoEmAberto
+    });
+  } catch (error) {
+    console.error(500).json({ message: error });
+  }
 }
 
 

@@ -54,7 +54,7 @@ async function dashboardFaturamentoTodosMeses(req, res) {
     const resultado = await sequelize.query(
       `
       SELECT
-        DATE_FORMAT(createdAt, '%Y-%m') AS referencia,
+        DATE_FORMAT(updatedAt, '%Y-%m') AS referencia,
         SUM(COALESCE(valor, 0)) AS totalPago
       FROM faturamentos
       WHERE pagamento = 'PAGA'
