@@ -115,13 +115,12 @@ async function createMedicao(req, res) {
                     dataDia: {
                         [Op.between]: [verificacao.periodoInicial, verificacao.periodoFinal]
                     },
-                    idMedicao: null,
-                    include: "medicoesFaturamento"
+                    idMedicao: null
                 },
             }
         )
 
-        console.log(rowsUpdate)
+        console.log("TOTAL DE DIARIO DE OBRA", rowsUpdate)
         if (rowsUpdate === 0) {
             return res.status(400).json({ message: 'Não foi possível atualizar' });
         }
@@ -132,11 +131,11 @@ async function createMedicao(req, res) {
 
         // fallback se nada for retornado
         return res.status(500).json({ message: 'Erro inesperado ao criar medição' });
-    
+
     } catch (error) {
-    console.error("Erro ao criar medição:", error.message);
-    console.error("Stack:", error.stack);
-}
+        console.error("Erro ao criar medição:", error.message);
+        console.error("Stack:", error.stack);
+    }
 
 
 }
