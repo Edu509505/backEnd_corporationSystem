@@ -114,28 +114,38 @@ async function getDiarioDeObraPorProposta(req, res) {
 
 async function getTodosOsDiariosDeObra(req, res) {
   try {
-    const diarios = await DiarioDeObra.findAll({
-      include: [
-        {
-          model: Proposta,
-          as: 'propostaDiario',
-          include: {
-            model: Clientes,
-            as: 'cliente'
-          }
-        },
-        // {
-        //   model: ItensDoDia,
-        //   as: 'itensDoDia',
-        //   include: {
-        //     model: Quantitativa,
-        //     as: 'quantitativa'
-        //   }
-        // }
-      ],
-    });
+ const diarios = await sequelize.query(
+      `
+      SELECT 
+        d.id AS diario_id,
+        d.titulo,
+        d.descricao,
+        d.createdAt AS diario_createdAt,
+        d.updatedAt AS diario_updatedAt,
+
+        p.id AS proposta_id,
+        p.nome AS proposta_nome,
+        p.createdAt AS proposta_createdAt,
+        p.updatedAt AS proposta_updatedAt,
+
+        c.id AS cliente_id,
+        c.nome AS cliente_nome,
+        c.email AS cliente_email,
+        c.createdAt AS cliente_createdAt,
+        c.updatedAt AS cliente_updatedAt
+
+      FROM diarioDeObras d
+      LEFT JOIN propostas p 
+        ON d.propostaDiarioId = p.id
+      LEFT JOIN Clientes c 
+        ON p.clienteId = c.id
+      ORDER BY d.createdAt DESC;
+      `,
+      { type: QueryTypes.SELECT }
+    );
 
     res.status(200).json(diarios);
+
   } catch (error) {
     console.error('Erro ao buscar diários de obra:', error);
     res.status(500).json({ mensagem: 'Erro interno do servidor.' });
