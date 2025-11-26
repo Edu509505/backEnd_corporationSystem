@@ -78,7 +78,7 @@ async function createFaturamento(req, res) {
     const extensaoDoArquivo = file.originalname.split('.').reverse()[0];
 
     // Upload para S3 - cada arquivo com nome único
-    const s3Key = `/${faturamento.idMedicao}/${faturamento.id}.${extensaoDoArquivo}`;
+    const s3Key = `${faturamento.idMedicao}/${faturamento.id}.${extensaoDoArquivo}`;
     const command = new PutObjectCommand({
       Bucket: 'anexo-faturamento',
       Key: s3Key,

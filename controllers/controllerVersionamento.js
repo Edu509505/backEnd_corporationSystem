@@ -41,7 +41,7 @@ async function createVersionamento(req, res) {
             const extensaoDoArquivo = file.originalname.split('.').reverse()[0];
 
             // Upload para S3 - cada arquivo com nome único
-            const s3Key = `/${versionamento.idProposta}/${versionamento.id}/${i}.${extensaoDoArquivo}`;
+            const s3Key = `${versionamento.idProposta}/${versionamento.id}/${i}.${extensaoDoArquivo}`;
             const command = new PutObjectCommand({
                 Bucket: 'anexo-versionamento',
                 Key: s3Key,

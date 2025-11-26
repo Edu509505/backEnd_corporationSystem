@@ -8,8 +8,12 @@ const keyId = process.env.AWS_ACCESS_KEY_ID;
 const secretKey = process.env.AWS_SECRET_ACCESS_KEY;
 const minioLink = process.env.MINIO_LINK;
 
+console.log('keyId', keyId);
+console.log('secretKey', secretKey);
+console.log('minioLink', minioLink);
+
 export const s3 = new S3Client({
-    region: "Horizon",
+    region: "us-east-1",
     credentials: {
         accessKeyId: keyId,
         secretAccessKey: secretKey
