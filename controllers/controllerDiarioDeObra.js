@@ -112,37 +112,73 @@ async function getDiarioDeObraPorProposta(req, res) {
   }
 }
 
+// async function getTodosOsDiariosDeObra(req, res) {
+//   try {
+//   const diarios = await DiarioDeObra.findAll({
+//       include: [
+//         {
+//           model: Proposta,
+//           as: 'propostaDiario',
+//           include: {
+//             model: Clientes,
+//             as: 'cliente'
+//           }
+//         },
+//         // {
+//         //   model: ItensDoDia,
+//         //   as: 'itensDoDia',
+//         //   include: {
+//         //     model: Quantitativa,
+//         //     as: 'quantitativa'
+//         //   }
+//         // }
+//       ],
+//     });
+
+
+//     res.status(200).json(diarios);
+
+//   } catch (error) {
+//     console.error('Erro ao buscar diários de obra:', error);
+//     res.status(500).json({ mensagem: 'Erro interno do servidor.' });
+//   }
+// }
+
 async function getTodosOsDiariosDeObra(req, res) {
   try {
-  const diarios = await DiarioDeObra.findAll({
-      include: [
-        {
-          model: Proposta,
-          as: 'propostaDiario',
-          include: {
-            model: Clientes,
-            as: 'cliente'
-          }
-        },
-        // {
-        //   model: ItensDoDia,
-        //   as: 'itensDoDia',
-        //   include: {
-        //     model: Quantitativa,
-        //     as: 'quantitativa'
-        //   }
-        // }
-      ],
-    });
+    const resultado = await sequelize.query(
+      `
+      SELECT 
+        d.id AS diario_id,
+        d.dataDia,
+        
+        p.nomeDaProposta,
+        c.name AS nomeCliente
 
+      FROM diariodeobras d
+      LEFT JOIN propostas p ON d.idProposta = p.id
+      LEFT JOIN clientes c ON p.idCliente = c.id
+      ORDER BY d.createdAt DESC;
+      `,
+      { type: QueryTypes.SELECT }
+    );
+
+    const diarios = resultado.map(row => ({
+      id: row.diario_id,
+      dataDia: row.dataDia,
+      nomeDaProposta: row.nomeDaProposta,
+      nomeCliente: row.nomeCliente
+    }));
 
     res.status(200).json(diarios);
-
   } catch (error) {
     console.error('Erro ao buscar diários de obra:', error);
     res.status(500).json({ mensagem: 'Erro interno do servidor.' });
   }
 }
+
+
+
 
 async function getDiarioDeObraPeriodo(req, res) {
   try {
