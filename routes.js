@@ -64,6 +64,7 @@ router.get('/contrato/:id/anexoContrato/url', authentication, controllerAnexoCon
 router.post('/proposta', authentication, pastaTemp.array('files', 10), controllerPropostas.createProposta);
 router.get('/proposta/:id', authentication, controllerPropostas.getProposta);
 router.get('/propostas', authentication, controllerPropostas.getPropostas);
+router.put('/updateProposta/:id', authentication, controllerPropostas.updateProposta)
 router.get('/getTodasAsPropostasAprovedas', authentication, controllerPropostas.getTodasAsPropostasAprovadas)
 router.get('/cliente/:id/propostasAprovadas/', authentication, controllerPropostas.getPropostasAprovadas)
 router.post('/proposta/:idProposta/versao', authentication, pastaTemp.array('files', 10), controllerVersionamento.createVersionamento);

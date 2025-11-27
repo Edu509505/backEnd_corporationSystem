@@ -49,7 +49,7 @@ async function createProposta(req, res) {
             // Iterar sobre cada arquivo enviado
             for (let i = 0; i < req.files.length; i++) {
                 const file = req.files[i];
-                
+
                 console.log("arquivosRecebidos", file)
 
                 // Caminho do arquivo
@@ -233,8 +233,7 @@ async function getPropostasEmAnalise(req, res) {
 
 async function updateProposta(req, res) {
     const { id } = req.params;
-    const { nomeDaProposta, descricao, valorProposta, statusProposta } = req.body;
-
+    const { valorProposta } = req.body;
     try {
         const proposta = await Proposta.findByPk(id);
 
@@ -242,10 +241,7 @@ async function updateProposta(req, res) {
             return res.status(404).json({ message: 'Proposta não encontrada' });
         }
 
-        proposta.nomeDaProposta = nomeDaProposta;
-        proposta.descricao = descricao;
         proposta.valorProposta = valorProposta;
-        proposta.statusProposta = statusProposta;
 
         await proposta.save();
 
@@ -255,6 +251,7 @@ async function updateProposta(req, res) {
         res.status(500).json({ message: 'Não foi possível atualizar a proposta' });
     }
 }
+
 
 
 async function getComparacaoPropostas(req, res) {
@@ -302,4 +299,4 @@ async function getComparacaoPropostas(req, res) {
 }
 
 
-export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado, getTodasPropostasAprovadas, getComparacaoPropostas, getPropostasEmAnalise, getTodasAsPropostasAprovadas }
+export default { createProposta, getProposta, getPropostas, getPropostasAprovadas, getPropostaVersionamentoAprovado, getTodasPropostasAprovadas, getComparacaoPropostas, getPropostasEmAnalise, getTodasAsPropostasAprovadas, updateProposta }
